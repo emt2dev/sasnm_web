@@ -1,0 +1,32 @@
+<p>dashboard works!</p>
+<!-- {{ this.USER__ID }}
+{{ this.ROLES }}
+{{ this.UserFound.Email }} -->
+
+
+<ng-container *ngIf="this.UserFound !=null">
+    <table class="table-striped table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>id</th>
+                <th>id</th>
+                <th>id</th>
+                <th>id</th>
+                <th>id</th>
+                <th>rok</th>
+                <th>id</th>
+                <th>id</th>
+                <th>id</th>
+            </tr>
+        </thead>
+        <tr >
+            <td>{{ this.UserFound.id }}</td>
+            <td>{{ this.UserFound.email }}</td>
+            <td>{{ this.UserFound.name }}</td>
+            <td>{{ this.UserFound.email }}</td>
+            <td>{{ this.UserFound.email }}</td>
+            <td>{{ this.UserFound.email }}</td>
+        </tr>
+    </table>
+</ng-container>
