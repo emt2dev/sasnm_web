@@ -30,3 +30,51 @@
         </tr>
     </table>
 </ng-container>
+
+<div class="main-content">
+    <div class="wrapper">
+        <h1 class="text-center">Order Details</h1>
+
+                <br /><br /><br />
+                <br><br>
+                <table class="content-table">
+                    <tr>
+                        <th>S.N. </th>
+                        <th>Food </th>
+                        <th>Price </th>
+                        <th>Qty. </th>
+                        <th>Total </th>
+                        <th>Order Date </th>
+                        <th>Status </th>
+                    </tr>
+//Get all the order details
+$id = $row['id'];
+$food = $row['food'];
+$price = $row['price'];
+$qty = $row['qty'];
+$total = $row['total'];
+$order_date = $row['order_date'];
+$status = $row['status'];
+<tr>
+    <td>$sn++; </td>
+    <td>$food;</td>
+    <td>price;</td>
+    <td>$qty;</td>
+    <td>echo $total</td>
+    <td> $order_date;</td>
+<td>
+$status=="Ordered
+<label>$status</label>
+status=="On Delivery
+<label style='color: orange;'>$status</label>
+status=="Delivered
+<label style='color: green;'>$status</label>
+status=="Cancelled
+<label style='color: red;'>$status</label>
+</td>
+</tr>
+<tr><td colspan='12' class='error'>You have not placed any orders yet!!!</td></tr>
+</table>
+</div>
+
+</div>
