@@ -4,11 +4,11 @@ export class PagedResults {
     /**
      *
      */
-    constructor(public TotalCount: number, public PageNumber: number, public RecordNumber: number, public Records: Array<Base__Company>) {
-        TotalCount = TotalCount;
-        PageNumber = PageNumber;
-        RecordNumber = RecordNumber;
-        Records = Records;
+    constructor(public totalCount: number, public pageNumber: number, public recordNumber: number, public records: Array<Base__Company>) {
+        totalCount = totalCount;
+        pageNumber = pageNumber;
+        recordNumber = recordNumber;
+        records = records;
     }
 
 }

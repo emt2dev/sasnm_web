@@ -6,14 +6,14 @@ export class Full__User extends Base__User {
     /**
      *
      */
-    constructor(Email: string, Password: string, public id: string, public Name: string, public PhoneNumber: string, public CompanyId: string, public IsStaff: Boolean, public CartList: Array<Full__Cart>, public OrderList: Array<Full__Order>) {
-        super(Email, Password);
+    constructor(email: string, password: string, public id: string, public name: string, public phoneNumber: string, public companyId: string, public isStaff: Boolean, public cartList: Array<Full__Cart>, public orderList: Array<Full__Order>) {
+        super(email, password);
         id = id;
-        Name = Name;
-        PhoneNumber = PhoneNumber;
-        CompanyId = CompanyId;
-        IsStaff = IsStaff;
-        CartList = CartList;
-        OrderList = OrderList;
+        name = name;
+        phoneNumber = phoneNumber;
+        companyId = companyId;
+        isStaff = isStaff;
+        cartList = cartList;
+        orderList = orderList;
     }
 }

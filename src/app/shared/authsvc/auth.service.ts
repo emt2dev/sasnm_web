@@ -14,6 +14,8 @@ import jwt_decode, { JwtPayload } from "jwt-decode";
 import { Router } from '@angular/router';
 import { AuthResponseDTO } from '../DTOs/authResponse';
 import { DecodedAuthResponse } from '../DTOs/decodedAuthResponse';
+import { Base__Company } from '../DTOs/Companies/Base__Company';
+import { overrideDTO } from '../DTOs/overrideDTo';
 
 export const TOKEN: string = 'TOKEN';
 export const USER_ID: string = 'USER_ID';
@@ -37,19 +39,47 @@ export class AuthService {
   _authreadyapi__REGISTER: string = 'http://localhost:5035/api/auth/register';
   _authreadyapi__LOGIN: string = 'http://localhost:5035/api/auth/login';
   _authreadyapi__USER__DETAILS: string = 'http://localhost:5035/api/user/details';
+  _authreadyapi__API__ADMIN__USER: string = 'http://localhost:5035/api/admin/admin__create';
+  _authreadyapi__API__ADMIN__COMPANY: string = 'http://localhost:5035/api/admin/company__create';
+  _authreadyapi__COMPANY__ADMIN__OVERRIDE: string = 'http://localhost:5035/api/admin/company__admin__override';
+  _authreadyapi__COMPANY__GET__ALL: string = 'http://localhost:5035/api/company/all';
+
+  
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   private UserDetails: Full__User = {
     id: '',
-    Name: '',
-    PhoneNumber: '',
-    CompanyId: '',
-    IsStaff: false,
-    CartList: [],
-    OrderList: [],
-    Email: '',
-    Password: '',
+    name: '',
+    phoneNumber: '',
+    companyId: '',
+    isStaff: false,
+    cartList: [],
+    orderList: [],
+    email: '',
+    password: '',
   };
+
+  private DTO_Company: Base__Company = {
+    id: '',
+    name: '',
+    phoneNumber: '',
+    description: '',
+    address: '',
+  };
+
+  private DTO_override: overrideDTO = {
+    userEmail: '',
+    companyId: 0,
+    replaceAdminOneOrTwo: 1,
+  };
+
+  private FullCompanyList: Array<Base__Company> = [];
+
+  getFullCompanyList() {
+    // let list: any = this.getAllCompanies();
+    // this.pushAllCompanies(list);
+    return this.FullCompanyList;
+  }
 
   getUserDetails() {
     return this.UserDetails;
@@ -70,7 +100,7 @@ export class AuthService {
       const decodedUser: decodedUser = {
         Token: token,
         UserId: decoded.sub,
-        Roles: decoded.roles,
+        Roles: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
         RefreshToken: refreshToken
       };
 
@@ -84,6 +114,16 @@ export class AuthService {
   REGISTER__USER(user:Base__User): Observable<any> {
     return this.http.post(this._authreadyapi__REGISTER, user).pipe(catchError(this.handleError));
   }
+
+  // register api admin account
+  REGISTER__API__ADMIN(apiAdmin:Base__User): Observable<any> {
+    return this.http.post(this._authreadyapi__API__ADMIN__USER, apiAdmin).pipe(catchError(this.handleError));
+  }
+
+    // register customer account
+    CREATE__COMPANY(newCompany:Base__Company): Observable<any> {
+      return this.http.post(this._authreadyapi__API__ADMIN__COMPANY, newCompany).pipe(catchError(this.handleError));
+    }
   
   // login account (working)
   
@@ -101,12 +141,13 @@ export class AuthService {
           const decoded: any = jwt_decode<JwtPayload>(res.token);
           i = localStorage.setItem(DECODED_TOKEN, decoded)
           i = localStorage.setItem(USER_ID, decoded.uid);
-          i = localStorage.setItem(ROLES, decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']);
+          i = localStorage.setItem(ROLES, decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
 
+          console.log(decoded);
           const decodedUser: decodedUser = {
             Token: res.token,
             UserId: decoded.sub,
-            Roles: decoded.Roles,
+            Roles: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
             RefreshToken: res.refreshToken
           };
 
@@ -114,24 +155,6 @@ export class AuthService {
           return decodedUser;
         })
       );
-      // .subscribe((res: any) => {
-      //   localStorage.setItem('token', res.token);
-      //   localStorage.setItem('refreshToken', res.refreshToken);
-      //   localStorage.setItem('userId', res.userId);
-
-      //   const decoded: any = jwt_decode<JwtPayload>(res.token);
-      //   localStorage.setItem('decodedtoken', decoded);
-
-      //   const decodedUser = new DecodedAuthResponse(decoded.sub,  decoded, res.refreshToken, decoded.roles);
-
-      //   // this.getUserProfile(res.userId).subscribe((res) => {
-      //   //   this.currentUser = res;
-      //   //   this.router.navigate(['dashboard']);
-      //   // });
-
-      //   // this.user.next(decodedUser);
-      //   return JSON.stringify(decodedUser);
-      // });
   }
 
   returnUserId() {
@@ -170,81 +193,21 @@ export class AuthService {
     return this.http.post(`${this._authreadyapi__USER__DETAILS}/${id}`, { headers:this.headers })
     .pipe(catchError(this.handleError))
   }
-  // //Full__User profile
-  // getUserProfile(id: string): Observable<Full__User> {
-  //     let userid = this.returnUserId();
-  //     let api = `${this._authreadyapi__USER__DETAILS}/${userid}`;
-  //     return this.http.post<Full__User>(api, userid, { headers: this.headers }).pipe(
-  //       map((user: Full__User) => {
-  //         this.UserDetails = user;
-  //         this.UserDetails.Id = user.Id,
-  //         this.UserDetails.Name = user.Name,
-  //         this.UserDetails.PhoneNumber = user.PhoneNumber,
-  //         this.UserDetails.CompanyId = user.CompanyId,
-  //         this.UserDetails.IsStaff = user.IsStaff,
-  //         this.UserDetails.CartList = user.CartList,
-  //         this.UserDetails.OrderList = user.OrderList,
-  //         this.UserDetails.Email = user.Email,
-  //         this.UserDetails.Password = '' 
-  //         return this.UserDetails;
-  //       })
-  //     )
-  //   };
 
-    // getUserProfile(id: string): Observable<any> {
-    //   let userid = this.returnUserId();
-    //   let api = `${this._authreadyapi__USER__DETAILS}/${userid}`;
-    //   return this.http.post<Full__User>(api, userid, { headers: this.headers }).pipe(
-    //     map((user: Full__User) => {
-    //       this.UserDetails = user;
-
-    //       return this.UserDetails;
-    //     })
-    //   )
-    // };
-
-  // getUserProfile(id: string): Observable<Full__User> {
-  //   let userid = this.returnUserId();
-  //   let api = `${this._authreadyapi__USER__DETAILS}/${userid}`;
-  //   return this.http.post<Full__User>(api, userid, { headers: this.headers }).pipe(
-  //     switchMap((DTO: Full__User): Full__User => {
-  //       if(DTO) {
-  //         this.UserDetails.Id = DTO.Id,
-  //         this.UserDetails.Name = DTO.Name,
-  //         this.UserDetails.PhoneNumber = DTO.PhoneNumber,
-  //         this.UserDetails.CompanyId = DTO.CompanyId,
-  //         this.UserDetails.IsStaff = DTO.IsStaff,
-  //         this.UserDetails.CartList = DTO.CartList,
-  //         this.UserDetails.OrderList = DTO.OrderList,
-  //         this.UserDetails.Email = DTO.Email,
-  //         this.UserDetails.Password = ''  
-  //       } else {
-  //         this.UserDetails.Id = '',
-  //         this.UserDetails.Name = '',
-  //         this.UserDetails.PhoneNumber = '',
-  //         this.UserDetails.CompanyId = '',
-  //         this.UserDetails.IsStaff = true,
-  //         this.UserDetails.CartList = [],
-  //         this.UserDetails.OrderList = [],
-  //         this.UserDetails.Email = '',
-  //         this.UserDetails.Password = ''
-  //       }
-  //     }
-  //   ));
-  // };
-
-  // //Full__User profile
-  // getUserProfile(id: string): Observable<any> {
-  // // getUserProfile(id: string) {
-  //   let userid = this.returnUserId();
-  //   let api = `${this._authreadyapi__USER__DETAILS}/${userid}`;
-  //   return this.http.post(api, userid, { headers: this.headers }).pipe(
-  //     map((res) => {
-  //       return res || {};
-  //     }),
-  //     catchError(this.handleError)
-  //   );
+  // this works so we're saving it
+  // getAllCompanies(): Observable<any> {
+  //   return this.http.get(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
   // }
+
+  getAllCompanies(): Observable<any> {
+    return this.http.get<Array<Base__Company>>(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  overrideAdmin(DTO: overrideDTO): Observable<any>{
+
+    return this.http.post(`${this._authreadyapi__COMPANY__ADMIN__OVERRIDE}`, DTO, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
 
   // Error
   handleError(error: HttpErrorResponse) {

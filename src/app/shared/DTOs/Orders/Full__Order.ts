@@ -5,21 +5,21 @@ export class Full__Order extends Base__Order {
     /**
      *
      */
-    constructor(Id: string,
+    constructor(id: string,
         deliveryDriver_Id: number,
-        Customer_Id: string,
-        CompanyId: string,
-        CartId: string,
-        Products: Array<Full__Product>,
-        DestinationAddress: string,
-        CurrentStatus: string,
-        Time__Touched: Date,
-        Time__Delivered: Date,
-        Payment_Complete: Boolean, public Destination_latitude: string, public Destination_longitude: string, public Payment_Amount: number, public Time_Submitted: Date) {
-        super(Id, deliveryDriver_Id, Customer_Id, CompanyId, CartId, Products, DestinationAddress, CurrentStatus, Time__Touched, Time__Delivered, Payment_Complete);
-            Destination_latitude = Destination_latitude;
-            Destination_longitude = Destination_longitude;
-            Payment_Amount = Payment_Amount;
+        customer_Id: string,
+        companyId: string,
+        cartId: string,
+        products: Array<Full__Product>,
+        destinationAddress: string,
+        currentStatus: string,
+        time__Touched: Date,
+        time__Delivered: Date,
+        payment_Complete: Boolean, public destination_latitude: string, public destination_longitude: string, public payment_Amount: number, public Time_Submitted: Date) {
+        super(id, deliveryDriver_Id, customer_Id, companyId, cartId, products, destinationAddress, currentStatus, time__Touched, time__Delivered, payment_Complete);
+            destination_latitude = destination_latitude;
+            destination_longitude = destination_longitude;
+            payment_Amount = payment_Amount;
             Time_Submitted = Time_Submitted;
     }
 }

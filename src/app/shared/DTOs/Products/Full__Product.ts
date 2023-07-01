@@ -5,22 +5,22 @@ export class Full__Product extends Base__Product {
 /**
  *
  */
-constructor(Id: string,
-    Name: string,
-    Price_Normal: number,
-    Price_Sale: number,
-    ImageURL: string,
-    CompanyId: string,
-    Keyword: string, public Description: string, public Price_Current: number, public Modifiers: string) {
-    super(Id,
-        Name,
-        Price_Normal,
-        Price_Sale,
-        ImageURL,
-        CompanyId,
-        Keyword,);
-        Description = Description;
-        Price_Current = Price_Current;
-        Modifiers = Modifiers;
+constructor(id: string,
+    name: string,
+    price_Normal: number,
+    price_Sale: number,
+    imageURL: string,
+    companyId: string,
+    keyword: string, public description: string, public price_Current: number, public modifiers: string) {
+    super(id,
+        name,
+        price_Normal,
+        price_Sale,
+        imageURL,
+        companyId,
+        keyword,);
+        description = description;
+        price_Current = price_Current;
+        modifiers = modifiers;
     }
 }

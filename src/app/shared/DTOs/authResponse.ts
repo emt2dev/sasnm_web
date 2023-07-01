@@ -1,7 +1,7 @@
 export class AuthResponseDTO {
-    constructor(public UserId: string, public Token: string, public RefreshToken: string) {
-        UserId = UserId;
-        Token = Token;
-        RefreshToken = RefreshToken;
+    constructor(public userId: string, public token: string, public refreshToken: string) {
+        userId = userId;
+        token = token;
+        refreshToken = refreshToken;
     }
 }

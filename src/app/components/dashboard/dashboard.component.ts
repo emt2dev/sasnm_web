@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, map } from 'rxjs';
+import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
 import { Full__User } from 'src/app/shared/DTOs/APIUsers/Full__APIUser';
 import { dto__full__user } from 'src/app/shared/DTOs/APIUsers/dto__full__user';
+import { Base__Cart } from 'src/app/shared/DTOs/Carts/Base__Cart';
+import { Base__Company } from 'src/app/shared/DTOs/Companies/Base__Company';
+import { overrideDTO } from 'src/app/shared/DTOs/overrideDTo';
 import { AuthService } from 'src/app/shared/authsvc/auth.service';
 
 // export interface userdetails {
@@ -31,9 +35,15 @@ import { AuthService } from 'src/app/shared/authsvc/auth.service';
 export class DashboardComponent implements OnInit {
   private user: BehaviorSubject<Full__User | null | undefined> = new BehaviorSubject<Full__User | null | undefined>(undefined);
 
-  USER__ID = this.authsvc.returnUserId()!;
+  FORM__API__ADMIN__REGISTER: FormGroup;
+  FORM__API__ADMIN__CREATE__COMPANY: FormGroup;
+  FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN: FormGroup;
 
+  USER__ID = this.authsvc.returnUserId()!;
   ROLES = this.authsvc.returnRoles();
+
+  // COMPANY__LIST: Array<Base__Company> = [];
+  COMPANY__LIST: Array<any> = [];
   
   UserFound: dto__full__user = {
     id: 'default',
@@ -46,65 +56,100 @@ export class DashboardComponent implements OnInit {
     email: 'default',
     password: 'default',
   };
-  
 
-  constructor(private authsvc: AuthService, private actRoute: ActivatedRoute, private router: Router){
+  CURRENT__CART: Base__Cart = {
+    id: '',
+    customerId: '',
+    companyId: '',
+    productsList: [],
+    total_Amount: 0,
+    abandoned: false,
+    submitted: false,
+  };
 
-    // const userdetails3 = this.authsvc.getUserProfile(this.USER__ID);
-    // this.authsvc.getUserProfile(this.USER__ID).subscribe((res) => {
-    //   map((user: Full__User) => {
-    //     this.UserFound = user;
-    //   });
-    // });
-          // this.UserFound.Id = user.Id,
-          // this.UserFound.Name = user.Name,
-          // this.UserFound.PhoneNumber = user.PhoneNumber,
-          // this.UserFound.CompanyId = user.CompanyId,
-          // this.UserFound.IsStaff = user.IsStaff,
-          // this.UserFound.CartList = user.CartList,
-          // this.UserFound.OrderList = user.OrderList,
-          // this.UserFound.Email = user.Email,
-          // this.UserFound.Password = ''      
+  constructor(public formBuilder: FormBuilder, private authsvc: AuthService, private actRoute: ActivatedRoute, private router: Router){
+          this.FORM__API__ADMIN__REGISTER = this.formBuilder.group({
+            email: ['', Validators.email],
+            password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
+          });
+
+          this.FORM__API__ADMIN__CREATE__COMPANY = this.formBuilder.group({
+            name: ['',],
+            description: ['',],
+            address: ['',],
+            phoneNumber: ['',]
+          });
+
+          this.FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN = this.formBuilder.group({
+            userEmail: ['',Validators.email],
+            companyId: ['',],
+            replaceAdminOneOrTwo: ['',]
+          });
   }
   ngOnInit(): void {
     // this.UserFound = this.authsvc.getUserProfile(this.USER__ID);
     this.authsvc.getUserProfile(this.USER__ID).subscribe((data: dto__full__user) => {
       this.UserFound=data;
+
       return this.UserFound;
-      // this.UserFound = data;
-      // this.UserFound.id = data.id,
-      // this.UserFound.Name = data.Name,
-      // this.UserFound.PhoneNumber = data.PhoneNumber,
-      // this.UserFound.CompanyId = data.CompanyId,
-      // this.UserFound.IsStaff = data.IsStaff,
-      // this.UserFound.CartList = data.CartList,
-      // this.UserFound.OrderList = data.OrderList,
-      // this.UserFound.Email = data.Email,
-      // this.UserFound.Password = '' 
-      // console.log(this.UserFound);
     })
-    // const here= this.authsvc.getUserProfile(this.USER__ID).subscribe((res) => {
-    //     map((apiResult: Full__User) => {
-
-    //       this.UserFound.Id = apiResult.Id,
-    //         this.UserFound.Name = apiResult.Name,
-    //         this.UserFound.PhoneNumber = apiResult.PhoneNumber,
-    //         this.UserFound.CompanyId = apiResult.CompanyId,
-    //         this.UserFound.IsStaff = apiResult.IsStaff,
-    //         this.UserFound.CartList = apiResult.CartList,
-    //         this.UserFound.OrderList = apiResult.OrderList,
-    //         this.UserFound.Email = apiResult.Email;
-
-    //         return apiResult;
-    //     });
-    //   });
-            
-            
+                
     this.authsvc.getUserDetails();
-    // this.authsvc.getUserProfile(this.USER__ID).subscribe((apiResult) => {
-    //   this.UserFound = apiResult;
-    // }); 
+
+    if (this.ROLES?.includes('API_Admin')) {
+      // const allCompanies = this.authsvc.getAllCompanies();
+      // const allCompanies = this.authsvc.getFullCompanyList();
+      // this.COMPANY__LIST = this.authsvc.getAllCompanies();
+      const test = this.authsvc.getAllCompanies();
+      test.forEach(element => {
+        this.COMPANY__LIST.push(element);
+
+      });
+    }
+    
   }
   
+  API__ADMIN__REGISTER() {
+    const NEW__API__ADMIN = new Base__User(this.FORM__API__ADMIN__REGISTER.value.email, this.FORM__API__ADMIN__REGISTER.value.password);
+console.log(NEW__API__ADMIN);
+    this.authsvc.REGISTER__API__ADMIN(NEW__API__ADMIN).subscribe({
+      next: (res) => {
+
+        this.FORM__API__ADMIN__REGISTER.reset();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  API__ADMIN__CREATE__COMPANY() {
+    const NEW__COMPANY = new Base__Company("", this.FORM__API__ADMIN__CREATE__COMPANY.value.name, this.FORM__API__ADMIN__CREATE__COMPANY.value.description, this.FORM__API__ADMIN__CREATE__COMPANY.value.address, this.FORM__API__ADMIN__CREATE__COMPANY.value.phoneNumber);
+
+    this.authsvc.CREATE__COMPANY(NEW__COMPANY).subscribe({
+      next: (res) => {
+
+        this.FORM__API__ADMIN__CREATE__COMPANY.reset();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  } 
+
+  API__ADMIN__OVERRIDE__COMPANY__ADMIN() {
+    const overrideAdmin_DTO = new overrideDTO(this.FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN.value.userEmail, parseInt(this.FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN.value.companyId), this.FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN.value.replaceAdminOneOrTwo);
+
+    this.authsvc.overrideAdmin(overrideAdmin_DTO).subscribe({
+      next: (res) => {
+
+        this.FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN.reset();
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  } 
+
   logout() { this.authsvc.LOGOUT__USER(); this.router.navigateByUrl('/');}
 }

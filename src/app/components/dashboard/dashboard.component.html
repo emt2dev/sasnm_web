@@ -1,80 +1,412 @@
-<p>dashboard works!</p>
-<!-- {{ this.USER__ID }}
+
 {{ this.ROLES }}
-{{ this.UserFound.Email }} -->
 
 
-<ng-container *ngIf="this.UserFound !=null">
-    <table class="table-striped table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>id</th>
-                <th>id</th>
-                <th>id</th>
-                <th>id</th>
-                <th>id</th>
-                <th>rok</th>
-                <th>id</th>
-                <th>id</th>
-                <th>id</th>
-            </tr>
-        </thead>
-        <tr >
-            <td>{{ this.UserFound.id }}</td>
-            <td>{{ this.UserFound.email }}</td>
-            <td>{{ this.UserFound.name }}</td>
-            <td>{{ this.UserFound.email }}</td>
-            <td>{{ this.UserFound.email }}</td>
-            <td>{{ this.UserFound.email }}</td>
-        </tr>
-    </table>
+<hr />
+BELOW IS COMPANY
+<ng-container *ngIf="(this.ROLES?.includes('User'))">
+    <div class="row">
+        <div class="col-lg-3">
+            <h5>Add new product!</h5>
+            <form action="">
+                <label for="product name">Name</label>
+                <input type="text">
+                <label for="product name">Description</label>
+                <input type="text">
+                <label for="product name">Normal Price</label>
+                <input type="text">
+                <label for="product name">Sale Price</label>
+                <input type="text">
+                <label for="product name">Current Price</label>
+                <input type="text">
+                <label for="product name">Image</label>
+                <input type="image">
+                <label for="product name">companyId</label>
+                <input type="text">
+                <label for="product name">Modifiers</label>
+                <input type="text">
+                <label for="product name">Keyword</label>
+                <select name="" id="">
+                    <option value="">Dessert</option>
+                    <option value="">Entree</option>
+                    <option value="">Drink</option>
+                    <option value="">Childrens Menu</option>
+                </select>
+                <button class="mt-3 btn btn-large btn-success">submit</button>
+            </form>
+        </div>
+        <div class="col-lg-3">
+            <h5>Delete product!</h5>
+            <form action="">
+                <select name="" id="">
+                    <option value="">Dessert</option>
+                    <option value="">Entree</option>
+                    <option value="">Drink</option>
+                    <option value="">Childrens Menu</option>
+                </select>
+                <button class="mt-3 btn btn-large btn-success">submit</button>
+            </form>
+        </div>
+        <div class="col-lg-3">
+            <h5>Delete Admin!</h5>
+            <form action="">
+                <select name="" id="">
+                    <option value="">Dessert</option>
+                    <option value="">Entree</option>
+                    <option value="">Drink</option>
+                    <option value="">Childrens Menu</option>
+                </select>
+                <button class="mt-3 btn btn-large btn-success">submit</button>
+            </form>
+        </div>
+        <div class="col-lg-3">
+            <h5>Update Company Details!</h5>
+            <form action="">
+                <label for="product name">Name</label>
+                <input type="text">
+                <label for="product name">Description</label>
+                <input type="text">
+                <label for="product name">Normal Price</label>
+                <input type="text">
+                <label for="product name">Sale Price</label>
+                <input type="text">
+                <label for="product name">Current Price</label>
+                <input type="text">
+                <label for="product name">Image</label>
+                <input type="image">
+                <label for="product name">companyId</label>
+                <input type="text">
+                <label for="product name">Modifiers</label>
+                <input type="text">
+                <label for="product name">Keyword</label>
+                <select name="" id="">
+                    <option value="">Dessert</option>
+                    <option value="">Entree</option>
+                    <option value="">Drink</option>
+                    <option value="">Childrens Menu</option>
+                </select>
+                <button class="mt-3 btn btn-large btn-success">submit</button>
+            </form>
+        </div>
+    </div>
+</ng-container>
+<hr />
+Below is User
+<ng-container *ngIf="(this.ROLES?.includes('User'))">
+    Welcome {{ UserFound.name }}!
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="container-fluid">
+                <h3>Whats in your cart?</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>ITEM</td>
+                            <td>COST</td>
+                            <td>REMOVE</td>
+                            <td>DUPLICATE</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td>ITEM</td>
+                            <td>COST</td>
+                            <td><button class="btn btn-outline-danger">Remove</button></td>
+                            <td><button class="btn btn-outline-primary">Duplicate</button></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button class="btn btn-success">Checkout</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <h3>Current Orders</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Time_Submitted</td>
+                            <td>currentStatus</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td>1pm</td>
+                            <td>delivered</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><p>thank you</p></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="container-fluid">
+                <h3>Previous Orders</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>time__Delivered</td>
+                            <td>currentStatus</td>
+                            <td>re-order</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr >
+                            <td>1pm</td>
+                            <td>delivered</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><button class="btn btn-success">Re-order</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
 </ng-container>
 
-<div class="main-content">
-    <div class="wrapper">
-        <h1 class="text-center">Order Details</h1>
+<hr />
+BELOW IS API_Admin role
+<ng-container *ngIf="(this.ROLES?.includes('API_Admin'))">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <h3 class="h3 mb-3 font-weight-normal text-center">Create Admin Account</h3>
+                <form
+                    class="form-control"
+                    [formGroup]="FORM__API__ADMIN__REGISTER"
+                    (ngSubmit)="API__ADMIN__REGISTER()">
+                    
+                    <div class="form-group">
+                    <label>Email Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                        placeholder="Enter Email Address"
+                        required
+                    />
+                    </div>
+            
+                    <div class="form-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        formControlName="password"
+                        placeholder="Password"
+                        required
+                    />
+                    </div>
+                    <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h3 class="h3 mb-3 font-weight-normal text-center">Create New Company</h3>
+                <form
+                class="form-control"
+                [formGroup]="FORM__API__ADMIN__CREATE__COMPANY"
+                (ngSubmit)="API__ADMIN__CREATE__COMPANY()">
+                <div class="form-group">
+                <label>Company Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="company name"
+                    required
+                />
+                </div>
+        
+                <div class="form-group">
+                    <label>Description</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="description"
+                        placeholder="company description"
+                        required
+                    />
+                    </div>
+        
+                <div class="form-group">
+                    <label>Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="address"
+                        placeholder="company address"
+                        required
+                    />
+                    </div>
+        
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="phoneNumber"
+                        placeholder="company phoneNumber"
+                        required
+                    />
+                    </div>
+                <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
+            </form>
+            </div>
+            <div class="col-lg-4">
+                <h3 class="h3 mb-3 font-weight-normal text-center">Replace Company Admin</h3>
+                <form
+                class="form-control"
+                [formGroup]="FORM__API__ADMIN__OVERRIDE__COMPANY__ADMIN"
+                (ngSubmit)="API__ADMIN__OVERRIDE__COMPANY__ADMIN()">
+                <div class="form-group">
+                    Choose Company
 
-                <br /><br /><br />
-                <br><br>
-                <table class="content-table">
-                    <tr>
-                        <th>S.N. </th>
-                        <th>Food </th>
-                        <th>Price </th>
-                        <th>Qty. </th>
-                        <th>Total </th>
-                        <th>Order Date </th>
-                        <th>Status </th>
-                    </tr>
-//Get all the order details
-$id = $row['id'];
-$food = $row['food'];
-$price = $row['price'];
-$qty = $row['qty'];
-$total = $row['total'];
-$order_date = $row['order_date'];
-$status = $row['status'];
-<tr>
-    <td>$sn++; </td>
-    <td>$food;</td>
-    <td>price;</td>
-    <td>$qty;</td>
-    <td>echo $total</td>
-    <td> $order_date;</td>
-<td>
-$status=="Ordered
-<label>$status</label>
-status=="On Delivery
-<label style='color: orange;'>$status</label>
-status=="Delivered
-<label style='color: green;'>$status</label>
-status=="Cancelled
-<label style='color: red;'>$status</label>
-</td>
-</tr>
-<tr><td colspan='12' class='error'>You have not placed any orders yet!!!</td></tr>
+                    <select formControlName="companyId">
+                        <option disabled>SELECT COMPANY</option>
+                        <option *ngFor="let company of COMPANY__LIST[0]" [ngValue]="company.id">
+                            {{company.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    Replace this Admin
+                    <select formControlName="replaceAdminOneOrTwo">
+                        <option disabled>SELECT ADMIN</option>
+                        <option [ngValue]="1">Admin One</option>
+                        <option [ngValue]="2">Admin Two</option>
+                    </select>
+                </div>
+        
+                <div class="form-group mt-3">
+                    
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="userEmail"
+                        placeholder="Email of New Admin"
+                        required
+                    />
+                    <label>Email of New Admin</label>
+                    </div>
+        
+                <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<hr />
+
+<div class="container-fluid">
+
+</div>
+<hr />
+<hr />
+
+
+<label for="CartTable">Items in your cart</label>
+<h2>DEBUG:: WHERE COMPANY ID = COMPANY ID && CART SUBMITTED == FALSE</h2>
+<table class="table table-striped">
+    <thead>
+        <th>DEBUG:: EMPTY</th>
+        <th>ITEMS</th>
+        <th>COST</th>
+        <th>DISCOUNT APPLIED</th>
+        <th>Duplicate Item</th>
+        <th>Remove Item</th>
+    </thead>
+    <tr>
+        <tbody>
+            <td>DEBUG:: DISPLAY ID HERE</td>
+            <td>Item Name</td>
+            <td>Cost</td>
+            <td>Discount</td>
+            <td><button class="primary">Duplicate</button></td>
+            <td><button class="danger">Remove</button></td>
+        </tbody>
+    </tr>
 </table>
-</div>
 
-</div>
+<label for="OrdersTable">current ORDERs</label>
+<h1>DEBUG:: WHERE CURRENTSTATUS == cooking</h1>
+<table class="table table-striped">
+    <thead>
+        <th>DEBUG:: EMPTY</th>
+        <th>DATE ORDERED</th>
+        <th>TOTAL COST</th>
+        <th>Began Cooking At</th>
+        <th>Time_Submitted</th>
+    </thead>
+    <tr>
+        <tbody>
+            <td>DEBUG:: DISPLAY ID HERE</td>
+            <td>DATE ORDERED</td>
+            <td>TOTAL COST</td>
+            <td>Began Cooking At</td>
+            <td>Time_Submitted</td>
+            <td><button class="primary">ETA</button></td>
+        </tbody>
+    </tr>
+</table>
+
+<label for="OrdersTable">ORDER OUT FOR DELIVERY</label>
+<h1>DEBUG:: WHERE CURRENTSTATUS == BEING_DELIVERED</h1>
+<table class="table table-striped">
+    <thead>
+        <th>DEBUG:: EMPTY</th>
+        <th>DATE ORDERED</th>
+        <th>TOTAL COST</th>
+        <th>TIME__DELIVERED</th>
+        <th>ETA</th>
+    </thead>
+    <tr>
+        <tbody>
+            <td>DEBUG:: DISPLAY ID HERE</td>
+            <td>DATE ORDERED</td>
+            <td>TOTAL COST</td>
+            <td>TIME__DELIVERED</td>
+            <td><button class="primary">ETA</button></td>
+        </tbody>
+    </tr>
+</table>
+
+<label for="OrdersTable">Previous Orders</label>
+<h1>DEBUG:: WHERE CURRENTSTATUS == COMPLETED</h1>
+<table class="table table-striped">
+    <thead>
+        <th>DEBUG:: EMPTY</th>
+        <th>DATE ORDERED</th>
+        <th>TOTAL COST</th>
+        <th>TIME__DELIVERED</th>
+        <th>VIEW ITEMS</th>
+        <th>RE-ORDER</th>
+    </thead>
+    <tr>
+        <tbody>
+            <td>DEBUG:: DISPLAY ID HERE</td>
+            <td>DATE ORDERED</td>
+            <td>TOTAL COST</td>
+            <td>TIME__DELIVERED</td>
+            <td><button class="primary">VIEW ITEMS</button></td>
+            <td><button type="button" class="success">RE-ORDER</button></td>
+        </tbody>
+    </tr>
+</table>
+
+

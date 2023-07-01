@@ -1,12 +1,12 @@
 
 export class Base__Product {
-    constructor(public Id: string, public Name: string, public Price_Normal: number, public Price_Sale: number, public ImageURL: string, public CompanyId: string, public Keyword: string) {
-        Id = Id;
-        Name = Name;
-        Price_Normal = Price_Normal;
-        Price_Sale = Price_Sale;
-        ImageURL = ImageURL;
-        CompanyId = CompanyId;
-        Keyword = Keyword;
+    constructor(public id: string, public name: string, public price_Normal: number, public price_Sale: number, public imageURL: string, public companyId: string, public keyword: string) {
+        id = id;
+        name = name;
+        price_Normal = price_Normal;
+        price_Sale = price_Sale;
+        imageURL = imageURL;
+        companyId = companyId;
+        keyword = keyword;
     }
 }

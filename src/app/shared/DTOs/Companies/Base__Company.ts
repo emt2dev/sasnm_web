@@ -2,7 +2,7 @@ export class Base__Company {
     /**
      *
      */
-    constructor(public Id: string, public Name: string, public Description: string, public Address: string, public PhoneNumber: string) {
+    constructor(public id: string, public name: string, public description: string, public address: string, public phoneNumber: string) {
 
     }
 }

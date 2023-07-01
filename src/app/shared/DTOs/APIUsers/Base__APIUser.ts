@@ -3,8 +3,8 @@ export class Base__User {
     /**
      *
      */
-    constructor(public Email: string, public Password: string) {
-        this.Email = Email;
-        this.Password = Password;
+    constructor(public email: string, public password: string) {
+        this.email = email;
+        this.password = password;
     }
 }

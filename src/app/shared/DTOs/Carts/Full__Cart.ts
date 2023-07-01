@@ -5,10 +5,12 @@ export class Full__Cart extends Base__Cart {
     /**
      *
      */
-    constructor(Id: string, CustomerId: string, CompanyId: string, ProductsList: Array<Full__Product>, Total_Amount: number, Abandoned: Boolean, Submitted: Boolean, Total_Discounted: number, Discount_Rate: number) {
-        Total_Discounted = Total_Discounted;
-        Discount_Rate = Discount_Rate;
-        super(Id, CustomerId, CompanyId, ProductsList, Total_Amount,  Abandoned, Submitted);
+    constructor(id: string, customerId: string, companyId: string, productsList: Array<Full__Product>, total_Amount: number, abandoned: Boolean, submitted: Boolean, total_Discounted: number, discount_Rate: number) {
+
+        total_Discounted = total_Discounted;
+        discount_Rate = discount_Rate;
+
+        super(id, customerId, companyId, productsList, total_Amount,  abandoned, submitted);
         
     }
 }

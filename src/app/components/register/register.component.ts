@@ -21,20 +21,19 @@ export class RegisterComponent implements OnInit {
   constructor(public formBuilder: FormBuilder, public authService: AuthService, public router: Router)
   {
     this.FORM__REGISTER = this.formBuilder.group({
-      Email: ['', Validators.email],
-      Password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
+      email: ['', Validators.email],
+      password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
     });
   }
 
   ngOnInit() {}
 
   SUBMIT__REGISTRATION() {
-    const NEW__USER = new Base__User(this.FORM__REGISTER.value.Email, this.FORM__REGISTER.value.Password);
+    const NEW__USER = new Base__User(this.FORM__REGISTER.value.email, this.FORM__REGISTER.value.password);
 
     this.authService.REGISTER__USER(NEW__USER).subscribe({
       next: (res) => {
-
-        alert('register success! Please login');
+        this.FORM__REGISTER.reset();
         this.router.navigateByUrl('/login');
       },
       error: (err) => {

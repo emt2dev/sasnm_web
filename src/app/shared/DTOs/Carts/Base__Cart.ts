@@ -4,13 +4,13 @@ export class Base__Cart {
     /**
      *
      */
-    constructor(public Id: string, public CustomerId: string, public CompanyId: string, public ProductsList: Array<Full__Product>, public Total_Amount: number, public Abandoned: Boolean, public Submitted: Boolean) {
-        Id = Id;
-        CustomerId = CustomerId;
-        CompanyId = CompanyId;
-        ProductsList = ProductsList;
-        Total_Amount = Total_Amount;
-        Abandoned = Abandoned;
-        Submitted = Submitted;
+    constructor(public id: string, public customerId: string, public companyId: string, public productsList: Array<Full__Product>, public total_Amount: number, public abandoned: Boolean, public submitted: Boolean) {
+        id = id;
+        customerId = customerId;
+        companyId = companyId;
+        productsList = productsList;
+        total_Amount = total_Amount;
+        abandoned = abandoned;
+        submitted = submitted;
     }
 }
