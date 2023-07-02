@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DevComponent } from './dev/dev.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptor } from './shared/tokeninterceptor/authconfig.interceptor';
@@ -14,7 +15,7 @@ import { LandingComponent } from './components/landing/landing.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +26,8 @@ import { LandingComponent } from './components/landing/landing.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    LandingComponent
+    LandingComponent,
+    DevComponent
   ],
   providers: [
     {

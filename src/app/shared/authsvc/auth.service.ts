@@ -16,6 +16,7 @@ import { AuthResponseDTO } from '../DTOs/authResponse';
 import { DecodedAuthResponse } from '../DTOs/decodedAuthResponse';
 import { Base__Company } from '../DTOs/Companies/Base__Company';
 import { overrideDTO } from '../DTOs/overrideDTo';
+import { Base__Product } from '../DTOs/Products/Base__Product';
 
 export const TOKEN: string = 'TOKEN';
 export const USER_ID: string = 'USER_ID';
@@ -42,7 +43,15 @@ export class AuthService {
   _authreadyapi__API__ADMIN__USER: string = 'http://localhost:5035/api/admin/admin__create';
   _authreadyapi__API__ADMIN__COMPANY: string = 'http://localhost:5035/api/admin/company__create';
   _authreadyapi__COMPANY__ADMIN__OVERRIDE: string = 'http://localhost:5035/api/admin/company__admin__override';
+
+
   _authreadyapi__COMPANY__GET__ALL: string = 'http://localhost:5035/api/company/all';
+
+  _authreadyapi__COMPANY__NEW__PRODUCT: string = 'http://localhost:5035/api/company/new__product';
+  _authreadyapi__COMPANY__UPDATE__PRODUCT: string = 'http://localhost:5035/api/company/update__product';
+  _authreadyapi__COMPANY__DELETE__PRODUCT: string = 'http://localhost:5035/api/company/delete__product';
+
+  _authreadyapi__COMPANY__ALL__PRODUCT: string = 'http://localhost:5035/api/company/all';
 
   
   headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -203,9 +212,26 @@ export class AuthService {
     return this.http.get<Array<Base__Company>>(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
-  overrideAdmin(DTO: overrideDTO): Observable<any>{
+  dev__getAllProductFromCompany(): Observable<any> {
+    return this.http.get<Array<Base__Product>>(this._authreadyapi__COMPANY__ALL__PRODUCT, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
 
+  overrideAdmin(DTO: overrideDTO): Observable<any>{
     return this.http.post(`${this._authreadyapi__COMPANY__ADMIN__OVERRIDE}`, DTO, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
+
+  deleteProduct(productId: string) {
+    return this.http.get(`${this._authreadyapi__COMPANY__DELETE__PRODUCT}/${productId}`).pipe(catchError(this.handleError))
+  }
+
+  updateProduct(DTO: Base__Product): Observable<any>{
+    return this.http.post(`${this._authreadyapi__COMPANY__NEW__PRODUCT}`, DTO, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
+
+  createProduct(DTO: Base__Product): Observable<any>{
+    return this.http.post(`${this._authreadyapi__COMPANY__NEW__PRODUCT}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
   }
 
