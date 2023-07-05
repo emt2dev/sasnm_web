@@ -17,6 +17,10 @@ import { DecodedAuthResponse } from '../DTOs/decodedAuthResponse';
 import { Base__Company } from '../DTOs/Companies/Base__Company';
 import { overrideDTO } from '../DTOs/overrideDTo';
 import { Base__Product } from '../DTOs/Products/Base__Product';
+import { Full__Product } from '../DTOs/Products/Full__Product';
+import { Full__Company } from '../DTOs/Companies/Full__Company';
+import { newProductDTO } from '../DTOs/Products/newProductDTO';
+import { Base__Cart } from '../DTOs/Carts/Base__Cart';
 
 export const TOKEN: string = 'TOKEN';
 export const USER_ID: string = 'USER_ID';
@@ -44,21 +48,27 @@ export class AuthService {
   _authreadyapi__API__ADMIN__COMPANY: string = 'http://localhost:5035/api/admin/company__create';
   _authreadyapi__COMPANY__ADMIN__OVERRIDE: string = 'http://localhost:5035/api/admin/company__admin__override';
 
-
   _authreadyapi__COMPANY__GET__ALL: string = 'http://localhost:5035/api/company/all';
+  _authreadyapi__COMPANY__GET__DETAILS: string = 'http://localhost:5035/api/company/details';
 
   _authreadyapi__COMPANY__NEW__PRODUCT: string = 'http://localhost:5035/api/company/new__product';
   _authreadyapi__COMPANY__UPDATE__PRODUCT: string = 'http://localhost:5035/api/company/update__product';
   _authreadyapi__COMPANY__DELETE__PRODUCT: string = 'http://localhost:5035/api/company/delete__product';
 
-  _authreadyapi__COMPANY__ALL__PRODUCT: string = 'http://localhost:5035/api/company/all';
+  _authreadyapi__PRODUCT__COMPANY__ALL: string = 'http://localhost:5035/api/product/list/all';
 
+  _authreadyapi__CART__ADD__ONE: string = 'http://localhost:5035/api/cart/add';
+  _authreadyapi__CART__GET__EXISTING: string = 'http://localhost:5035/api/cart/existing';
+
+  returnNewProductURL() {
+    return this._authreadyapi__COMPANY__NEW__PRODUCT;
+  }
   
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   private UserDetails: Full__User = {
     id: '',
-    name: '',
+    name: 'name',
     phoneNumber: '',
     companyId: '',
     isStaff: false,
@@ -105,7 +115,7 @@ export class AuthService {
     if(token && refreshToken) {
 
       const decoded: any = jwt_decode<JwtPayload>(token);
-
+      console.log(decoded);
       const decodedUser: decodedUser = {
         Token: token,
         UserId: decoded.sub,
@@ -148,6 +158,7 @@ export class AuthService {
           i = localStorage.setItem(REFRESH_TOKEN, res.userId);
 
           const decoded: any = jwt_decode<JwtPayload>(res.token);
+
           i = localStorage.setItem(DECODED_TOKEN, decoded)
           i = localStorage.setItem(USER_ID, decoded.uid);
           i = localStorage.setItem(ROLES, decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
@@ -208,12 +219,16 @@ export class AuthService {
   //   return this.http.get(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
   // }
 
-  getAllCompanies(): Observable<any> {
-    return this.http.get<Array<Base__Company>>(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
+  // getAllCompanies(): Observable<any> {
+  //   return this.http.get<Array<Base__Company>>(this._authreadyapi__COMPANY__GET__ALL, {headers:this.headers}).pipe(catchError(this.handleError))
+  // }
+
+  getCompanyDetails(companyId: number): Observable<any> {
+    return this.http.get<Full__Company>(`${this._authreadyapi__COMPANY__GET__DETAILS}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
-  dev__getAllProductFromCompany(): Observable<any> {
-    return this.http.get<Array<Base__Product>>(this._authreadyapi__COMPANY__ALL__PRODUCT, {headers:this.headers}).pipe(catchError(this.handleError))
+  getAllProductFromCompany(companyId: number): Observable<any> {
+    return this.http.get<Array<Full__Product>>(`${this._authreadyapi__PRODUCT__COMPANY__ALL}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
   overrideAdmin(DTO: overrideDTO): Observable<any>{
@@ -221,8 +236,8 @@ export class AuthService {
     .pipe(catchError(this.handleError))
   }
 
-  deleteProduct(productId: string) {
-    return this.http.get(`${this._authreadyapi__COMPANY__DELETE__PRODUCT}/${productId}`).pipe(catchError(this.handleError))
+  deleteProduct(productId: number) {
+    return this.http.delete(`${this._authreadyapi__COMPANY__DELETE__PRODUCT}/${productId}`,  { headers:this.headers }).pipe(catchError(this.handleError))
   }
 
   updateProduct(DTO: Base__Product): Observable<any>{
@@ -230,9 +245,17 @@ export class AuthService {
     .pipe(catchError(this.handleError))
   }
 
-  createProduct(DTO: Base__Product): Observable<any>{
+  createProduct(DTO: newProductDTO): Observable<any>{
     return this.http.post(`${this._authreadyapi__COMPANY__NEW__PRODUCT}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
+  }
+
+  addToCart(URL: string, email: string): Observable<any> {
+    return this.http.post(`${this._authreadyapi__CART__ADD__ONE}/${URL}`, email, { headers:this.headers })
+  }
+
+  returnCurrentCart(companyId: number, userEmail: string): Observable<Base__Cart> {
+    return this.http.post<Base__Cart>(`${this._authreadyapi__CART__GET__EXISTING}/${companyId}`, userEmail, { headers:this.headers })
   }
 
   // Error

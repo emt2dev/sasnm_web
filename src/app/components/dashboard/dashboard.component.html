@@ -1,186 +1,387 @@
 
 {{ this.ROLES }}
+{{ this.UserFound.email }}
+{{ this.COMPANY__FOUND.id }}
 
+{{ CURRENT__CART.productsList }}
+<div class="col-md-6 col-lg-4" *ngFor="let product of PRODUCTS__LIST">
+    <ul>
+        <li>{{product.name}}</li>
+    </ul>
+</div>
+<ng-container *ngIf="(this.ROLES?.includes('Company_Admin') || this.ROLES?.includes('API_Admin'))">
+    <div class="container-fluid mt-5 mb-5 pb-5">
+        <div class="row">
+            <div class="col-md-6 col-lg-4" *ngFor="let product of PRODUCTS__LIST">
+                <form action="http://localhost:5035/api/cart/add/{{COMPANY__FOUND.id}}/{{product.id}}/" method="post">
+                    <label for="imageURL"><h5>{{product.name}}</h5></label>
+                        <img class="img-fluid img-thumbnail rounded float-start" src="{{product.imageURL}}" alt="burrito">
+                    <input type="text" name="userEmail" value="{{UserFound.email}}" readonly hidden>
 
-<hr />
-BELOW IS COMPANY
-<ng-container *ngIf="(this.ROLES?.includes('User'))">
-    <div class="row">
-        <div class="col-lg-3">
-            <h5>Add new product!</h5>
-            <form action="">
-                <label for="product name">Name</label>
-                <input type="text">
-                <label for="product name">Description</label>
-                <input type="text">
-                <label for="product name">Normal Price</label>
-                <input type="text">
-                <label for="product name">Sale Price</label>
-                <input type="text">
-                <label for="product name">Current Price</label>
-                <input type="text">
-                <label for="product name">Image</label>
-                <input type="image">
-                <label for="product name">companyId</label>
-                <input type="text">
-                <label for="product name">Modifiers</label>
-                <input type="text">
-                <label for="product name">Keyword</label>
-                <select name="" id="">
-                    <option value="">Dessert</option>
-                    <option value="">Entree</option>
-                    <option value="">Drink</option>
-                    <option value="">Childrens Menu</option>
-                </select>
-                <button class="mt-3 btn btn-large btn-success">submit</button>
-            </form>
+                    <h6 class="offset-7">${{product.price_Current}}</h6>
+                    <h6>{{product.id}}</h6>
+                    <button class="offset-7 mt-3 btn btn-small btn-success">
+                        Add to cart
+                    </button>
+                </form>
+                <form
+                    class="form-control"
+                    [formGroup]="FORM__ADD__TO__CART"
+                    (ngSubmit)="USER__ADD__TO__CART()">
+
+                    <div class="form-group">
+                        
+                        <img class="img-fluid img-thumbnail rounded float-start" src="{{product.imageURL}}" alt="burrito">
+                        {{product.id}}
+                        <input type="text" formControlName="productId" value={{product.id}} >
+                        <input type="text" formControlName="email" value={{UserFound.email}} readonly>
+                        <input type="text" formControlName="userId" value={{UserFound.companyId}} readonly>
+                        <input type="text" formControlName="companyId" value={{product.companyId}} readonly>
+                        
+                        <h6 class="offset-5">${{product.price_Current}}</h6>
+                        <button class="offset-7 mt-3 btn btn-small btn-success">
+                        Add to cart
+                    </button>
+                    </div>
+                </form>
+
+            <!-- <div class="col-md-6 col-lg-4">
+                <form
+                    class="form-control"
+                    [formGroup]="FORM__ADD__TO__CART"
+                    (ngSubmit)="USER__ADD__TO__CART()">
+                    <div class="form-group">
+                         <label>product.name</label> 
+                        <h5>{{PRODUCTS__LIST[0].name}}</h5>
+                    </div>
+                    <div class="form-group">
+                        <img class="img-fluid img-thumbnail rounded float-start" src="https://cdn.britannica.com/13/234013-050-73781543/rice-and-chorizo-burrito.jpg" alt="burrito">
+                    </div>
+                    <div class="form-group offset-9">
+                        <h4>{{PRODUCTS__LIST[0].price_Current}}</h4>
+                    </div>
+                    <input type="number" value={{PRODUCTS__LIST[0].price_Current}} hidden>
+                    <input type="text" value={{UserFound.id}} hidden>
+                    <input type="text" value={{PRODUCTS__LIST[0].companyId}} hidden>
+                    <button class="mt-3 btn btn-small btn-success">
+                        Add to cart
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <form action="">
+                    <div class="form-group">
+                        <label>product.name</label> 
+                        <h5>product.name</h5>
+                    </div>
+                    <div class="form-group">
+                        <img class="img-fluid img-thumbnail rounded float-start" src="https://i.pinimg.com/originals/d5/90/08/d59008e96e5d805b640c383200f90845.jpg" alt="bento-box">
+                    </div>
+                    <div class="form-group">
+                        <h5>$13.99</h5>
+                    </div>
+                    <button class="btn btn-small btn-info">
+                        Add to cart
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <form action="">
+                    <div class="form-group">
+                        <h5>product.name</h5>
+                    </div>
+                    <div class="form-group">
+                        <img class="img-fluid img-thumbnail rounded float-start" src="https://kristineskitchenblog.com/wp-content/uploads/2022/08/meatball-sub-recipe-08.jpg" alt="meatball-submarine">
+                    </div>
+                    <div class="form-group">
+                        <h5>$9.99</h5>
+                    </div>
+                    <button class="btn btn-small btn-info">
+                        Add to cart
+                    </button>{{ this.COMPANY__FOUND.name }}
+                </form>-->
+            </div>
         </div>
-        <div class="col-lg-3">
-            <h5>Delete product!</h5>
-            <form action="">
-                <select name="" id="">
-                    <option value="">Dessert</option>
-                    <option value="">Entree</option>
-                    <option value="">Drink</option>
-                    <option value="">Childrens Menu</option>
-                </select>
-                <button class="mt-3 btn btn-large btn-success">submit</button>
-            </form>
+        <h5 class="offset-5 mb-5">Company Details</h5>
+        <div class="row">
+            <div class="col-lg-4">
+                <h5>Delete Admin</h5>
+                <form>
+                <ul>
+                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
+                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
+                </ul>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>Add Admin</h5>
+                <form
+                    class="form-control"
+                    [formGroup]="FORM__API__ADMIN__REGISTER"
+                    (ngSubmit)="API__ADMIN__REGISTER()">
+                    
+                    <div class="form-group">
+                    <label>Email Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                        placeholder="Enter Email Address"
+                        />
+                    </div>
+
+                    <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>View Company Details</h5>
+                <ul>
+                    <li>{{ COMPANY__FOUND.name }}</li>
+                    <li>{{ COMPANY__FOUND.description }}</li>
+                    <li>{{ COMPANY__FOUND.address }}</li>
+                    <li>{{ COMPANY__FOUND.phoneNumber }}</li>
+                    <li *ngFor="let product of COMPANY__FOUND.products">{{ product.name }}</li>
+                </ul>
+            </div>
         </div>
-        <div class="col-lg-3">
-            <h5>Delete Admin!</h5>
-            <form action="">
-                <select name="" id="">
-                    <option value="">Dessert</option>
-                    <option value="">Entree</option>
-                    <option value="">Drink</option>
-                    <option value="">Childrens Menu</option>
-                </select>
-                <button class="mt-3 btn btn-large btn-success">submit</button>
-            </form>
+        <div class="row">
+            <h5 class="offset-5 mt-5 mb-5">Product Details</h5>
+            <div class="col-lg-4">
+                <h5>Add new product!</h5>
+                <form id="" action={{newProductAction}} enctype="multipart/form-data" method="post">
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="name" name="Name">       
+                    
+                    <label for="description">Description</label>
+                    <input type="text" placeholder="description" name="Name">
+
+                    <label for="price_Normal">Normal Price</label>
+                    <input type="number" placeholder="1.99" name="price_Normal">
+
+                    <label for="price_Sale">Sale Price</label>
+                    <input type="number" placeholder="1.99" name="price_Sale">
+
+                    <label for="imageURL">Image</label>
+                    <input type="file" name="imageURL">
+
+                    <input type="text" value={{COMPANY__FOUND.id}} hidden name="CompanyId">
+
+                    <label>Product Category</label>
+                            <select formControlName="Keyword" name="Keyword">
+                                <option disabled>Keyword</option>
+
+                                    <option value="Entree/Breakfast">Entree/Breakfast</option>
+                                    <option value="Entree/Lunch">Entree/Lunch</option>
+        
+                                    <option value="Appetizer/Breakfast">Appetizer/Breakfast</option>
+                                    <option value="Appetizer/Lunch">Appetizer/Lunch</option>
+        
+                                    <option value="Dessert/Breakfast">Dessert/Breakfast</option>
+                                    <option value="Dessert/Lunch">Dessert/Lunch</option>
+        
+                                    <option value="Drink/Breakfast">Drink/Breakfast</option>
+                                    <option value="Drink/Lunch">Drink/Lunch</option>
+        
+                                    <option value="Clothing/Shorts">Clothing/Shorts</option>
+                                    <option value="Clothing/Pants">Clothing/Pants</option>
+        
+                                    <option value="Clothing/Dress">Clothing/Dress</option>
+                                    <option value="Clothing/Blouse">Clothing/Blouse</option>
+        
+                                    <option value="Clothing/Socks">Clothing/Socks</option>
+                                    <option value="Clothing/Shoes">Clothing/Shoes</option>
+        
+                                    <option value="Clothing/Jacket">Clothing/Jacket</option>
+        
+                                    <option value="Accessories/Winter">Accessories/Winter</option>
+                                    <option value="Accessories/Summer">Accessories/Summer</option>
+                            </select>
+
+                            <button class="mt-3 btn btn-large btn-success">Create</button>
+                </form>
+                    <!-- <form class="form-control"
+                    [formGroup]="FORM__COMPANY__CREATE__PRODUCT"
+                    (ngSubmit)="COMPANY__CREATE__PRODUCT()">
+                            <div class="form-group">
+                                Choose Company
+                    
+                                <select formControlName="CompanyId">
+                                    <option value={{COMPANY__FOUND.id}}>
+                                        {{COMPANY__FOUND.name}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="Name"
+                                placeholder="Name"
+                                />
+                            </div>
+                        
+                        <div class="form-group">
+                            <label>Normal Price</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                formControlName="Price_Normal"
+                                placeholder=0.00
+                                />
+                        </div>
+                        <div class="form-group">
+                            <label>Sale Price</label>
+                            <input
+                                type="number"
+                                class="form-control"
+                                formControlName="Price_Sale"
+                                placeholder="sales price"
+                                />
+                        </div>
+                    
+                        <div class="form-group">
+                            <label>Product Category</label>
+                            <select formControlName="Keyword">
+                                <option disabled>Keyword</option>
+
+                                    <option value="Entree/Breakfast">Entree/Breakfast</option>
+                                    <option value="Entree/Lunch">Entree/Lunch</option>
+        
+                                    <option value="Appetizer/Breakfast">Appetizer/Breakfast</option>
+                                    <option value="Appetizer/Lunch">Appetizer/Lunch</option>
+        
+                                    <option value="Dessert/Breakfast">Dessert/Breakfast</option>
+                                    <option value="Dessert/Lunch">Dessert/Lunch</option>
+        
+                                    <option value="Drink/Breakfast">Drink/Breakfast</option>
+                                    <option value="Drink/Lunch">Drink/Lunch</option>
+        
+                                    <option value="Clothing/Shorts">Clothing/Shorts</option>
+                                    <option value="Clothing/Pants">Clothing/Pants</option>
+        
+                                    <option value="Clothing/Dress">Clothing/Dress</option>
+                                    <option value="Clothing/Blouse">Clothing/Blouse</option>
+        
+                                    <option value="Clothing/Socks">Clothing/Socks</option>
+                                    <option value="Clothing/Shoes">Clothing/Shoes</option>
+        
+                                    <option value="Clothing/Jacket">Clothing/Jacket</option>
+        
+                                    <option value="Accessories/Winter">Accessories/Winter</option>
+                                    <option value="Accessories/Summer">Accessories/Summer</option>
+                            </select>
+                        </div>
+                    
+                        <h6>debug:: companyId is attached to this form</h6>
+                        <button class="mt-3 btn btn-large btn-success">Create</button>
+                    </form> -->
+                    </div>
+                <div class="col-lg-4">
+                    <h4>DELETE PRODUCT</h4>
+                    <form class="form-control"
+                    [formGroup]="FORM__COMPANY__DELETE__PRODUCT"
+                    (ngSubmit)="COMPANY__DELETE__PRODUCT()">
+                            
+                            <div class="form-group">
+                                <select formControlName="productId" >
+                                    <option disabled>SELECT Product</option>
+                                    <option *ngFor="let product of PRODUCTS__LIST" [ngValue]="product.id">
+                                        {{product.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        <button class="mt-3 btn btn-large btn-success">submit</button>
+                    </form>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Update Product</h5>
+                    <h6>FEATURE COMING SOON</h6>
+                    <form class="form-control"
+                    [formGroup]="FORM__COMPANY__UPDATE__PRODUCT"
+                    (ngSubmit)="COMPANY__UPDATE__PRODUCT()">
+                    <div class="form-group">
+                        Choose Company
+            
+                        <select formControlName="companyId">
+                            <option disabled>SELECT COMPANY</option>
+                            <option *ngFor="let company of COMPANY__LIST[0]" [ngValue]="company.id">
+                                {{company.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        Choose Product
+                        <select formControlName="productId" >
+                            <option disabled>SELECT Product</option>
+                            <option  *ngFor="let product of PRODUCTS__LIST" [ngValue]="product.id">
+                                {{product.name}}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="container-fluid">
+                    <h3>Current Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Time_Submitted</td>
+                                <td>currentStatus</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><p>thank you</p></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="col-lg-3">
-            <h5>Update Company Details!</h5>
-            <form action="">
-                <label for="product name">Name</label>
-                <input type="text">
-                <label for="product name">Description</label>
-                <input type="text">
-                <label for="product name">Normal Price</label>
-                <input type="text">
-                <label for="product name">Sale Price</label>
-                <input type="text">
-                <label for="product name">Current Price</label>
-                <input type="text">
-                <label for="product name">Image</label>
-                <input type="image">
-                <label for="product name">companyId</label>
-                <input type="text">
-                <label for="product name">Modifiers</label>
-                <input type="text">
-                <label for="product name">Keyword</label>
-                <select name="" id="">
-                    <option value="">Dessert</option>
-                    <option value="">Entree</option>
-                    <option value="">Drink</option>
-                    <option value="">Childrens Menu</option>
-                </select>
-                <button class="mt-3 btn btn-large btn-success">submit</button>
-            </form>
-        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="container-fluid">
+                    <h3>Previous Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>time__Delivered</td>
+                                <td>currentStatus</td>
+                                <td>re-order</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><button class="btn btn-success">Re-order</button></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>                         
     </div>
 </ng-container>
-<hr />
-Below is User
-<ng-container *ngIf="(this.ROLES?.includes('User'))">
-    Welcome {{ UserFound.name }}!
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="container-fluid">
-                <h3>Whats in your cart?</h3>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>ITEM</td>
-                            <td>COST</td>
-                            <td>REMOVE</td>
-                            <td>DUPLICATE</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr >
-                            <td>ITEM</td>
-                            <td>COST</td>
-                            <td><button class="btn btn-outline-danger">Remove</button></td>
-                            <td><button class="btn btn-outline-primary">Duplicate</button></td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td><button class="btn btn-success">Checkout</button></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="container-fluid">
-                <h3>Current Orders</h3>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>Time_Submitted</td>
-                            <td>currentStatus</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr >
-                            <td>1pm</td>
-                            <td>delivered</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td><p>thank you</p></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="container-fluid">
-                <h3>Previous Orders</h3>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>time__Delivered</td>
-                            <td>currentStatus</td>
-                            <td>re-order</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr >
-                            <td>1pm</td>
-                            <td>delivered</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td><button class="btn btn-success">Re-order</button></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        </div>
-    </div>
-</ng-container>
 
-<hr />
-BELOW IS API_Admin role
 <ng-container *ngIf="(this.ROLES?.includes('API_Admin'))">
-    <div class="container-fluid">
+    <div class="container-fluid mt-5 mb-5">
         <div class="row">
             <div class="col-lg-4">
                 <h3 class="h3 mb-3 font-weight-normal text-center">Create Admin Account</h3>
@@ -196,7 +397,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="email"
                         placeholder="Enter Email Address"
-                        required
+                        
                     />
                     </div>
             
@@ -207,7 +408,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="password"
                         placeholder="Password"
-                        required
+                        
                     />
                     </div>
                     <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
@@ -226,7 +427,7 @@ BELOW IS API_Admin role
                     class="form-control"
                     formControlName="name"
                     placeholder="company name"
-                    required
+                    
                 />
                 </div>
         
@@ -237,7 +438,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="description"
                         placeholder="company description"
-                        required
+                        
                     />
                     </div>
         
@@ -248,7 +449,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="address"
                         placeholder="company address"
-                        required
+                        
                     />
                     </div>
         
@@ -259,7 +460,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="phoneNumber"
                         placeholder="company phoneNumber"
-                        required
+                        
                     />
                     </div>
                 <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
@@ -298,7 +499,7 @@ BELOW IS API_Admin role
                         class="form-control"
                         formControlName="userEmail"
                         placeholder="Email of New Admin"
-                        required
+                        
                     />
                     <label>Email of New Admin</label>
                     </div>
@@ -309,104 +510,148 @@ BELOW IS API_Admin role
         </div>
     </div>
 </ng-container>
-
-
-<hr />
-
-<div class="container-fluid">
-
-</div>
-<hr />
-<hr />
-
-
-<label for="CartTable">Items in your cart</label>
-<h2>DEBUG:: WHERE COMPANY ID = COMPANY ID && CART SUBMITTED == FALSE</h2>
-<table class="table table-striped">
-    <thead>
-        <th>DEBUG:: EMPTY</th>
-        <th>ITEMS</th>
-        <th>COST</th>
-        <th>DISCOUNT APPLIED</th>
-        <th>Duplicate Item</th>
-        <th>Remove Item</th>
-    </thead>
-    <tr>
-        <tbody>
-            <td>DEBUG:: DISPLAY ID HERE</td>
-            <td>Item Name</td>
-            <td>Cost</td>
-            <td>Discount</td>
-            <td><button class="primary">Duplicate</button></td>
-            <td><button class="danger">Remove</button></td>
-        </tbody>
-    </tr>
-</table>
-
-<label for="OrdersTable">current ORDERs</label>
-<h1>DEBUG:: WHERE CURRENTSTATUS == cooking</h1>
-<table class="table table-striped">
-    <thead>
-        <th>DEBUG:: EMPTY</th>
-        <th>DATE ORDERED</th>
-        <th>TOTAL COST</th>
-        <th>Began Cooking At</th>
-        <th>Time_Submitted</th>
-    </thead>
-    <tr>
-        <tbody>
-            <td>DEBUG:: DISPLAY ID HERE</td>
-            <td>DATE ORDERED</td>
-            <td>TOTAL COST</td>
-            <td>Began Cooking At</td>
-            <td>Time_Submitted</td>
-            <td><button class="primary">ETA</button></td>
-        </tbody>
-    </tr>
-</table>
-
-<label for="OrdersTable">ORDER OUT FOR DELIVERY</label>
-<h1>DEBUG:: WHERE CURRENTSTATUS == BEING_DELIVERED</h1>
-<table class="table table-striped">
-    <thead>
-        <th>DEBUG:: EMPTY</th>
-        <th>DATE ORDERED</th>
-        <th>TOTAL COST</th>
-        <th>TIME__DELIVERED</th>
-        <th>ETA</th>
-    </thead>
-    <tr>
-        <tbody>
-            <td>DEBUG:: DISPLAY ID HERE</td>
-            <td>DATE ORDERED</td>
-            <td>TOTAL COST</td>
-            <td>TIME__DELIVERED</td>
-            <td><button class="primary">ETA</button></td>
-        </tbody>
-    </tr>
-</table>
-
-<label for="OrdersTable">Previous Orders</label>
-<h1>DEBUG:: WHERE CURRENTSTATUS == COMPLETED</h1>
-<table class="table table-striped">
-    <thead>
-        <th>DEBUG:: EMPTY</th>
-        <th>DATE ORDERED</th>
-        <th>TOTAL COST</th>
-        <th>TIME__DELIVERED</th>
-        <th>VIEW ITEMS</th>
-        <th>RE-ORDER</th>
-    </thead>
-    <tr>
-        <tbody>
-            <td>DEBUG:: DISPLAY ID HERE</td>
-            <td>DATE ORDERED</td>
-            <td>TOTAL COST</td>
-            <td>TIME__DELIVERED</td>
-            <td><button class="primary">VIEW ITEMS</button></td>
-            <td><button type="button" class="success">RE-ORDER</button></td>
-        </tbody>
-    </tr>
-</table>
-
-
+<ng-container *ngIf="(this.ROLES?.includes('User') || this.ROLES?.includes('API_Admin'))">
+    <hr />
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Update My Profile</h4>
+                <form
+                class="form-control"
+                [formGroup]="FORM__USER__UPDATE__PROFILE"
+                (ngSubmit)="USER__UPDATE__PROFILE()">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                            placeholder="Your name"
+                            />
+                        </div>
+    
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="phoneNumber"
+                                placeholder="Your Number"
+                                />
+                            </div>
+                    <button class="mt-3 btn btn-large btn-success">submit</button>
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <h4>Update My Password</h4>
+                <form
+                class="form-control"
+                [formGroup]="FORM__USER__UPDATE__PASSWORD"
+                (ngSubmit)="USER__UPDATE__PASSWORD()">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            formControlName="currentPassword"
+                            placeholder="****"
+                            />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            formControlName="newPassword"
+                            placeholder="****"
+                            />
+                    </div>
+    
+                    <button class="mt-3 btn btn-large btn-success">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="container-fluid mt-5">
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="container-fluid mb-5">
+                    <h3>Whats in your cart?</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>ITEM</td>
+                                <td>COST</td>
+                                <td>REMOVE</td>
+                                <td>DUPLICATE</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>ITEM</td>
+                                <td>COST</td>
+                                <td><button class="btn btn-outline-danger">Remove</button></td>
+                                <td><button class="btn btn-outline-primary">Duplicate</button></td>
+                            </tr>
+                        </tbody>
+                        <td><button class="btn btn-outline-success">Empty Cart</button></td>
+                        <td><button class="btn btn-success">Checkout</button></td>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="container-fluid">
+                    <h3>Current Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Time_Submitted</td>
+                                <td>currentStatus</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><p>thank you</p></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                    <h3>Previous Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>time__Delivered</td>
+                                <td>currentStatus</td>
+                                <td>re-order</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><button class="btn btn-success">Re-order</button></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+</ng-container>

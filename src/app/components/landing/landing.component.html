@@ -1,1 +1,49 @@
-Landing Page
+
+<div>
+    {{COMPANY__FOUND.name}}
+    {{UserFound.email}}
+</div>
+<div>
+    Cart Drawer
+    <div *ngFor="let item of Cart.productsList">
+        {{item.name}}
+    </div>
+</div>
+<div>
+    <img height="150px" src="https://media-cdn.tripadvisor.com/media/photo-p/12/4d/9c/ae/la-imperial-bakery-cafe.jpg" alt="{{COMPANY__FOUND.name}} logo">
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6">
+            <p>
+                
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <p>
+                {{COMPANY__FOUND.description}}
+            </p>
+        </div>
+    </div>
+</div>
+<!-- <ng-container> -->
+<div class="container-fluid" >
+    <div class="row">
+        <div class="col-lg-4" *ngFor="let product of COMPANY__PRODUCTS">
+            <div class="panel panel-primary">
+                <div class="panel-heading mt-3">{{product.name}}</div>
+                <div class="panel-body">
+                    <img src="https://placehold.it/150x80?text=IMAGE" style="width:100%" alt="Image">
+                    <h6 class="offset-5 mt-1">{{product.price_Current}}</h6>
+                </div>
+                <form action="">
+                    <input type="text" value={{product.id}} hidden readonly>
+                    <button class="offset-3 btn btn-small btn-success">
+                        Add to cart
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </ng-container> -->

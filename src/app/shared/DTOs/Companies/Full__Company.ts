@@ -8,7 +8,7 @@ export class Full__Company extends Base__Company {
 /**
  *
  */
-    constructor(id: string, name: string, description: string, address: string, phoneNumber: string, public id_admin_one: string, public id_admin_two: string, public staffList: Array<Full__User>, public products: Array<Full__Product>, public orders: Array<Full__Order>, public carts: Array<Full__Cart>) {
+    constructor(id: string, name: string, description: string, address: string, phoneNumber: string, public id_admin_one: string, public id_admin_two: string, public staffList: Array<any>, public products: Array<any>, public orders: Array<any>, public carts: Array<any>) {
 
         super(id, name, description, address, phoneNumber);
         id_admin_one = id_admin_one;

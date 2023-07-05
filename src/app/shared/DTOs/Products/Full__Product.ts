@@ -11,7 +11,7 @@ constructor(id: string,
     price_Sale: number,
     imageURL: string,
     companyId: string,
-    keyword: string, public description: string, public price_Current: number, public modifiers: string) {
+    keyword: string, public description: string, public price_Current: number, public modifiers: string, public quantity: number) {
     super(id,
         name,
         price_Normal,
@@ -22,5 +22,6 @@ constructor(id: string,
         description = description;
         price_Current = price_Current;
         modifiers = modifiers;
+        quantity = quantity;
     }
 }

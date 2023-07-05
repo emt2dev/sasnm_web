@@ -5,17 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DevComponent } from './dev/dev.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AuthInterceptor } from './shared/tokeninterceptor/authconfig.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LandingComponent } from './components/landing/landing.component';
+import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,9 +24,8 @@ import { LandingComponent } from './components/landing/landing.component';
     ReactiveFormsModule,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent,
     LandingComponent,
-    DevComponent
+    UserDashboardComponent
   ],
   providers: [
     {

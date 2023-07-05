@@ -10,10 +10,7 @@ const routes: Routes = [
   
   {path: 'register', loadComponent: () => import('./components/register/register.component').then((modulePart) => modulePart.RegisterComponent),},
 
-  {path: 'dashboard', loadComponent: () => import('./components/dashboard/dashboard.component').then((modulePart) => modulePart.DashboardComponent), canActivate: []},
-  
-  {path: 'dev', loadComponent: () => import('./dev/dev.component').then((modulePart) => modulePart.DevComponent)},
-
+  {path: 'dashboard', loadComponent: () => import('./components/user-dashboard/user-dashboard.component').then((modulePart) => modulePart.UserDashboardComponent), canActivate: []},
 ];
 
 @NgModule({

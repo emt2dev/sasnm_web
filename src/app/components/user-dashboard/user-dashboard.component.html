@@ -1,0 +1,208 @@
+{{ this.COMPANY__FOUND.name }}
+
+<ng-container>
+    <div class="container-fluid" *ngIf="(UserFound)">
+        {{UserFound.email}}
+    </div>
+</ng-container>
+
+<ng-container>
+    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(this.COMPANY__FOUND.name != '')">
+        <h5>Here is company admin</h5>
+        <div class="row">
+            <div class="col-lg-4">
+                <h5>Delete Admin</h5>
+                <form>
+                <ul>
+                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
+                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
+                </ul>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>Add Admin</h5>
+                <form
+                    class="form-control"
+                    [formGroup]="FORM__API__ADMIN__REGISTER"
+                    (ngSubmit)="API__ADMIN__REGISTER()">
+                    
+                    <div class="form-group">
+                    <label>Email Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="email"
+                        placeholder="Enter Email Address"
+                        />
+                    </div>
+
+                    <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>View Company Details</h5>
+                <ul>
+                    <li>{{ COMPANY__FOUND.name }}</li>
+                    <li>{{ COMPANY__FOUND.description }}</li>
+                    <li>{{ COMPANY__FOUND.address }}</li>
+                    <li>{{ COMPANY__FOUND.phoneNumber }}</li>
+                    <li *ngFor="let product of COMPANY__FOUND.products">{{ product.name }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <h5 class="offset-5 mt-5 mb-5">Product Details</h5>
+            <div class="col-lg-4">
+                <h5>Add new product!</h5>
+                <form id="" action={{newProductAction}} enctype="multipart/form-data" method="post">
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="name" name="Name">       
+                    
+                    <label for="description">Description</label>
+                    <input type="text" placeholder="description" name="Name">
+
+                    <label for="price_Normal">Normal Price</label>
+                    <input type="number" placeholder="1.99" name="price_Normal">
+
+                    <label for="price_Sale">Sale Price</label>
+                    <input type="number" placeholder="1.99" name="price_Sale">
+
+                    <label for="imageURL">Image</label>
+                    <input type="file" name="imageURL">
+
+                    <input type="text" value={{COMPANY__FOUND.id}} hidden name="CompanyId">
+
+                    <label>Product Category</label>
+                    <select formControlName="Keyword" name="Keyword">
+                        <option disabled>Keyword</option>
+
+                            <option value="Entree/Breakfast">Entree/Breakfast</option>
+                            <option value="Entree/Lunch">Entree/Lunch</option>
+
+                            <option value="Appetizer/Breakfast">Appetizer/Breakfast</option>
+                            <option value="Appetizer/Lunch">Appetizer/Lunch</option>
+
+                            <option value="Dessert/Breakfast">Dessert/Breakfast</option>
+                            <option value="Dessert/Lunch">Dessert/Lunch</option>
+
+                            <option value="Drink/Breakfast">Drink/Breakfast</option>
+                            <option value="Drink/Lunch">Drink/Lunch</option>
+
+                            <option value="Clothing/Shorts">Clothing/Shorts</option>
+                            <option value="Clothing/Pants">Clothing/Pants</option>
+
+                            <option value="Clothing/Dress">Clothing/Dress</option>
+                            <option value="Clothing/Blouse">Clothing/Blouse</option>
+
+                            <option value="Clothing/Socks">Clothing/Socks</option>
+                            <option value="Clothing/Shoes">Clothing/Shoes</option>
+
+                            <option value="Clothing/Jacket">Clothing/Jacket</option>
+
+                            <option value="Accessories/Winter">Accessories/Winter</option>
+                            <option value="Accessories/Summer">Accessories/Summer</option>
+                    </select>
+
+                    <button class="mt-3 btn btn-large btn-success">Create</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h4>DELETE PRODUCT</h4>
+                <form class="form-group"
+                [formGroup]="FORM__COMPANY__DELETE__PRODUCT"
+                (ngSubmit)="COMPANY__DELETE__PRODUCT()">
+                        <div class="form-control">
+                            <select formControlName="productId" >
+                                <option disabled>SELECT Product</option>
+                                <!-- <option *ngFor="let product of COMPANY__PRODUCTS" [ngValue]="product.id">
+                                    {{product.name}}
+                                </option> -->
+                            </select>
+                        </div>
+                    <button class="mt-3 btn btn-large btn-success">submit</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>Update Product</h5>
+                <h6>FEATURE COMING SOON</h6>
+                <form class="form-control"
+                [formGroup]="FORM__COMPANY__UPDATE__PRODUCT"
+                (ngSubmit)="COMPANY__UPDATE__PRODUCT()">
+                    <div class="form-group">
+                        Choose Company
+            
+                        <select formControlName="companyId">
+                            <option disabled>SELECT COMPANY</option>
+                            <option *ngFor="let company of COMPANY__LIST[0]" [ngValue]="company.id">
+                                {{company.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        Choose Product
+                        <select formControlName="productId" >
+                            <option disabled>SELECT Product</option>
+                            <option  *ngFor="let product of PRODUCTS__LIST" [ngValue]="product.id">
+                                {{product.name}}
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-lg-12">
+                <div class="container-fluid">
+                    <h3>Current Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Time_Submitted</td>
+                                <td>currentStatus</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><p>thank you</p></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-lg-12">
+                <div class="container-fluid">
+                    <h3>Previous Orders</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>time__Delivered</td>
+                                <td>currentStatus</td>
+                                <td>re-order</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>1pm</td>
+                                <td>delivered</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><button class="btn btn-success">Re-order</button></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {{ this.COMPANY__FOUND.name }}
+    </div>
+</ng-container>
