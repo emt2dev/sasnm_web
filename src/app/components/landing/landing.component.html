@@ -1,12 +1,15 @@
 
 <div>
     {{COMPANY__FOUND.name}}
+    {{COMPANY__FOUND.id}}
     {{UserFound.email}}
 </div>
 <div>
     Cart Drawer
-    <div *ngFor="let item of Cart.productsList">
-        {{item.name}}
+    {{CURRENT__CART.companyId}}
+    <div *ngFor="let item of CURRENT__CART.items">
+        {{item.price}}
+        {{item.count}}
     </div>
 </div>
 <div>
@@ -34,16 +37,51 @@
                 <div class="panel-heading mt-3">{{product.name}}</div>
                 <div class="panel-body">
                     <img src="https://placehold.it/150x80?text=IMAGE" style="width:100%" alt="Image">
-                    <h6 class="offset-5 mt-1">{{product.price_Current}}</h6>
+                    <h6 class="offset-5 mt-3">{{product.price_Current}}</h6>
                 </div>
-                <form action="">
-                    <input type="text" value={{product.id}} hidden readonly>
-                    <button class="offset-3 btn btn-small btn-success">
-                        Add to cart
-                    </button>
-                </form>
+                    <div class="form-control bg-success">
+                        <button (click)="ADD__TO__CART($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
+                            Add to cart
+                        </button>
+                    </div>
             </div>
         </div>
     </div>
 </div>
 <!-- </ng-container> -->
+
+<ng-container>
+    <div *ngIf="CURRENT__CART.companyId != '0'" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{CURRENT__CART.cost}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Add 1</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of CURRENT__CART.items">
+                    <th scope="row">{{item.count}}</th>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                    <td><button (click)="ADD__TO__CART($event)" id={{item.id}} class="btn btn-warning">+</button></td>
+                    <td><button (click)="REMOVE__ONE($event)" id={{item.id}} class="btn btn-danger">-</button></td>
+                  </tr>
+              </table>
+              <button (click)="TRUNCATE($event)" id={{CURRENT__CART.id}} class="btn btn-outline-secondary">Empty Cart</button>
+              <button (click)="CHECKOUT($event)" id={{CURRENT__CART.id}} class="offset-3 btn btn-primary">Checkout</button>
+          </div>
+          
+        </div>
+      </div>
+</ng-container>
+

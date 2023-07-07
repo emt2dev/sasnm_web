@@ -27,7 +27,12 @@ export class CompanyService {
 
   _authreadyapi__COMPANY__GET__DETAILS: string = 'http://localhost:5035/api/company/details';
   _authreadyapi__PRODUCT__COMPANY__ALL: string = 'http://localhost:5035/api/product/list/all';
-  _authreadyapi__CART__GET__EXISTING: string = '/api/Cart/existing';
+
+  _authreadyapi__CART__GET__EXISTING: string = 'http://localhost:5035/api/shoppingCart/existing';
+  _authreadyapi__CART__ADD__ONE: string = 'http://localhost:5035/api/shoppingCart/add';
+
+  _authreadyapi__CART__TRUNCATE: string = 'http://localhost:5035/api/shoppingCart/empty';
+  _authreadyapi__CART__REMOVE__ONE: string = 'http://localhost:5035/api/shoppingCart/remove';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   
@@ -43,9 +48,22 @@ export class CompanyService {
     return this.http.get<Array<Full__Product>>(`${this._authreadyapi__PRODUCT__COMPANY__ALL}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
-  getUserCart(companyId: number, userEmail: string): Observable<any> {
-    return this.http.post<Full__Cart>(`${this._authreadyapi__CART__GET__EXISTING}/${companyId}`, userEmail, {headers:this.headers}).pipe(catchError(this.handleError))
+  getUserCart(companyId: any, userId: string): Observable<any> {
+    let company = parseInt(companyId);
+    return this.http.post<Full__Cart>(`${this._authreadyapi__CART__GET__EXISTING}/${companyId}/${userId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   };
+
+  addToCart(productId: number, userId: string): Observable<any> {
+    return this.http.post(`${this._authreadyapi__CART__ADD__ONE}/${productId}/${userId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  truncateCart(cartId: number): Observable<any> {
+    return this.http.post(`${this._authreadyapi__CART__TRUNCATE}/${cartId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  removeFromCart(productId: number, customerId: string): Observable<any> {
+    return this.http.post(`${this._authreadyapi__CART__REMOVE__ONE}/${productId}/${customerId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
 
   // Error
   handleError(error: HttpErrorResponse) {

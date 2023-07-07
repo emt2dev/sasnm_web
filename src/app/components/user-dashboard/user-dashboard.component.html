@@ -114,9 +114,9 @@
                         <div class="form-control">
                             <select formControlName="productId" >
                                 <option disabled>SELECT Product</option>
-                                <!-- <option *ngFor="let product of COMPANY__PRODUCTS" [ngValue]="product.id">
+                                <option *ngFor="let product of PRODUCTS__LIST" [ngValue]="product.id">
                                     {{product.name}}
-                                </option> -->
+                                </option>
                             </select>
                         </div>
                     <button class="mt-3 btn btn-large btn-success">submit</button>
@@ -205,4 +205,38 @@
         </div>
         {{ this.COMPANY__FOUND.name }}
     </div>
+</ng-container>
+<ng-container>
+    <div *ngIf="CURRENT__CART.companyId != '0'" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{CURRENT__CART.cost}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Add 1</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of CURRENT__CART.items">
+                    <th scope="row">{{item.count}}</th>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                    <td><button (click)="ADD__TO__CART($event)" id={{item.id}} class="btn btn-warning">+</button></td>
+                    <td><button (click)="REMOVE__ONE($event)" id={{item.id}} class="btn btn-danger">-</button></td>
+                  </tr>
+              </table>
+              <button (click)="TRUNCATE($event)" id={{CURRENT__CART.id}} class="btn btn-outline-secondary">Empty Cart</button>
+              <button (click)="CHECKOUT($event)" id={{CURRENT__CART.id}} class="offset-3 btn btn-primary">Checkout</button>
+          </div>
+          
+        </div>
+      </div>
 </ng-container>

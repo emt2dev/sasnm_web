@@ -6,7 +6,9 @@ import { BehaviorSubject, delay } from 'rxjs';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
 import { Full__User } from 'src/app/shared/DTOs/APIUsers/Full__APIUser';
 import { dto__full__user } from 'src/app/shared/DTOs/APIUsers/dto__full__user';
+// import { Cart } from 'src/app/shared/DTOs/Carts/Cart';
 import { Full__Cart } from 'src/app/shared/DTOs/Carts/Full__Cart';
+import { shoppingCart } from 'src/app/shared/DTOs/Carts/shoppingCart';
 import { Base__Company } from 'src/app/shared/DTOs/Companies/Base__Company';
 import { Full__Company } from 'src/app/shared/DTOs/Companies/Full__Company';
 import { Base__Product } from 'src/app/shared/DTOs/Products/Base__Product';
@@ -14,6 +16,7 @@ import { Full__Product } from 'src/app/shared/DTOs/Products/Full__Product';
 import { newProductDTO } from 'src/app/shared/DTOs/Products/newProductDTO';
 import { overrideDTO } from 'src/app/shared/DTOs/overrideDTo';
 import { AuthService } from 'src/app/shared/authsvc/auth.service';
+import { CompanyService } from 'src/app/shared/company/company.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -80,17 +83,17 @@ export class UserDashboardComponent implements OnInit {
   // Cart Forms and Info
   FORM__ADD__TO__CART: FormGroup;
 
-  CURRENT__CART: Full__Cart = {
-    id: '',
+  CURRENT__CART: shoppingCart = {
+    id: 0,
     customerId: '',
     companyId: '',
-    productsList: [],
-    total_Amount: 0,
+    items: [],
+    cost: 0,
     abandoned: false,
     submitted: false,
   };
 
-  constructor(public formBuilder: FormBuilder, private authService: AuthService, private actRoute: ActivatedRoute, private router: Router){
+  constructor(public formBuilder: FormBuilder, private authService: AuthService, private companyService: CompanyService, private actRoute: ActivatedRoute, private router: Router){
     this.FORM__API__ADMIN__REGISTER = this.formBuilder.group({
       email: ['', Validators.email],
       password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
@@ -190,6 +193,15 @@ export class UserDashboardComponent implements OnInit {
 
           return this.PRODUCTS__LIST;
         });
+      });
+
+      this.companyService.getUserCart(1, this.USER__ID).subscribe(async (data: shoppingCart) => {
+        this.CURRENT__CART=data;
+  
+        await this.CURRENT__CART;
+  
+        this.CURRENT__CART.cost = parseFloat(this.CURRENT__CART.cost.toFixed(4));
+  
       });
     // }
   }
@@ -327,6 +339,94 @@ export class UserDashboardComponent implements OnInit {
   //   });
 
   // }
+
+  TRUNCATE(event: any) {
+    // console.log(this.FORM__ADD__TO__CART.getRawValue())
+    let element = event.target || event.srcElement || event.currentTarget;
+    let elementId = element.id;
+    let j = elementId.match(/\d/g);
+    j = j.join("");
+    j = parseInt(j);
+    let cartId: number = j;
+
+    this.companyService.truncateCart(cartId).subscribe({
+      next: (res) => {
+        this.FORM__ADD__TO__CART.disable();
+        this.FORM__ADD__TO__CART.reset();
+
+        let presentationId = 1;
+        this.companyService.getUserCart(presentationId, this.USER__ID).subscribe(async (data: shoppingCart) => {
+        this.CURRENT__CART=data;
+  
+        await this.CURRENT__CART;
+
+        this.CURRENT__CART.cost = parseFloat(this.CURRENT__CART.cost.toFixed(4));
+      });
+    }
+  })
+}
+
+  CHECKOUT(event: any) {
+    window.location.href = "https://buy.stripe.com/bIY7sJ62O7wz1dmfZ1";
+  }
+
+  REMOVE__ONE(event: any) {
+    // console.log(this.FORM__ADD__TO__CART.getRawValue())
+    let element = event.target || event.srcElement || event.currentTarget;
+    let elementId = element.id;
+    let j = elementId.match(/\d/g);
+    j = j.join("");
+    j = parseInt(j);
+    let productId: number = j;
+
+    let customerId = this.UserFound.id;
+
+    this.companyService.removeFromCart(productId, customerId)
+    .subscribe({
+      next: (res) => {
+        this.FORM__ADD__TO__CART.disable();
+        this.FORM__ADD__TO__CART.reset();
+        
+        let presentationId = 1;
+        this.companyService.getUserCart(presentationId, this.USER__ID).subscribe(async (data: shoppingCart) => {
+          this.CURRENT__CART=data;
+
+          await this.CURRENT__CART;
+          
+          this.CURRENT__CART.cost = parseFloat(this.CURRENT__CART.cost.toFixed(4));
+        });
+      }
+    })
+  }
+
+  ADD__TO__CART(event: any) {
+    // console.log(this.FORM__ADD__TO__CART.getRawValue())
+    let element = event.target || event.srcElement || event.currentTarget;
+    let elementId = element.id;
+    let j = elementId.match(/\d/g);
+    j = j.join("");
+    j = parseInt(j);
+    let productId: number = j;
+
+    let customerId = this.UserFound.id;
+
+    this.companyService.addToCart(productId, customerId)
+    .subscribe({
+      next: (res) => {
+        this.FORM__ADD__TO__CART.disable();
+        this.FORM__ADD__TO__CART.reset();
+
+        let presentationId = 1;
+        this.companyService.getUserCart(presentationId, this.USER__ID).subscribe(async (data: shoppingCart) => {
+          this.CURRENT__CART=data;
+
+          await this.CURRENT__CART;
+
+          this.CURRENT__CART.cost = parseFloat(this.CURRENT__CART.cost.toFixed(4));
+        });
+      }
+    })
+  }
 
   logout() { this.authService.LOGOUT__USER(); this.router.navigateByUrl('/'); }
 }

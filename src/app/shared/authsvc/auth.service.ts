@@ -57,7 +57,7 @@ export class AuthService {
 
   _authreadyapi__PRODUCT__COMPANY__ALL: string = 'http://localhost:5035/api/product/list/all';
 
-  _authreadyapi__CART__ADD__ONE: string = 'http://localhost:5035/api/cart/add';
+  
   _authreadyapi__CART__GET__EXISTING: string = 'http://localhost:5035/api/cart/existing';
 
   returnNewProductURL() {
@@ -248,10 +248,6 @@ export class AuthService {
   createProduct(DTO: newProductDTO): Observable<any>{
     return this.http.post(`${this._authreadyapi__COMPANY__NEW__PRODUCT}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
-  }
-
-  addToCart(URL: string, email: string): Observable<any> {
-    return this.http.post(`${this._authreadyapi__CART__ADD__ONE}/${URL}`, email, { headers:this.headers })
   }
 
   returnCurrentCart(companyId: number, userEmail: string): Observable<Base__Cart> {

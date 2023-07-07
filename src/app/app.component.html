@@ -325,7 +325,7 @@
     </a>
 </div>
 
-<div class="content" role="main">
+<div class="content pt-5" role="main">
 
   <!-- Highlight Card -->
   <div class="card highlight-card card-small">
@@ -352,13 +352,35 @@
 
   <div
   class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm fixed-top">
-  <h5 class="my-0 mr-md-auto font-weight-normal">Angular Mean Auth</h5>
-  <nav class="my-2 my-md-0 mr-md-3">
-    <a *ngIf="this.authService.isUserLoggedIn" class="p-2 text-dark">User Profile</a>
-    <a *ngIf="!this.authService.isUserLoggedIn" class="p-2 text-dark" routerLinkActive="active" routerLink="/login">Login</a>
+  
+  <nav class="my-2 my-md-0 mr-md-3 text-center row">
+    <h4 class="my-0 mr-md-auto font-weight-normal">Sweet and Sour No More</h4>
+    <div class="col-sm-1 col-lg-12">
+      <a class="btn btn-warning text-dark p-2" routerLinkActive="active" routerLink="/">
+        Menu
+      </a>
+      
+      <a *ngIf="this.authService.isUserLoggedIn" class="btn btn-info text-light p-2" routerLinkActive="active" routerLink="/dashboard">
+        Dashboard
+      </a>
+
+      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-warning p-2" routerLinkActive="active" routerLink="/login">
+        Login
+      </a>
+
+      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-outline-primary p-2" routerLinkActive="active"
+      routerLinkActive="active" routerLink="/register">
+        Register
+      </a>
+      
+      <button *ngIf="this.authService.isUserLoggedIn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        Cart
+      </button>
+
+      <button (click)="logout()" *ngIf="this.authService.isUserLoggedIn" type="button" class="btn btn-danger">
+        Logout
+      </button>
+    </div>    
   </nav>
-  <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-outline-primary" routerLinkActive="active"
-    routerLinkActive="active" routerLink="/register">Register</a>
-  <button (click)="logout()" *ngIf="this.authService.isUserLoggedIn" type="button" class="btn btn-danger">Logout</button>
 </div>
 <router-outlet></router-outlet>
