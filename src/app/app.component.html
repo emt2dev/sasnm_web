@@ -360,11 +360,11 @@
         Menu
       </a>
       
-      <a *ngIf="this.authService.isUserLoggedIn" class="btn btn-info text-light p-2" routerLinkActive="active" routerLink="/dashboard">
+      <a *ngIf="this.authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/dashboard">
         Dashboard
       </a>
 
-      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-warning p-2" routerLinkActive="active" routerLink="/login">
+      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/login">
         Login
       </a>
 

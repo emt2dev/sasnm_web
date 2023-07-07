@@ -34,6 +34,7 @@ export class CompanyService {
   _authreadyapi__CART__TRUNCATE: string = 'http://localhost:5035/api/shoppingCart/empty';
   _authreadyapi__CART__REMOVE__ONE: string = 'http://localhost:5035/api/shoppingCart/remove';
 
+  _authreadyapi__ORDER__CHECKOUT: string = 'http://localhost:5035/api/order/submit';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   
   constructor(private http: HttpClient, public router: Router) {
@@ -63,6 +64,10 @@ export class CompanyService {
 
   removeFromCart(productId: number, customerId: string): Observable<any> {
     return this.http.post(`${this._authreadyapi__CART__REMOVE__ONE}/${productId}/${customerId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  submitOrder(shoppingCartId: number): Observable<any> {
+    return this.http.post(`${this._authreadyapi__ORDER__CHECKOUT}`, shoppingCartId, {headers:this.headers}).pipe(catchError(this.handleError));
   }
 
   // Error
