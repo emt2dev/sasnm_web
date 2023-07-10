@@ -11,6 +11,9 @@ import { AuthInterceptor } from './shared/tokeninterceptor/authconfig.intercepto
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LandingComponent } from './components/landing/landing.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { UserDashboardComponent } from './components/user-dashboard/user-dashboa
     LoginComponent,
     RegisterComponent,
     LandingComponent,
-    UserDashboardComponent
+    UserDashboardComponent,
+    CheckoutComponent,
+    SuccessComponent,
+    CancelComponent
   ],
   providers: [
     {

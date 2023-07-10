@@ -131,13 +131,14 @@ export class LandingComponent implements OnInit {
   }
 
   CHECKOUT(event: any) {
+    let i: number = parseInt(this.COMPANY__FOUND.id);
     // here we attempt to reach our api for checking out
-    this.companyService.submitOrder(this.CURRENT__CART.id).subscribe({
+    this.companyService.submitOrder(i, this.UserFound.id).subscribe({
       next: (res) => {
-        console.log(res);
+        this.router.navigateByUrl("success");
       }
     });
-
+  
     // generic stripe payment link with static elements is below
     // window.location.href = "https://buy.stripe.com/bIY7sJ62O7wz1dmfZ1";
   }

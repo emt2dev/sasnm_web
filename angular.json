@@ -61,10 +61,12 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "sasnm_web:build:production"
+              "browserTarget": "sasnm_web:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
-              "browserTarget": "sasnm_web:build:development"
+              "browserTarget": "sasnm_web:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -72,7 +74,8 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sasnm_web:build"
+            "browserTarget": "sasnm_web:build",
+            "proxyConfig": "src/proxy.conf.json"
           }
         },
         "test": {

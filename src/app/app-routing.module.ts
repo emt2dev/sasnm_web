@@ -11,6 +11,8 @@ const routes: Routes = [
   {path: 'register', loadComponent: () => import('./components/register/register.component').then((modulePart) => modulePart.RegisterComponent),},
 
   {path: 'dashboard', loadComponent: () => import('./components/user-dashboard/user-dashboard.component').then((modulePart) => modulePart.UserDashboardComponent), canActivate: []},
+
+  {path: 'success', loadComponent: () => import('./components/success/success.component').then((modulePart) => modulePart.SuccessComponent), canActivate: []},
 ];
 
 @NgModule({
