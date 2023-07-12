@@ -74,8 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sasnm_web:build",
-            "proxyConfig": "src/proxy.conf.json"
+            "browserTarget": "sasnm_web:build"
           }
         },
         "test": {

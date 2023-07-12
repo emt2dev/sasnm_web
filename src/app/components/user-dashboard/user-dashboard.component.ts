@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Stripe, loadStripe } from '@stripe/stripe-js';
+import { environment } from 'environment';
 import { BehaviorSubject, delay } from 'rxjs';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
 import { Full__User } from 'src/app/shared/DTOs/APIUsers/Full__APIUser';
@@ -29,6 +31,9 @@ import { CompanyService } from 'src/app/shared/company/company.service';
 
 export class UserDashboardComponent implements OnInit {
   private user: BehaviorSubject<Full__User | null | undefined> = new BehaviorSubject<Full__User | null | undefined>(undefined);
+
+  // allows stripe methods
+  private stripePromise?: Promise<Stripe | null>;
 
   // API Admin Forms and Info
   FORM__API__ADMIN__REGISTER: FormGroup;
@@ -366,19 +371,33 @@ export class UserDashboardComponent implements OnInit {
   })
 }
 
-CHECKOUT(event: any) {
-  let i: number = parseInt(this.COMPANY__FOUND.id);
-  // here we attempt to reach our api for checking out
-  this.companyService.submitOrder(i, this.UserFound.id).subscribe({
-    next: (res) => {
-      console.log(res);
-      
-    }
-  });
+async CHECKOUT(event: any) {
+  let publicApiKey = environment.stripe;
 
-  // generic stripe payment link with static elements is below
-  //
+  let companyId: number = parseInt(this.COMPANY__FOUND.id);
+
+  this.stripePromise = loadStripe(publicApiKey);
+  const stripe = await this.stripePromise;
+  this.companyService.submitOrder(companyId, this.UserFound.id).subscribe((response: string) => {            
+    // console.log(response);
+    // console.log(JSON.stringify(response));
+    stripe?.redirectToCheckout({ sessionId: response });
+  });
 }
+
+// CHECKOUT(event: any) {
+  // let i: number = parseInt(this.COMPANY__FOUND.id);
+//   // here we attempt to reach our api for checking out
+  // this.companyService.submitOrder(i, this.UserFound.id).subscribe({
+//     next: (res) => {
+//       console.log(res);
+      
+//     }
+//   });
+
+//   // generic stripe payment link with static elements is below
+//   //
+// }
 // CHECKOUT(event: any) {
 //   let i: number = parseInt(this.COMPANY__FOUND.id);
 //   // here we attempt to reach our api for checking out

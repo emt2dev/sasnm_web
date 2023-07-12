@@ -5,6 +5,7 @@ import { Observable, catchError } from 'rxjs';
 import { Full__Company } from '../DTOs/Companies/Full__Company';
 import { Full__Product } from '../DTOs/Products/Full__Product';
 import { Full__Cart } from '../DTOs/Carts/Full__Cart';
+import { IOrderRequest } from 'IOrderRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,8 @@ export class CompanyService {
   _authreadyapi__CART__REMOVE__ONE: string = 'http://localhost:5035/api/shoppingCart/remove';
 
   _authreadyapi__ORDER__CHECKOUT: string = 'http://localhost:5035/api/order/submit/pickup';
+
+  v2_startOrder = 'http://localhost:5035/api/order/submit/test';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   
@@ -67,9 +70,18 @@ export class CompanyService {
     return this.http.post(`${this._authreadyapi__CART__REMOVE__ONE}/${productId}/${customerId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
+  // submitOrder(companyId: number, customerId: string): Observable<any> {
+  //   return this.http.post<string>(`${this.v2_startOrder}/${companyId}/${customerId}`, {headers:this.headers}).pipe(catchError(this.handleError));
+  // }
+
   submitOrder(companyId: number, customerId: string): Observable<any> {
-    return this.http.post(`${this._authreadyapi__ORDER__CHECKOUT}/${companyId}/${customerId}`, {headers:this.headers}).pipe(catchError(this.handleError));
+    return this.http.post<string>(`${this.v2_startOrder}/${companyId}/${customerId}`, {headers:this.headers});
   }
+
+  // below returns a session id
+  createOrder(order: IOrderRequest): Observable<string> {       
+    return this.http.post<string>(this.v2_startOrder, order)    
+   }
 
   // Error
   handleError(error: HttpErrorResponse) {
