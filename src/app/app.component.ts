@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './shared/authsvc/auth.service';
+import { v2_AuthService } from './shared/authsvc/v2_auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { AuthService } from './shared/authsvc/auth.service';
 export class AppComponent {
   title = 'sasnm_web';
 
-  constructor(public authService: AuthService) {}
+  constructor(public v2_authService: v2_AuthService) {}
 
-  logout() { this.authService.LOGOUT__USER() }
+  logout() { this.v2_authService.LOGOUT__USER() }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError } from 'rxjs';
@@ -13,6 +13,7 @@ import { v2_StaffDTO } from '../v2_DTOs/v2_Staff';
 })
 
 export class v2_CompanyService {
+
   Owner: v2_StaffDTO = {
     id: '...Loading...',
     name: '...Loading...',
@@ -88,6 +89,7 @@ export class v2_CompanyService {
   _getProductDetails: string = 'products/details';
   _createNewProduct: string = 'products/create';
   _updateProduct: string = 'products/update';
+  _updateProductImage: string = 'products/update/image';
   _deleteProduct: string = 'products/delete';
   
   // Shopping Cart End Points
@@ -113,6 +115,12 @@ export class v2_CompanyService {
   constructor(private http: HttpClient, public router: Router) {
       
    }
+
+  
+  v2_returnNewProductURL(){
+    let builder = `${this._api}/${this._createNewProduct}`;
+    return builder;
+  }
 
   /**** COMPANY CALLS */
   v2_getCompanyDetails(companyId: number): Observable<any> {
@@ -146,6 +154,20 @@ export class v2_CompanyService {
 
   v2_updateProduct(sendingDTO: v2_ProductDTO): Observable<any> {
     return this.http.put(`${this._api}/${this._updateProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  v2_updateProductImage(intendedFileUpload: File, productId: number) {
+    const formData: FormData = new FormData();
+
+    formData.append('file', intendedFileUpload);
+
+    const outgoingRequest = new HttpRequest('POST', `${this._api}/${this._updateProductImage}/${productId}`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+
+    this.http.request(outgoingRequest);
+    return 0;
   }
 
   v2_deleteProduct(productId: number): Observable<any> {

@@ -360,24 +360,24 @@
         Menu
       </a>
       
-      <a *ngIf="this.authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/dashboard">
+      <a *ngIf="this.v2_authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/dashboard">
         Dashboard
       </a>
 
-      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/login">
+      <a *ngIf="!this.v2_authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/login">
         Login
       </a>
 
-      <a *ngIf="!this.authService.isUserLoggedIn" class="btn btn-outline-primary p-2" routerLinkActive="active"
+      <a *ngIf="!this.v2_authService.isUserLoggedIn" class="btn btn-outline-primary p-2" routerLinkActive="active"
       routerLinkActive="active" routerLink="/register">
         Register
       </a>
       
-      <button *ngIf="this.authService.isUserLoggedIn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <button *ngIf="this.v2_authService.isUserLoggedIn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
         Cart
       </button>
 
-      <button (click)="logout()" *ngIf="this.authService.isUserLoggedIn" type="button" class="btn btn-danger">
+      <button (click)="logout()" *ngIf="this.v2_authService.isUserLoggedIn" type="button" class="btn btn-danger">
         Logout
       </button>
     </div>    

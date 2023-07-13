@@ -1,30 +1,36 @@
-{{ this.COMPANY__FOUND.name }}
-
 <ng-container>
-    <div class="container-fluid" *ngIf="(UserFound)">
-        {{UserFound.email}}
+    <div class="container-fluid" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch)">
+        {{v2_Customer.email}}
     </div>
 </ng-container>
-
 <ng-container>
-    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(this.COMPANY__FOUND.name != '')">
-        <h5>Here is company admin</h5>
+    <div class="container-fluid" *ngIf="(DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch)">
+        {{v2_Staff.email}}
+    </div>
+</ng-container>
+<ng-container>
+    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(
+        OwnerComparison.localeCompare(v2_Staff.email) == StringsAreAMatch  && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch
+        || AdministratorOneComparison.localeCompare(v2_Staff.email) == StringsAreAMatch  && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch
+        || AdministratorTwoComparison.localeCompare(v2_Staff.email) == StringsAreAMatch && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch)"
+    >
+<h5>Here is company admin</h5>
         <div class="row">
             <div class="col-lg-4">
                 <h5>Delete Admin</h5>
                 <form>
                 <ul>
-                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
-                    <li>Admin: Name <button class="btn btn-danger">Delete</button></li>
+                    <li>Admin: {{v2_Company.administratorOne.name}} <button class="btn btn-danger">Revoke Admin</button></li>
+                    <li>Admin: {{v2_Company.administratorTwo.name}} <button class="btn btn-danger">Revoke Admin</button></li>
                 </ul>
                 </form>
             </div>
             <div class="col-lg-4">
                 <h5>Add Admin</h5>
                 <form
-                    class="form-control"
-                    [formGroup]="FORM__API__ADMIN__REGISTER"
-                    (ngSubmit)="API__ADMIN__REGISTER()">
+                    class="form-group"
+                    [formGroup]="FORM_newDev"
+                    (ngSubmit)="v2_newDev()">
                     
                     <div class="form-group">
                     <label>Email Address</label>
@@ -42,11 +48,22 @@
             <div class="col-lg-4">
                 <h5>View Company Details</h5>
                 <ul>
-                    <li>{{ COMPANY__FOUND.name }}</li>
-                    <li>{{ COMPANY__FOUND.description }}</li>
-                    <li>{{ COMPANY__FOUND.address }}</li>
-                    <li>{{ COMPANY__FOUND.phoneNumber }}</li>
-                    <li *ngFor="let product of COMPANY__FOUND.products">{{ product.name }}</li>
+                    <li>{{ v2_Company.name }}</li>
+                    <li>{{ v2_Company.description }}</li>
+
+                    
+                    <li>{{ v2_Company.smallTagline }}</li>
+                    <li>{{ v2_Company.menuDescription }}</li>
+
+                    <li>{{ v2_Company.addressStreet }}</li>
+                    <li>{{ v2_Company.addressSuite }}</li>
+                    <li>{{ v2_Company.addressCity }}</li>
+                    <li>{{ v2_Company.addressState }}</li>
+                    <li>{{ v2_Company.addressPostal_Code }}</li>
+                    <li>{{ v2_Company.addressCountry }}</li>
+                    <li>{{ v2_Company.phoneNumber }}</li>
+
+                    <li *ngFor="let product of v2_Company.listOfAllProducts">{{ product.name }}</li>
                 </ul>
             </div>
         </div>
@@ -54,67 +71,91 @@
             <h5 class="offset-3 mt-5 mb-5">Product Details</h5>
             <div class="col-lg-4">
                 <h5>Add new product!</h5>
-                <form action={{newProductAction}} enctype="multipart/form-data" method="post">
-                    <label for="name">Name</label>
-                    <input class="form-control" type="text" placeholder="name" name="Name">       
-                    
-                    <label for="description">Description</label>
-                    <input class="form-control" type="text" placeholder="description" name="Name">
-
-                    <label for="price_Normal">Normal Price</label>
-                    <input class="form-control" type="number" placeholder="1.99" name="price_Normal">
-
-                    <label for="price_Sale">Sale Price</label>
-                    <input class="form-control" type="number" placeholder="1.99" name="price_Sale">
-
-                    <label for="imageURL">Image</label>
-                    <input class="form-control" type="file" name="imageURL">
-
-                    <input class="form-control" type="text" value={{COMPANY__FOUND.id}} hidden name="CompanyId">
-
-                    <label>Product Category</label>
-                    <select formControlName="Keyword" class="form-control" name="Keyword">
-                        <option disabled value="">Keyword</option>
-
-                            <option value="Entree/Breakfast">Entree/Breakfast</option>
-                            <option value="Entree/Lunch">Entree/Lunch</option>
-
-                            <option value="Appetizer/Breakfast">Appetizer/Breakfast</option>
-                            <option value="Appetizer/Lunch">Appetizer/Lunch</option>
-
-                            <option value="Dessert/Breakfast">Dessert/Breakfast</option>
-                            <option value="Dessert/Lunch">Dessert/Lunch</option>
-
-                            <option value="Drink/Breakfast">Drink/Breakfast</option>
-                            <option value="Drink/Lunch">Drink/Lunch</option>
-
-                            <option value="Clothing/Shorts">Clothing/Shorts</option>
-                            <option value="Clothing/Pants">Clothing/Pants</option>
-
-                            <option value="Clothing/Dress">Clothing/Dress</option>
-                            <option value="Clothing/Blouse">Clothing/Blouse</option>
-
-                            <option value="Clothing/Socks">Clothing/Socks</option>
-                            <option value="Clothing/Shoes">Clothing/Shoes</option>
-
-                            <option value="Clothing/Jacket">Clothing/Jacket</option>
-
-                            <option value="Accessories/Winter">Accessories/Winter</option>
-                            <option value="Accessories/Summer">Accessories/Summer</option>
-                    </select>
-
-                    <button class="mt-3 mb-3 btn btn-large btn-success">Create</button>
+                <form class="form-group"
+                [formGroup]="FORM_newProduct"
+                (ngSubmit)="v2_newProduct()">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" name="name" class="form-control" id="name" aria-describedby="newProductName">
+                        <div id="newProductName" class="form-text">Name of the new product.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Description</label>
+                        <input type="text" name="description" class="form-control" id="description" aria-describedby="newProductDescription">
+                        <div id="newProductDescription" class="form-text">Description of the new product.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Default Price</label>
+                        <input type="text" name="default_price" class="form-control" id="default_price" aria-describedby="newProductDefaultPrice">
+                        <div id="newProductDefaultPrice" class="form-text">Default Price of the new product.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Package Dimensions</label>
+                        <input type="text" name="package_dimensions" class="form-control" id="package_dimensions" aria-describedby="newProductpackage_dimensions">
+                        <div id="newProductpackage_dimensions" class="form-text">Package Dimensions of the new product.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Statement Description</label>
+                        <input type="text" name="statement_descriptor" class="form-control" id="statement_descriptor" aria-describedby="newProductstatement_descriptor">
+                        <div id="newProductstatement_descriptor" class="form-text">This will be shown on the customer's debit card statement.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="unit_label" class="form-label">Unit Label</label>
+                        <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                        <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                        <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="shippable" aria-describedby="newProductshippable" value="true">
+                        <label for="unit_label" class="form-label">This product can be shipped</label>
+                        <div id="newProductshippable" class="form-text">Check the box if this product can be shipped</div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <img src="https://via.placeholder.com/150x80?text=image" alt="">
+                        <h5>Placeholder Image</h5>
+                        <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the product unless you upload one.</div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="imageToBeUploaded" id="imageToBeUploaded" aria-describedby="newProductimageToBeUploaded" accept="image/png, image/jpeg">
+                        <label class="input-group-text" for="imageToBeUploaded">Product Image</label>
+                        <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the menu</div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="seo" class="form-control" id="seo" aria-describedby="newProductseo">
+                        <div id="newProductseo" class="form-text">Search Engine Optimizations Tag</div>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Open this select menu</option>
+                            <option value="Available only during Breakfast">Available only during Breakfast</option>
+                            <option value="Available After Breakfast">Available After Breakfast</option>
+                            <option value="Available After Lunch">Available After Lunch</option>
+                            <option value="Lunch Only">Lunch Only</option>
+                            <option value="Dinner Only">Dinner Only</option>
+                            <option value="Appetizer">Appetizer</option>
+                            <option value="Limited Amount Daily">Limited Amount Daily</option>
+                            <option value="Limited Time Only">Limited Time Only</option>
+                            <option value="Dessert">Dessert</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Seasonal">Seasonal</option>
+                        </select>
+                    </div>
+                    <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
                 </form>
             </div>
             <div class="col-lg-4 mt-3 ">
                 <h4>DELETE PRODUCT</h4>
                 <form class="form-group"
-                [formGroup]="FORM__COMPANY__DELETE__PRODUCT"
-                (ngSubmit)="COMPANY__DELETE__PRODUCT()">
+                [formGroup]="FORM_deleteProduct"
+                (ngSubmit)="v2_deleteProduct()">
                         <div class="form-control">
                             <select formControlName="productId" >
                                 <option disabled>SELECT Product</option>
-                                <option *ngFor="let product of PRODUCTS__LIST" [ngValue]="product.id">
+                                <option *ngFor="let product of v2_Products" [ngValue]="product.id">
                                     {{product.name}}
                                 </option>
                             </select>
@@ -122,67 +163,70 @@
                     <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
                 </form>
             </div>
-        </div>
-        <div class="row pt-3">
-            <div class="col-lg-12">
-                <div class="container-fluid">
-                    <h3>Current Orders</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Time_Submitted</td>
-                                <td>currentStatus</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr >
-                                <td>1pm</td>
-                                <td>delivered</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td><p>thank you</p></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+            <div class="col-lg-4 mt-3 ">
+                <h6>COMING SOON</h6>
+                <h4>UPDATE PRODUCT IMAGE</h4>
+                <form class="form-group">
+                        <div class="form-control">
+                            <select formControlName="productId" >
+                                <option disabled>SELECT Product</option>
+                                <option #productId *ngFor="let product of v2_Products" [ngValue]="product.id">
+                                    {{product.name}}
+                                </option>
+                            </select>
+                        </div>
+                    <button type="button" (click)="v2_updateProductImage()" class="mt-3 mb-3 btn btn-large btn-success">submit</button>
+                </form>
             </div>
         </div>
-        <div class="row pt-3">
-            <div class="col-lg-12">
-                <div class="container-fluid">
-                    <h3>Previous Orders</h3>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>time__Delivered</td>
-                                <td>currentStatus</td>
-                                <td>re-order</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr >
-                                <td>1pm</td>
-                                <td>delivered</td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td><button class="btn btn-success">Re-order</button></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-        </div>
-        {{ this.COMPANY__FOUND.name }}
     </div>
 </ng-container>
 <ng-container>
-    <div *ngIf="CURRENT__CART.companyId != '0'" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch && v2_ActiveOrders.length != StringsAreAMatch)">
+        <div>
+            <h4>Active Orders</h4>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Delivery or Pickup</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Order will be ready at</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of v2_ActiveOrders">
+                    <th scope="row">{{order.method}}</th>
+                    <td>{{order.status}}</td>
+                    <td>{{order.eta}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+    </div>
+        <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch && v2_ActiveOrders.length == StringsAreAMatch )">
+        <div>
+            <h4>Active Orders</h4>
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Delivery or Pickup</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Order will be ready at</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td align="center" colspan="3" >...Loading Orders...</td>
+                    </tr>
+                </tbody>
+              </table>
+          </div>
+    </div>
+</ng-container>
+<ng-container>
+    <div *ngIf="v2_Cart.companyId > StringsAreAMatch" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{CURRENT__CART.cost}}</h5>
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{v2_Cart.costInString}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -198,19 +242,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of CURRENT__CART.items">
-                    <th scope="row">{{item.count}}</th>
+                  <tr *ngFor="let item of v2_Cart.Items">
+                    <th scope="row">{{item.quantity}}</th>
                     <td>{{item.name}}</td>
-                    <td>{{item.price}}</td>
-                    <td><button (click)="ADD__TO__CART($event)" id={{item.id}} class="btn btn-warning">+</button></td>
-                    <td><button (click)="REMOVE__ONE($event)" id={{item.id}} class="btn btn-danger">-</button></td>
+                    <td>{{item.default_price}}</td>
+                    <td><button (click)="v2_AddItemToCart($event)" id={{item.id}} class="btn btn-warning">+</button></td>
+                    <td><button (click)="v2_RemoveItemFromCart($event)" id={{item.id}} class="btn btn-danger">-</button></td>
                   </tr>
               </table>
-              <button (click)="TRUNCATE($event)" id={{CURRENT__CART.id}} class="btn btn-outline-secondary">Empty Cart</button>
-              <!-- <button (click)="CHECKOUT($event)" id={{CURRENT__CART.id}} class="offset-3 btn btn-primary">Checkout</button> -->
-              <button (click)="CHECKOUT($event)" id={{CURRENT__CART.id}} class="offset-3 btn btn-primary">Checkout</button>
+              <button (click)="v2_EmptyCart($event)" id={{v2_Cart.id}} class="btn btn-outline-secondary">Empty Cart</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Delivery</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Pickup</button>
           </div>
-          
         </div>
       </div>
 </ng-container>

@@ -1,19 +1,19 @@
 
 <div>
-    {{COMPANY__FOUND.name}}
-    {{COMPANY__FOUND.id}}
-    {{UserFound.email}}
+    {{v2_Company.name}}
+    {{v2_Company.id}}
+    {{v2_Customer.email}}
 </div>
 <div>
     Cart Drawer
-    {{CURRENT__CART.companyId}}
-    <div *ngFor="let item of CURRENT__CART.items">
-        {{item.price}}
-        {{item.count}}
+    {{v2_Cart.companyId}}
+    <div *ngFor="let item of v2_Cart.Items">
+        {{item.default_price}}
+        {{item.quantity}}
     </div>
 </div>
 <div>
-    <img height="150px" src="https://media-cdn.tripadvisor.com/media/photo-p/12/4d/9c/ae/la-imperial-bakery-cafe.jpg" alt="{{COMPANY__FOUND.name}} logo">
+    <img src="{{v2_Company.logoImageUrl}}" alt="{{v2_Company.name}} logo">
 </div>
 <div class="container-fluid">
     <div class="row">
@@ -24,7 +24,7 @@
         </div>
         <div class="col-lg-6">
             <p>
-                {{COMPANY__FOUND.description}}
+                {{v2_Company.description}}
             </p>
         </div>
     </div>
@@ -32,15 +32,15 @@
 <!-- <ng-container> -->
 <div class="container-fluid" >
     <div class="row">
-        <div class="col-lg-4" *ngFor="let product of COMPANY__PRODUCTS">
+        <div class="col-lg-4" *ngFor="let product of v2_Products">
             <div class="panel panel-primary">
                 <div class="panel-heading mt-3">{{product.name}}</div>
                 <div class="panel-body">
-                    <img src="https://placehold.it/150x80?text=IMAGE" style="width:100%" alt="Image">
-                    <h6 class="offset-5 mt-3">{{product.price_Current}}</h6>
+                    <img src="{{product.image}}" style="width:100%" alt="Image">
+                    <h6 class="offset-5 mt-3">{{product.default_price}}</h6>
                 </div>
                     <div class="form-control bg-success">
-                        <button (click)="ADD__TO__CART($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
+                        <button (click)="v2_AddItemToCart($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
                             Add to cart
                         </button>
                     </div>
@@ -51,9 +51,9 @@
 <!-- </ng-container> -->
 
 <ng-container>
-    <div *ngIf="CURRENT__CART.companyId != '0'" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div *ngIf="v2_Cart.companyId > 0" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{CURRENT__CART.cost}}</h5>
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{v2_Cart.costInString}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -69,18 +69,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of CURRENT__CART.items">
-                    <th scope="row">{{item.count}}</th>
+                  <tr *ngFor="let item of v2_Cart.Items">
+                    <th scope="row">{{item.quantity}}</th>
                     <td>{{item.name}}</td>
-                    <td>{{item.price}}</td>
-                    <td><button (click)="ADD__TO__CART($event)" id={{item.id}} class="btn btn-warning">+</button></td>
-                    <td><button (click)="REMOVE__ONE($event)" id={{item.id}} class="btn btn-danger">-</button></td>
+                    <td>{{item.default_price}}</td>
+                    <td><button (click)="v2_AddItemToCart($event)" id={{item.id}} class="btn btn-warning">+</button></td>
+                    <td><button (click)="v2_RemoveItemFromCart($event)" id={{item.id}} class="btn btn-danger">-</button></td>
                   </tr>
               </table>
-              <button (click)="TRUNCATE($event)" id={{CURRENT__CART.id}} class="btn btn-outline-secondary">Empty Cart</button>
-              <button (click)="CHECKOUT($event)" id={{CURRENT__CART.id}} class="offset-3 btn btn-primary">Checkout</button>
+              <button (click)="v2_EmptyCart($event)" id={{v2_Cart.id}} class="btn btn-outline-secondary">Empty Cart</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Delivery</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Pickup</button>
           </div>
-          
         </div>
       </div>
 </ng-container>

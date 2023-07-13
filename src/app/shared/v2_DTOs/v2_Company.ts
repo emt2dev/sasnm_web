@@ -3,7 +3,34 @@ import { v2_StaffDTO } from "./v2_Staff";
 
 
 export class v2_CompanyDTO {
-    constructor(public id: number , public name: string , public description: string, public phoneNumber: string, public addressStreet: string, public addressSuite: string, public addressCity: string, public addressState: string, public addressPostal_Code: string, public addressCountry: string, public smallTagline: string, public menuDescription: string, public headerImage: string, public aboutUsImageUrl: string, public locationImageUrl: string, public logoImageUrl: string, public miscImageUrl: string, public listOfAllProducts: Array<v2_ProductDTO>, public owner: v2_StaffDTO, public administratorOne: v2_StaffDTO, public administratorTwo: v2_StaffDTO) {
+    constructor(
+        public id: number,
+
+        public name: string ,
+        public description: string,
+        public phoneNumber: string,
+
+        public smallTagline: string,
+        public menuDescription: string,
+
+        public addressStreet: string,
+        public addressSuite: string,
+        public addressCity: string,
+        public addressState: string,
+        public addressPostal_Code: string,
+        public addressCountry: string,
+
+        public headerImage: string,
+        public aboutUsImageUrl: string,
+        public locationImageUrl: string,
+        public logoImageUrl: string,
+        public miscImageUrl: string,
+
+        public listOfAllProducts: Array<v2_ProductDTO>,
+        public owner: v2_StaffDTO,
+        public administratorOne: v2_StaffDTO,
+        public administratorTwo: v2_StaffDTO,
+    ) {
         id = id;
         name = name;
         description = description;
