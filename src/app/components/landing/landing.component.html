@@ -6,10 +6,10 @@
 </div>
 <div>
     Cart Drawer
+    {{v2_CustomerId}}
     {{v2_Cart.companyId}}
-    <div *ngFor="let item of v2_Cart.Items">
-        {{item.default_price}}
-        {{item.quantity}}
+    <div *ngFor="let item of v2_Cart.items">
+        {{item.name}}
     </div>
 </div>
 <div>
@@ -51,7 +51,7 @@
 <!-- </ng-container> -->
 
 <ng-container>
-    <div *ngIf="v2_Cart.companyId > 0" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div *ngIf="v2_Cart.companyId > StringsAreAMatch" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasExampleLabel">Total: ${{v2_Cart.costInString}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -69,17 +69,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of v2_Cart.Items">
+                  <tr *ngFor="let item of v2_Cart.items">
                     <th scope="row">{{item.quantity}}</th>
-                    <td>{{item.name}}</td>
-                    <td>{{item.default_price}}</td>
-                    <td><button (click)="v2_AddItemToCart($event)" id={{item.id}} class="btn btn-warning">+</button></td>
-                    <td><button (click)="v2_RemoveItemFromCart($event)" id={{item.id}} class="btn btn-danger">-</button></td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.default_price}}</td>
+                        <td><button (click)="v2_AddItemToCart($event)" id={{item.id}} class="btn btn-warning">+</button></td>
+                        <td><button (click)="v2_RemoveItemFromCart($event)" id={{item.id}} class="btn btn-danger">-</button></td>
                   </tr>
               </table>
               <button (click)="v2_EmptyCart($event)" id={{v2_Cart.id}} class="btn btn-outline-secondary">Empty Cart</button>
-              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Delivery</button>
-              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="offset-3 btn btn-primary">Order as Pickup</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="btn btn-success">Order as Delivery</button>
+              <button (click)="v2_CheckoutDelivery($event)" id={{v2_Cart.id}} class="btn btn-info">Order as Pickup</button>
           </div>
         </div>
       </div>

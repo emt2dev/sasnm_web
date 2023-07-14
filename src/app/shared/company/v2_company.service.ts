@@ -76,7 +76,7 @@ export class v2_CompanyService {
 
   /* AuthReadyAPI V2 API End Points */
   // api builder
-  _api: string = 'http://localhost:5035/api/v2.0';
+  _api: string = 'http://localhost:5035/api/v2';
 
   // Company End Points
   _getCompanyDetails: string = 'company/details';
@@ -95,8 +95,8 @@ export class v2_CompanyService {
   // Shopping Cart End Points
   _getCart: string = 'shoppingCart/existing';
   _addToCart: string = 'shoppingCart/add';
-  _removeFromCart: string = 'remove';
-  _emptyCart: string = 'empty';
+  _removeFromCart: string = 'shoppingCart/remove';
+  _emptyCart: string = 'shoppingCart/empty';
 
   // Order End Points
   _newOrderDelivery: string = 'orders/submit/delivery';

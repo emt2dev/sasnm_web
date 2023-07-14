@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { Stripe, loadStripe } from '@stripe/stripe-js';
 import { environment } from 'environment';
+import { delay } from 'rxjs';
 import { Full__User } from 'src/app/shared/DTOs/APIUsers/Full__APIUser';
 import { dto__full__user } from 'src/app/shared/DTOs/APIUsers/dto__full__user';
 import { Base__Cart } from 'src/app/shared/DTOs/Carts/Base__Cart';
@@ -34,12 +35,11 @@ import { v2_StaffDTO } from 'src/app/shared/v2_DTOs/v2_Staff';
 export class LandingComponent implements OnInit {
   private stripePromise?: Promise<Stripe | null>;
   
-  v2_CustomerId= this.v2_authService.returnUserId()!;
+  v2_CustomerId = this.v2_authService.returnUserId()!;
   v2_Roles = this.v2_authService.returnRoles();
 
-  // USER__ID = this.authService.returnUserId()!;
-  // ROLES = this.authService.returnRoles();
-
+  StringsAreAMatch: number = 0;
+  
   v2_Owner: v2_StaffDTO = {
     id: '...Loading...',
     name: '...Loading...',
@@ -104,7 +104,7 @@ export class LandingComponent implements OnInit {
     id: 0,
     companyId: 0,
     customerId: '...Loading...',
-    Items: [],
+    items: [],
     cost: 0,
     submitted: false,
     abandoned: false,
@@ -148,6 +148,8 @@ export class LandingComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    await delay(5000);
+
     let presentationId = 1;
 
     this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
@@ -168,10 +170,13 @@ export class LandingComponent implements OnInit {
       await this.v2_Customer;
     });
 
-    this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
-    this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
+    // this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
+    // await this.v2_Customer;
 
-    this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_Customer.id).subscribe(async (data: v2_ShoppingCartDTO) => {
+    this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
+    await this.v2_Staff;
+    
+    await this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
       this.v2_Cart = data;
 
       await this.v2_Cart;
@@ -193,7 +198,7 @@ export class LandingComponent implements OnInit {
         this.FORM__ADD__TO__CART.reset();
 
         let presentationId = 1;
-        this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_Customer.id).subscribe(async (data: v2_ShoppingCartDTO) => {
+        this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
         this.v2_Cart=data;
   
         await this.v2_Cart;
@@ -209,7 +214,7 @@ export class LandingComponent implements OnInit {
   
     this.stripePromise = loadStripe(publicApiKey);
     const stripe = await this.stripePromise;
-    this.v2_companyService.v2_newDeliveryOrder(companyId, this.v2_Customer.id).subscribe((response: string) => {            
+    this.v2_companyService.v2_newDeliveryOrder(companyId, this.v2_CustomerId).subscribe((response: string) => {            
       stripe?.redirectToCheckout({ sessionId: response });
     });
   }
@@ -221,7 +226,7 @@ export class LandingComponent implements OnInit {
   
     this.stripePromise = loadStripe(publicApiKey);
     const stripe = await this.stripePromise;
-    this.v2_companyService.v2_newTakeoutOrder(companyId, this.v2_Customer.id).subscribe((response: string) => {            
+    this.v2_companyService.v2_newTakeoutOrder(companyId, this.v2_CustomerId).subscribe((response: string) => {            
       stripe?.redirectToCheckout({ sessionId: response });
     });
   }
@@ -235,7 +240,7 @@ export class LandingComponent implements OnInit {
     j = parseInt(j);
     let productId: number = j;
     
-    let customerId = this.v2_Customer.id;
+    let customerId = this.v2_CustomerId;
 
     this.v2_companyService.v2_removeFromCart(productId, customerId)
     .subscribe({
@@ -262,7 +267,7 @@ export class LandingComponent implements OnInit {
     j = parseInt(j);
     let productId: number = j;
     
-    let customerId = this.v2_Customer.id;
+    let customerId = this.v2_CustomerId;
 
     this.v2_companyService.v2_addToCart(productId, customerId)
     .subscribe({

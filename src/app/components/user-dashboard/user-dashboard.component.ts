@@ -160,7 +160,7 @@ export class UserDashboardComponent implements OnInit {
     id: 0,
     companyId: 0,
     customerId: '...Loading...',
-    Items: [],
+    items: [],
     cost: 0,
     submitted: false,
     abandoned: false,
@@ -301,11 +301,11 @@ export class UserDashboardComponent implements OnInit {
     this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
 */  
 
-    this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_Customer.id).subscribe(async (data: v2_ShoppingCartDTO) => {
-    this.v2_Cart = data;
+      this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
+      this.v2_Cart = data;
 
-    await this.v2_Cart;
-    });
+      await this.v2_Cart;
+      });
 
     this.v2_companyService.v2_getActiveCustomerOrders(presentationId, this.v2_CustomerId).subscribe(async (data: Array<v2_OrderDTO>) => {
       this.v2_ActiveOrders = data;
@@ -451,7 +451,7 @@ export class UserDashboardComponent implements OnInit {
   
     this.stripePromise = loadStripe(publicApiKey);
     const stripe = await this.stripePromise;
-    this.v2_companyService.v2_newDeliveryOrder(companyId, this.v2_Customer.id).subscribe((response: string) => {            
+    this.v2_companyService.v2_newDeliveryOrder(companyId, this.v2_CustomerId).subscribe((response: string) => {            
       stripe?.redirectToCheckout({ sessionId: response });
     });
   }
@@ -463,7 +463,7 @@ export class UserDashboardComponent implements OnInit {
   
     this.stripePromise = loadStripe(publicApiKey);
     const stripe = await this.stripePromise;
-    this.v2_companyService.v2_newTakeoutOrder(companyId, this.v2_Customer.id).subscribe((response: string) => {            
+    this.v2_companyService.v2_newTakeoutOrder(companyId, this.v2_CustomerId).subscribe((response: string) => {            
       stripe?.redirectToCheckout({ sessionId: response });
     });
   }
@@ -477,7 +477,7 @@ export class UserDashboardComponent implements OnInit {
     j = parseInt(j);
     let productId: number = j;
     
-    let customerId = this.v2_Customer.id;
+    let customerId = this.v2_CustomerId;
 
     this.v2_companyService.v2_removeFromCart(productId, customerId)
     .subscribe({
@@ -504,7 +504,7 @@ export class UserDashboardComponent implements OnInit {
     j = parseInt(j);
     let productId: number = j;
     
-    let customerId = this.v2_Customer.id;
+    let customerId = this.v2_CustomerId;
 
     this.v2_companyService.v2_addToCart(productId, customerId)
     .subscribe({
