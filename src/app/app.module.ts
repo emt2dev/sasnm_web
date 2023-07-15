@@ -13,10 +13,12 @@ import { LandingComponent } from './components/landing/landing.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
+import { StaffComponent } from './components/staff/staff.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StaffComponent
   ],
   imports: [
     BrowserModule,

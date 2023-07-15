@@ -44,4 +44,18 @@ export class LoginComponent implements OnInit {
       }
     });
   }
+
+  staff_LOGIN() {
+    const EXISTING__USER = new Base__User(this.FORM__LOGIN.value.Email, this.FORM__LOGIN.value.Password);
+
+    this.v2_authService.v2_LoginStaff(EXISTING__USER).subscribe({
+      next: (res) => {
+
+        this.router.navigateByUrl('/staff');
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
 }

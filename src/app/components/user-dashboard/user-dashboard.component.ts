@@ -18,7 +18,7 @@ import { Full__Product } from 'src/app/shared/DTOs/Products/Full__Product';
 import { newProductDTO } from 'src/app/shared/DTOs/Products/newProductDTO';
 import { overrideDTO } from 'src/app/shared/DTOs/overrideDTo';
 import { AuthService } from 'src/app/shared/authsvc/auth.service';
-import { v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
+import { STAFF, v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
 import { CompanyService } from 'src/app/shared/company/company.service';
 import { v2_CompanyService } from 'src/app/shared/company/v2_company.service';
 import { v2_CompanyDTO } from 'src/app/shared/v2_DTOs/v2_Company';
@@ -38,7 +38,7 @@ import { v2_StaffDTO } from 'src/app/shared/v2_DTOs/v2_Staff';
 })
 
 export class UserDashboardComponent implements OnInit {
-  private user: BehaviorSubject<Full__User | null | undefined> = new BehaviorSubject<Full__User | null | undefined>(undefined);
+  private user: BehaviorSubject<v2_CustomerDTO | null | undefined> = new BehaviorSubject<v2_CustomerDTO | null | undefined>(undefined);
 
   // allows stripe methods
   private stripePromise?: Promise<Stripe | null>;
@@ -276,42 +276,41 @@ export class UserDashboardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let presentationId = 1;
     
-    this.v2_authService.v2_getCustomerProfile(this.v2_CustomerId).subscribe((data: v2_CustomerDTO) => {
-      this.v2_Customer = data;
-      console.log(data);
-      return this.v2_Customer;
-    });
-                
-    this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
-
-    // if staff
-/*
-    this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
-      this.v2_Company = data;
-
-      await this.v2_Company;
-    });
-
-    this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
-      this.v2_Products = data;
-
-      await this.v2_Products;
-    });
-
-    this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
-*/  
-
-      this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
-      this.v2_Cart = data;
-
-      await this.v2_Cart;
+    if (localStorage.getItem(STAFF) == "true") {
+      this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
+        this.v2_Company = data;
+  
+        await this.v2_Company;
       });
-
-    this.v2_companyService.v2_getActiveCustomerOrders(presentationId, this.v2_CustomerId).subscribe(async (data: Array<v2_OrderDTO>) => {
-      this.v2_ActiveOrders = data;
-
-      await this.v2_ActiveOrders;
-    });
+  
+      this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
+        this.v2_Products = data;
+  
+        await this.v2_Products;
+      });
+  
+      this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
+    } else {
+      this.v2_authService.v2_getCustomerProfile(this.v2_CustomerId).subscribe((data: v2_CustomerDTO) => {
+        this.v2_Customer = data;
+        console.log(data);
+        return this.v2_Customer;
+      });
+                  
+      this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
+  
+      this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
+        this.v2_Cart = data;
+  
+        await this.v2_Cart;
+      });
+  
+      this.v2_companyService.v2_getActiveCustomerOrders(presentationId, this.v2_CustomerId).subscribe(async (data: Array<v2_OrderDTO>) => {
+        this.v2_ActiveOrders = data;
+  
+        await this.v2_ActiveOrders;
+      });
+    }
 
     this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
       this.v2_Products = data;

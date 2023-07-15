@@ -23,6 +23,7 @@ export const USER_ID: string = 'USER_ID';
 export const REFRESH_TOKEN: string = 'REFRESH_TOKEN';
 export const ROLES: string = 'ROLES';
 export const DECODED_TOKEN: string = 'DECODED_TOKEN';
+export const STAFF: string = "false";
 
 export interface decodedUser {
   Token: string;
@@ -66,17 +67,6 @@ export class v2_AuthService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  // private UserDetails: Full__User = {
-  //   id: '',
-  //   name: 'name',
-  //   phoneNumber: '',
-  //   companyId: '',
-  //   isStaff: false,
-  //   cartList: [],
-  //   orderList: [],
-  //   email: '',
-  //   password: '',
-  // };
 
   v2_Customer: v2_CustomerDTO = {
     id: '...Loading...',
@@ -272,6 +262,7 @@ export class v2_AuthService {
           i = localStorage.setItem(DECODED_TOKEN, decoded)
           i = localStorage.setItem(USER_ID, decoded.uid);
           i = localStorage.setItem(ROLES, decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
+          i = localStorage.setItem(STAFF, "true");
 
           console.log(decoded);
           const decodedUser: decodedUser = {
