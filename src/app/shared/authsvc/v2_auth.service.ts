@@ -45,8 +45,8 @@ export class v2_AuthService {
   _api: string = 'http://localhost:5035/api/v2.0';
 
   // update password
-  _updatePassword: string = '/customers/update/password';
-  _updateProfile: string = '/customers/update/password';
+  _updatePassword: string = 'customers/update/password';
+  _updateProfile: string = 'customers/update';
 
   // logins
   _customerLogin: string = 'entry/customer';
@@ -361,12 +361,12 @@ export class v2_AuthService {
   }
 
   v2_updateStaffProfile(id: string, DTO: v2_StaffDTO): Observable<any>{
-    return this.http.post(`${this._api}/${this._customerDetails}/${id}`, DTO, { headers:this.headers })
+    return this.http.post(`${this._api}/${this._updateProfile}/${id}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
   }
 
   v2_updateCustomerProfile(id: string, DTO: v2_CustomerDTO): Observable<any>{
-    return this.http.post(`${this._api}/${this._customerDetails}/${id}`, DTO, { headers:this.headers })
+    return this.http.post(`${this._api}/${this._updateProfile}/${id}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
   }
    

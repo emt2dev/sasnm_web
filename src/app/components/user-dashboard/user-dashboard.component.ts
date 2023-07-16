@@ -44,6 +44,10 @@ export class UserDashboardComponent implements OnInit {
   // allows stripe methods
   private stripePromise?: Promise<Stripe | null>;
 
+  defaultValue: string = '...Loading...';
+  defaultPostalCode: string = "33805";
+  defaultCountry: string = "USA";
+
   FORM_updatePassword: FormGroup;
   FORM_updateProfile: FormGroup;
   
@@ -52,15 +56,15 @@ export class UserDashboardComponent implements OnInit {
   v2_newProductAction = this.v2_companyService.v2_returnNewProductURL();
 
   v2_Staff: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: false,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -71,15 +75,15 @@ export class UserDashboardComponent implements OnInit {
   };
 
   v2_Owner: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -90,15 +94,15 @@ export class UserDashboardComponent implements OnInit {
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -109,15 +113,15 @@ export class UserDashboardComponent implements OnInit {
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -129,46 +133,46 @@ export class UserDashboardComponent implements OnInit {
 
   v2_Company: v2_CompanyDTO = {
     id: 0,
-    name: '...Loading...',
-    description: '...Loading...',
-    phoneNumber: '...Loading...',
-    addressStreet: '...Loading...',
-    addressSuite: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    addressCountry: '...Loading...',
-    smallTagline: '...Loading...',
-    menuDescription: '...Loading...',
-    headerImage: '...Loading...',
-    aboutUsImageUrl: '...Loading...',
-    locationImageUrl: '...Loading...',
-    logoImageUrl: '...Loading...',
-    miscImageUrl: '...Loading...',
+    name: this.defaultValue,
+    description: this.defaultValue,
+    phoneNumber: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressSuite: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    addressCountry: this.defaultValue,
+    smallTagline: this.defaultValue,
+    menuDescription: this.defaultValue,
+    headerImage: this.defaultValue,
+    aboutUsImageUrl: this.defaultValue,
+    locationImageUrl: this.defaultValue,
+    logoImageUrl: this.defaultValue,
+    miscImageUrl: this.defaultValue,
     listOfAllProducts: [],
     owner: this.v2_Owner,
     administratorOne: this.v2_AdministratorOne,
     administratorTwo: this.v2_AdministratorTwo
   };
 
-  DefaultComparison: string = '...Loading...';
+  DefaultComparison: string = this.defaultValue;
   StringsAreAMatch: number = 0;
   OwnerComparison: string = this.v2_Company.owner.email;
   AdministratorOneComparison: string = this.v2_Company.administratorOne.email;
   AdministratorTwoComparison: string = this.v2_Company.administratorTwo.email;
 
   v2_Customer: v2_CustomerDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    description: '...Loading...',
-    addressStreet: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    currency: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    description: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    currency: this.defaultValue,
     livemode: false,
-    password: '...Loading...',
-    email: '...Loading...',
+    password: this.defaultValue,
+    email: this.defaultValue,
     phoneNumber: '..Loading...',
     addressSuite: '',
     addressCountry: ''
@@ -177,12 +181,12 @@ export class UserDashboardComponent implements OnInit {
   v2_Cart: v2_ShoppingCartDTO = {
     id: 0,
     companyId: 0,
-    customerId: '...Loading...',
+    customerId: this.defaultValue,
     items: [],
     cost: 0,
     submitted: false,
     abandoned: false,
-    costInString: '...Loading...',
+    costInString: this.defaultValue,
   };
 
   v2_Products: Array<v2_ProductDTO> = [];
@@ -195,7 +199,6 @@ export class UserDashboardComponent implements OnInit {
 
   constructor(public formBuilder: FormBuilder, private v2_authService: v2_AuthService, private v2_companyService: v2_CompanyService, private actRoute: ActivatedRoute, private router: Router){
     
-
     this.FORM__ADD__TO__CART = this.formBuilder.group({
       userId: ['',],
       productId: ['',],
@@ -204,14 +207,13 @@ export class UserDashboardComponent implements OnInit {
     });
 
     this.FORM_updateProfile = this.formBuilder.group({
-      name: [this.v2_Staff.email,],
-      phoneNumber: [this.v2_Staff.phoneNumber,],
-      addressStreet: [this.v2_Staff.addressStreet,],
-      addressSuite: [this.v2_Staff.addressSuite,],
-      addressCity: [this.v2_Staff.addressCity,],
-      addressState: [this.v2_Staff.addressState,],
-      addressPostal_Code: [this.v2_Staff.addressPostal_Code,],
-      addressCountry: ["USA",],
+      name: [this.v2_Customer.name,],
+      phoneNumber: [this.v2_Customer.phoneNumber,],
+      addressStreet: [this.v2_Customer.addressStreet,],
+      addressSuite: [this.v2_Customer.addressSuite,],
+      addressCity: [this.v2_Customer.addressCity,],
+      addressState: [this.v2_Customer.addressState,],
+      addressCountry: [this.defaultCountry,],
     });
 
     this.FORM_updatePassword = this.formBuilder.group({
@@ -265,13 +267,14 @@ export class UserDashboardComponent implements OnInit {
   }
 
   updateProfile() {
-    let customer = new v2_CustomerDTO(this.v2_CustomerId, this.FORM_updateProfile.value.name, this.v2_Customer.description, this.FORM_updateProfile.value.addressStreet, this.FORM_updateProfile.value.addressSuite, this.FORM_updateProfile.value.addressCity, this.FORM_updateProfile.value.addressState, this.FORM_updateProfile.value.addressPostal_Code, this.FORM_updateProfile.value.addressCountry, this.v2_Customer.currency, false, '', this.v2_Customer.email, this.FORM_updateProfile.value.phoneNumber);
+    let email = this.v2_Customer.email;
+    let customer = new v2_CustomerDTO(this.v2_CustomerId, this.FORM_updateProfile.value.name, this.v2_Customer.description, this.FORM_updateProfile.value.addressStreet, this.FORM_updateProfile.value.addressSuite, this.FORM_updateProfile.value.addressCity, this.FORM_updateProfile.value.addressState, this.defaultPostalCode, this.FORM_updateProfile.value.addressCountry, this.v2_Customer.currency, false, this.DefaultComparison, email, this.FORM_updateProfile.value.phoneNumber);
 
+    console.log(customer);
     this.v2_authService.v2_updateCustomerProfile(this.v2_CustomerId, customer).subscribe({
       next: (res) => {
 
         this.FORM_updateProfile.reset();
-        this.router.navigateByUrl("dashboard");
       },
       error: (err) => {
         console.log(err);

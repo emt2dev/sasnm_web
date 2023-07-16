@@ -26,6 +26,11 @@ import { v2_StaffDTO } from 'src/app/shared/v2_DTOs/v2_Staff';
 
 export class StaffComponent implements OnInit {
 
+
+  defaultValue: string = "...Loading...";
+  defaultPostalCode: string = "33805";
+  defaultCountry: string = "USA";
+
   // company images
   _imageDomain: string = 'http://localhost:5035/api/v2/company/images/';
   _header: string = '/header';
@@ -39,11 +44,13 @@ export class StaffComponent implements OnInit {
   _updateImageAction = "http://localhost:5035/api/v2/products/update/image/";
   _deleteProductAction = "http://localhost:5035/api/v2/products/delete/";
 
-
   _productImageDomain: string = 'http://localhost:5035/api/v2/product/update/image/';
 
-  _orderDomain: string = 'http://localhost:5035/api/v2/company/orders/';
-  _ready: string = '/ready/';
+  _orderDomain: string = 'http://localhost:5035/api/v2/orders/';
+  _delivery: string = 'delivery/';
+  _pickup: string = 'pickup/';
+  _ready: string = 'ready/';
+  _completed: string = 'completed/';
 
   defaultPassword: string = "P@ssword1";
   StringsAreAMatch: number = 0;
@@ -70,15 +77,15 @@ export class StaffComponent implements OnInit {
   v2_Products: Array<v2_ProductDTO> = [];
 
   v2_Staff: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: false,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressCity: '',
     addressState: '',
@@ -89,15 +96,15 @@ export class StaffComponent implements OnInit {
   };
 
   v2_Owner: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressCity: '',
     addressState: '',
@@ -108,15 +115,15 @@ export class StaffComponent implements OnInit {
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressCity: '',
     addressState: '',
@@ -127,15 +134,15 @@ export class StaffComponent implements OnInit {
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressCity: '',
     addressState: '',
@@ -147,22 +154,22 @@ export class StaffComponent implements OnInit {
   
   v2_Company: v2_CompanyDTO = {
     id: 0,
-    name: '...Loading...',
-    description: '...Loading...',
-    phoneNumber: '...Loading...',
-    addressStreet: '...Loading...',
-    addressSuite: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    addressCountry: '...Loading...',
-    smallTagline: '...Loading...',
-    menuDescription: '...Loading...',
-    headerImage: '...Loading...',
-    aboutUsImageUrl: '...Loading...',
-    locationImageUrl: '...Loading...',
-    logoImageUrl: '...Loading...',
-    miscImageUrl: '...Loading...',
+    name: this.defaultValue,
+    description: this.defaultValue,
+    phoneNumber: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressSuite: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    addressCountry: this.defaultValue,
+    smallTagline: this.defaultValue,
+    menuDescription: this.defaultValue,
+    headerImage: this.defaultValue,
+    aboutUsImageUrl: this.defaultValue,
+    locationImageUrl: this.defaultValue,
+    logoImageUrl: this.defaultValue,
+    miscImageUrl: this.defaultValue,
     listOfAllProducts: [],
     owner: this.v2_Owner,
     administratorOne: this.v2_AdministratorOne,
@@ -232,8 +239,7 @@ export class StaffComponent implements OnInit {
       addressSuite: [this.v2_Staff.addressSuite,],
       addressCity: [this.v2_Staff.addressCity,],
       addressState: [this.v2_Staff.addressState,],
-      addressPostal_Code: [this.v2_Staff.addressPostal_Code,],
-      addressCountry: ["USA",],
+      addressCountry: [this.defaultCountry,],
     });
 
     this.FORM_updatePassword = this.formBuilder.group({
@@ -281,6 +287,21 @@ export class StaffComponent implements OnInit {
       console.log(data);
       return this.v2_Staff;
     });
+
+    this.v2_companyService.v2_getActiveCompanyOrders(presentationId).subscribe((data: Array<v2_OrderDTO>) => {
+      this.v2_ActiveOrders = data;
+      console.log(data);
+
+      return this.v2_ActiveOrders;
+    });
+
+    this.v2_companyService.v2_getCompletedCompanyOrders(presentationId).subscribe((data: Array<v2_OrderDTO>) => {
+      this.v2_CompletedOrders = data;
+      console.log(data);
+
+      return this.v2_CompletedOrders;
+    });
+    
   }
 
   updateProfile() {

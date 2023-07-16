@@ -1,3 +1,5 @@
+<h3 class="h3">Welcome {{v2_Customer.name}}</h3>
+
 <div class="container-fluid">
     <div class="accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
@@ -51,7 +53,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="name"
-                                ngModel="{{v2_Staff.name}}"
+                                ngModel="{{v2_Customer.name}}"
                                 />
                             </div>
                         
@@ -61,7 +63,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="phoneNumber"
-                                ngModel="{{v2_Staff.phoneNumber}}"
+                                ngModel="{{v2_Customer.phoneNumber}}"
                                 />
                             </div>
                         
@@ -71,7 +73,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="addressStreet"
-                                ngModel="{{v2_Staff.addressStreet}}"
+                                ngModel="{{v2_Customer.addressStreet}}"
                                 />
                             </div>
                         
@@ -81,7 +83,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="addressSuite"
-                                ngModel="{{v2_Staff.addressSuite}}"
+                                ngModel="{{v2_Customer.addressSuite}}"
                                 />
                             </div>
                         
@@ -91,7 +93,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="addressCity"
-                                ngModel="{{v2_Staff.addressCity}}"
+                                ngModel="{{v2_Customer.addressCity}}"
                                 />
                             </div>
                         
@@ -101,17 +103,7 @@
                                 type="text"
                                 class="form-control"
                                 formControlName="addressState"
-                                ngModel="{{v2_Staff.addressState}}"
-                                />
-                            </div>
-                        
-                            <div class="form-group">
-                                <label>Postal Code</label>
-                                <input
-                                type="text"
-                                class="form-control"
-                                formControlName="addressPostal_Code"
-                                ngModel="{{v2_Staff.addressPostal_Code}}"
+                                ngModel="{{v2_Customer.addressState}}"
                                 />
                             </div>
                             <button type="submit" class="btn btn-block btn-primary">Sign up</button>

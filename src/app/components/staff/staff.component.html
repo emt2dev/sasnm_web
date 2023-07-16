@@ -571,16 +571,20 @@
                                 <th>READY?</th>
                                 <th>STATUS</th>
                                 <th>ADDRESS</th>
+                                <th>Cart ID</th>
                                 <th>ITEMS</th>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let order of v2_ActiveOrders">
                                     <th scope="row">{{order.method}}</th>
-                                    <td><a class="btn btn-primary" href="{{_orderDomain + order.method + order.id}}">Order Is Ready</a></td>
+                                    <td><a class="btn btn-primary" href="{{_orderDomain}}{{_delivery}}{{_ready}}{{order.id}}">Delivery Ready</a></td>
+                                    <td><a class="btn btn-success" href="{{_orderDomain}}{{_delivery}}{{_completed}}{{order.id}}">Customer Received Delivery</a></td>
+                                    <td><a class="btn btn-info" href="{{_orderDomain}}{{_pickup}}{{_ready}}{{order.id}}">PickUp Ready</a></td>
+                                    <td><a class="btn btn-warning" href="{{_orderDomain}}{{_pickup}}{{_completed}}{{order.id}}">Customer Received Pickup</a></td>
                                     <td>{{order.status}}</td>
                                     <td>{{order.deliveryAddress}}</td>
+                                    <td>{{order.cart.id}}</td>
                                     <td *ngFor="let item of order.cart.items">{{item.quantity}} of {{item.name}}</td>
-                                    <td>{{order.cart.items}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -615,15 +619,15 @@
                             <thead>
                                 <th>METHOD</th>
                                 <th>STATUS</th>
-                                <th>Delivered At</th>
-                                <th>Picked up At</th>
+                                <th>COMPLETED</th>
+                                <th>Delivery Address</th>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let order of v2_CompletedOrders">
                                     <th scope="row">{{order.method}}</th>
                                     <td>{{order.status}}</td>
-                                    <td>{{order.timeDelivered}}</td>
-                                    <td>Ready for {{order.timePickedUpByCustomer}}</td>
+                                    <td>{{order.orderCompleted}}</td>
+                                    <td>{{order.deliveryAddress}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -631,8 +635,6 @@
                             <thead>
                                 <th>METHOD</th>
                                 <th>STATUS</th>
-                                <th>Delivered At</th>
-                                <th>Picked up At</th>
                             </thead>
                             <tbody>
                                 <tr>
