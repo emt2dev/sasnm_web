@@ -7,6 +7,7 @@ import { v2_ProductDTO } from '../v2_DTOs/v2_ProductStripe';
 import { v2_ShoppingCartDTO } from '../v2_DTOs/v2_ShoppingCart';
 import { v2_OrderDTO } from '../v2_DTOs/v2_Order';
 import { v2_StaffDTO } from '../v2_DTOs/v2_Staff';
+import { v2_newProductDTO } from '../DTOs/Products/v2_newProductDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -186,26 +187,20 @@ export class v2_CompanyService {
     return this.http.get<v2_ProductDTO>(`${this._api}/${this._getProductDetails}/${productId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
-  v2_newProduct(sendingDTO: v2_ProductDTO): Observable<any> {
-    return this.http.post<v2_ProductDTO>(`${this._api}/${this._createNewProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
+  v2_newProduct(sendingDTO: v2_newProductDTO): Observable<any> {
+    return this.http.post<v2_newProductDTO>(`${this._api}/${this._createNewProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  v2_newProductFormData(sendingDTO: FormData): Observable<any> {
+    return this.http.post<v2_newProductDTO>(`${this._api}/${this._createNewProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
   v2_updateProduct(sendingDTO: v2_ProductDTO): Observable<any> {
     return this.http.put(`${this._api}/${this._updateProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
-  v2_updateProductImage(intendedFileUpload: File, productId: number) {
-    const formData: FormData = new FormData();
-
-    formData.append('file', intendedFileUpload);
-
-    const outgoingRequest = new HttpRequest('POST', `${this._api}/${this._updateProductImage}/${productId}`, formData, {
-      reportProgress: true,
-      responseType: 'json',
-    });
-
-    this.http.request(outgoingRequest);
-    return 0;
+  v2_updateProductImage(form: FormData, productId: number) {
+    return this.http.post(`${this._api}/${this._updateProductImage}/${productId}`, form, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
   v2_deleteProduct(productId: number): Observable<any> {

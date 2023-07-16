@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
+import { v2_newProductDTO } from 'src/app/shared/DTOs/Products/v2_newProductDTO';
 import { overrideDTO } from 'src/app/shared/DTOs/overrideDTo';
 import { v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
 import { v2_CompanyService } from 'src/app/shared/company/v2_company.service';
@@ -34,6 +35,11 @@ export class StaffComponent implements OnInit {
   _misc: string = '.misc';
 
   // product images
+  _newProductAction = "http://localhost:5035/api/v2/products/create/";
+  _updateImageAction = "http://localhost:5035/api/v2/products/update/image/";
+  _deleteProductAction = "http://localhost:5035/api/v2/products/delete/";
+
+
   _productImageDomain: string = 'http://localhost:5035/api/v2/product/update/image/';
 
   _orderDomain: string = 'http://localhost:5035/api/v2/company/orders/';
@@ -50,6 +56,7 @@ export class StaffComponent implements OnInit {
   FORM_newProduct: FormGroup;
   FORM_updateProduct: FormGroup;
   FORM_deleteProduct: FormGroup;
+  FORM_updateImage: FormGroup;
 
   companyStaffList: Array<v2_StaffDTO> = [];
   adminList: Array<v2_StaffDTO> = [];
@@ -189,22 +196,9 @@ export class StaffComponent implements OnInit {
     });
 
     this.FORM_newProduct = this.formBuilder.group({
-      id: [,],
-      companyId: [,],
-      stripeId: ['',],
       name: ['',],
       description: ['',],
-      default_price: [,],
-      package_dimensions: ['',],
-      statement_descriptor: ['',],
-      unit_label: ['',],
-      shippable: ['',],
-      image: ['',],
-      url: ['',],
-      priceInString: ['',],
-      seo: ['',],
-      keyword: ['',],
-      imageToBeUploaded: [File,],
+      default_price: [,]
     });
 
     this.FORM_updateProduct = this.formBuilder.group({
@@ -246,6 +240,11 @@ export class StaffComponent implements OnInit {
       currentPassword: ['',],
       newPassword: ['',],
     });
+
+    this.FORM_updateImage = this.formBuilder.group({
+      updateImage: ['',],
+      productId: [,]
+    })
   }
   ngOnInit(): void {
     const presentationId: number = 1;
@@ -256,6 +255,12 @@ export class StaffComponent implements OnInit {
       return await this.v2_Company;
     });
 
+    // get company products
+    this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
+      this.v2_Products = data;
+      return await this.v2_Products;
+    });
+    
     // get full list
     this.v2_companyService.v2_getStaffList(presentationId).subscribe(async (data: Array<v2_StaffDTO>) => {
       this.companyStaffList = data;
@@ -311,31 +316,19 @@ export class StaffComponent implements OnInit {
   }
 
   v2_newProduct() {
-    let newProduct = new v2_ProductDTO
+    let default_quantity: number = 1;
+    let newProduct = new v2_newProductDTO
     (
-      0,
       this.v2_Company.id,
-      "",
       this.FORM_newProduct.value.name,
       this.FORM_newProduct.value.description,
       this.FORM_newProduct.value.default_price,
-      1,
-      false,
-      this.FORM_newProduct.value.package_dimensions,
-      this.FORM_newProduct.value.statement_descriptor,
-      this.FORM_newProduct.value.unit_label,
-      false,
-      "https://via.placeholder.com/150x80?text=image",
-      "",
-      this.FORM_newProduct.value.default_price.toString(),
-      this.FORM_newProduct.value.seo,
-      this.FORM_newProduct.value.keyword,
-      "",
+      default_quantity,
     );
 
     this.v2_companyService.v2_newProduct(newProduct).subscribe({
       next: (res) => {
-
+        
         this.FORM_newProduct.reset();
         this.router.navigateByUrl('/staff');
       },
@@ -345,7 +338,6 @@ export class StaffComponent implements OnInit {
     });
   }
 
-
   v2_deleteProduct() {
     const productId = this.FORM_deleteProduct.value.productId;
     console.log(productId);
@@ -354,7 +346,6 @@ export class StaffComponent implements OnInit {
       next: (res) => {
 
         this.FORM_deleteProduct.reset();
-        this.router.navigateByUrl('/staff');
       },
       error: (err) => {
         console.log(err);
@@ -363,7 +354,23 @@ export class StaffComponent implements OnInit {
   }
 
   v2_updateProductImage() {
-    // console.log(event);
+    let formdata = new FormData();
+    formdata.append('file', this.FORM_updateImage.get('updateImage')?.value);
+    let pid = this.FORM_updateImage.value.productId;
+    console.log(formdata);
+    console.log(pid);
+
+    this.v2_companyService.v2_updateProductImage(formdata, pid).subscribe({
+      next: (res) => {
+
+        this.FORM_updateImage.reset();
+        console.log(res);
+        this.router.navigateByUrl("/staff");
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
   updateCompany() {

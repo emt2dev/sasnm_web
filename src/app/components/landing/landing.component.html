@@ -1,41 +1,71 @@
-
-<div>
-    <img src="{{v2_Company.logoImageUrl}}" alt="{{v2_Company.name}} logo">
-</div>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-6">
-            <p>
-                
-            </p>
-        </div>
-        <div class="col-lg-6">
-            <p>
-                {{v2_Company.description}}
-            </p>
-        </div>
-    </div>
-</div>
-<!-- <ng-container> -->
-<div class="container-fluid" >
-    <div class="row">
-        <div class="col-lg-4" *ngFor="let product of v2_Products">
-            <div class="panel panel-primary">
-                <div class="panel-heading mt-3">{{product.name}}</div>
-                <div class="panel-body">
-                    <img src="{{product.image}}" style="width:100%" alt="Image">
-                    <h6 class="offset-5 mt-3">{{product.default_price}}</h6>
-                </div>
-                    <div class="form-control bg-success">
-                        <button (click)="v2_AddItemToCart($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
-                            Add to cart
-                        </button>
-                    </div>
+    <header>
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{v2_Company.headerImage}}" class="img-fluid" alt="{{v2_Company.name}} logo">
+            </div>
+            <div class="col-lg-8">
+                <h5>
+                    {{v2_Company.description}}
+                </h5>
             </div>
         </div>
-    </div>
+    </header>
 </div>
-<!-- </ng-container> -->
+<div class="container-fluid mt-3">
+    <main>
+        <div class="row">
+            <div class="col-lg-4">
+                <h3 class="h3">{{v2_Company.name}}</h3>
+                <p>
+                    <strong>
+                        is the best choice for breakfast, lunch, and dinner.
+                    </strong>
+                    {{v2_Company.description}}
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h5>Food from our childhood</h5>
+                <p>
+                    <strong>
+                        we offer the foods that we all grew up eating.
+                    </strong>
+                    {{v2_Company.smallTagline}}
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <h5>Quality That Matters</h5>
+                <p>
+                    <strong>
+                        We put forth great effort
+                    </strong>
+                    {{v2_Company.menuDescription}}
+                </p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="container-fluid mt-3">
+    <menu>
+        <div class="row">
+            <div class="col-lg-4" *ngFor="let product of v2_Products">
+                <div class="panel panel-primary">
+                    <div class="panel-heading mt-3">{{product.name}}</div>
+                    <div class="panel-body">
+                        <img src="{{product.image}}" style="width:100%" alt="Image">
+                        <h6 class="offset-5 mt-3">{{product.default_price}}</h6>
+                    </div>
+                        <div class="form-control bg-success">
+                            <button (click)="v2_AddItemToCart($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
+                                Add to cart
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </menu>
+</div>
 
 <ng-container>
     <div *ngIf="v2_Cart.companyId > StringsAreAMatch" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
