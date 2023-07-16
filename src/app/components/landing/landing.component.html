@@ -2,7 +2,7 @@
     <header>
         <div class="row">
             <div class="col-lg-4">
-                <img src="{{v2_Company.headerImage}}" class="img-fluid" alt="{{v2_Company.name}} logo">
+                <img src="{{v2_Company.locationImageUrl}}" class="img-fluid" alt="{{v2_Company.name}} logo">
             </div>
             <div class="col-lg-8">
                 <h5>
@@ -12,11 +12,18 @@
         </div>
     </header>
 </div>
+<div class="jumbotron">
+    <div class="container text-center">
+      <h1>{{v2_Company.name}}</h1>      
+      <p>{{v2_Company.description}}</p>
+    </div>
+  </div>
 <div class="container-fluid mt-3">
     <main>
         <div class="row">
             <div class="col-lg-4">
                 <h3 class="h3">{{v2_Company.name}}</h3>
+                <img src="{{v2_Company.aboutUsImageUrl}}" alt="about us image">
                 <p>
                     <strong>
                         is the best choice for breakfast, lunch, and dinner.
@@ -25,6 +32,7 @@
                 </p>
             </div>
             <div class="col-lg-4">
+                <img src="{{v2_Company.miscImageUrl}}" alt="about us image">
                 <h5>Food from our childhood</h5>
                 <p>
                     <strong>
@@ -34,6 +42,7 @@
                 </p>
             </div>
             <div class="col-lg-4">
+                <img src="{{v2_Company.headerImage}}" alt="about us image">
                 <h5>Quality That Matters</h5>
                 <p>
                     <strong>
@@ -49,18 +58,17 @@
 <div class="container-fluid mt-3">
     <menu>
         <div class="row">
-            <div class="col-lg-4" *ngFor="let product of v2_Products">
-                <div class="panel panel-primary">
-                    <div class="panel-heading mt-3">{{product.name}}</div>
-                    <div class="panel-body">
-                        <img src="{{product.image}}" style="width:100%" alt="Image">
-                        <h6 class="offset-5 mt-3">{{product.default_price}}</h6>
-                    </div>
-                        <div class="form-control bg-success">
-                            <button (click)="v2_AddItemToCart($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
-                                Add to cart
-                            </button>
-                        </div>
+            <div class="col-sm-4" *ngFor="let product of v2_Products">
+                <div class="panel panel-success">
+                    <div class="panel-heading">{{product.name}}</div>
+                    <div class="panel-body"><img src="{{product.image}}" class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-footer">{{product.description}}</div>
+                    <h6 class="offset-5 mt-3">{{product.default_price}}</h6>
+                </div>
+                <div class="form-control bg-success">
+                    <button (click)="v2_AddItemToCart($event)" id={{product.id}} class="offset-3 btn btn-small btn-success" type="submit">
+                        Add to cart
+                    </button>
                 </div>
             </div>
         </div>
@@ -102,3 +110,6 @@
       </div>
 </ng-container>
 
+<footer>
+
+</footer>

@@ -23,6 +23,10 @@ export class DevComponent implements OnInit {
 
   defaultPassword: string = "P@ssword1";
 
+  defaultValue: string = "...Loading...";
+  defaultPostalCode: string = "33805";
+  defaultCountry: string = "USA";
+
   FORM_newStaff: FormGroup;
   FORM_overrideAdmin: FormGroup;
   FORM_newCompany: FormGroup;
@@ -33,15 +37,15 @@ export class DevComponent implements OnInit {
   nonAdminList: Array<v2_StaffDTO> = [];
 
   v2_Staff: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: false,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -52,15 +56,15 @@ export class DevComponent implements OnInit {
   };
 
   v2_Owner: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -71,15 +75,15 @@ export class DevComponent implements OnInit {
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -90,15 +94,15 @@ export class DevComponent implements OnInit {
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -110,22 +114,22 @@ export class DevComponent implements OnInit {
 
   v2_Company: v2_CompanyDTO = {
     id: 0,
-    name: '...Loading...',
-    description: '...Loading...',
-    phoneNumber: '...Loading...',
-    addressStreet: '...Loading...',
-    addressSuite: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    addressCountry: '...Loading...',
-    smallTagline: '...Loading...',
-    menuDescription: '...Loading...',
-    headerImage: '...Loading...',
-    aboutUsImageUrl: '...Loading...',
-    locationImageUrl: '...Loading...',
-    logoImageUrl: '...Loading...',
-    miscImageUrl: '...Loading...',
+    name: this.defaultValue,
+    description: this.defaultValue,
+    phoneNumber: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressSuite: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    addressCountry: this.defaultValue,
+    smallTagline: this.defaultValue,
+    menuDescription: this.defaultValue,
+    headerImage: this.defaultValue,
+    aboutUsImageUrl: this.defaultValue,
+    locationImageUrl: this.defaultValue,
+    logoImageUrl: this.defaultValue,
+    miscImageUrl: this.defaultValue,
     listOfAllProducts: [],
     owner: this.v2_Owner,
     administratorOne: this.v2_AdministratorOne,

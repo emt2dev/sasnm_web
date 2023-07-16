@@ -222,7 +222,7 @@ export class v2_CompanyService {
   };
 
   v2_emptyCart(cartId: number): Observable<any> {
-    return this.http.post(`${this._api}/${cartId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+    return this.http.post(`${this._api}/${this._emptyCart}/${cartId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   };
 
   /*** ORDER CALLS */

@@ -39,17 +39,19 @@ export class LandingComponent implements OnInit {
   v2_Roles = this.v2_authService.returnRoles();
 
   StringsAreAMatch: number = 0;
+  defaultValue: string = "...Loading...";
+  defaultPostalCode: string = "33805";
   
   v2_Owner: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -60,15 +62,15 @@ export class LandingComponent implements OnInit {
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -79,15 +81,15 @@ export class LandingComponent implements OnInit {
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: true,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
-    email: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
+    email: this.defaultValue,
     addressStreet: '',
     addressSuite: '',
     addressCity: '',
@@ -99,22 +101,22 @@ export class LandingComponent implements OnInit {
 
   v2_Company: v2_CompanyDTO = {
     id: 0,
-    name: '...Loading...',
-    description: '...Loading...',
-    phoneNumber: '...Loading...',
-    addressStreet: '...Loading...',
-    addressSuite: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    addressCountry: '...Loading...',
-    smallTagline: '...Loading...',
-    menuDescription: '...Loading...',
-    headerImage: '...Loading...',
-    aboutUsImageUrl: '...Loading...',
-    locationImageUrl: '...Loading...',
-    logoImageUrl: '...Loading...',
-    miscImageUrl: '...Loading...',
+    name: this.defaultValue,
+    description: this.defaultValue,
+    phoneNumber: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressSuite: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    addressCountry: this.defaultValue,
+    smallTagline: this.defaultValue,
+    menuDescription: this.defaultValue,
+    headerImage: this.defaultValue,
+    aboutUsImageUrl: this.defaultValue,
+    locationImageUrl: this.defaultValue,
+    logoImageUrl: this.defaultValue,
+    miscImageUrl: this.defaultValue,
     listOfAllProducts: [],
     owner: this.v2_Owner,
     administratorOne: this.v2_AdministratorOne,
@@ -124,23 +126,23 @@ export class LandingComponent implements OnInit {
   v2_Cart: v2_ShoppingCartDTO = {
     id: 0,
     companyId: 0,
-    customerId: '...Loading...',
+    customerId: this.defaultValue,
     items: [],
     cost: 0,
     submitted: false,
     abandoned: false,
-    costInString: '...Loading...',
+    costInString: this.defaultValue,
   };
 
   v2_Staff: v2_StaffDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    position: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    position: this.defaultValue,
     giveAdminPrivledges: false,
-    longitude: '...Loading...',
-    latitude: '...Loading...',
-    coordinates: '...Loading...',
-    password: '...Loading...',
+    longitude: this.defaultValue,
+    latitude: this.defaultValue,
+    coordinates: this.defaultValue,
+    password: this.defaultValue,
     email: '',
     addressStreet: '',
     addressSuite: '',
@@ -152,17 +154,17 @@ export class LandingComponent implements OnInit {
   };
 
   v2_Customer: v2_CustomerDTO = {
-    id: '...Loading...',
-    name: '...Loading...',
-    description: '...Loading...',
-    addressStreet: '...Loading...',
-    addressCity: '...Loading...',
-    addressState: '...Loading...',
-    addressPostal_Code: '...Loading...',
-    currency: '...Loading...',
+    id: this.defaultValue,
+    name: this.defaultValue,
+    description: this.defaultValue,
+    addressStreet: this.defaultValue,
+    addressCity: this.defaultValue,
+    addressState: this.defaultValue,
+    addressPostal_Code: this.defaultValue,
+    currency: this.defaultValue,
     livemode: false,
-    password: '...Loading...',
-    email: '...Loading...',
+    password: this.defaultValue,
+    email: this.defaultValue,
     phoneNumber: '',
     addressSuite: '',
     addressCountry: ''
@@ -201,9 +203,6 @@ export class LandingComponent implements OnInit {
       await this.v2_Customer;
     });
 
-    // this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
-    // await this.v2_Customer;
-
     this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
     await this.v2_Staff;
     
@@ -228,12 +227,7 @@ export class LandingComponent implements OnInit {
         this.FORM__ADD__TO__CART.disable();
         this.FORM__ADD__TO__CART.reset();
 
-        let presentationId = 1;
-        this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
-        this.v2_Cart=data;
-  
-        await this.v2_Cart;
-        });
+        this.router.navigate(["/dashboard"]);
       }
     })
   }
@@ -278,13 +272,8 @@ export class LandingComponent implements OnInit {
       next: (res) => {
         this.FORM__ADD__TO__CART.disable();
         this.FORM__ADD__TO__CART.reset();
-        
-        let presentationId = 1;
-        this.v2_companyService.v2_getCustomerCart(presentationId, customerId).subscribe(async (data: v2_ShoppingCartDTO) => {
-          this.v2_Cart=data;
-    
-          await this.v2_Cart;
-        });
+
+        this.router.navigate(["/dashboard"]);
       }
     })
   }
@@ -306,12 +295,7 @@ export class LandingComponent implements OnInit {
         this.FORM__ADD__TO__CART.disable();
         this.FORM__ADD__TO__CART.reset();
 
-        let presentationId = 1;
-        this.v2_companyService.v2_getCustomerCart(presentationId, customerId).subscribe(async (data: v2_ShoppingCartDTO) => {
-          this.v2_Cart=data;
-    
-          await this.v2_Cart;
-        });
+        this.router.navigate(["/dashboard"]);
       }
     })
   }
