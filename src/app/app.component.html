@@ -341,11 +341,11 @@
       </a>
 
       <a *ngIf="this.v2_authService.isUserStaff && this.v2_authService.isUserDev == false" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/staff">
-        Staff Dashboard
+        Dashboard
       </a>
 
       <a *ngIf="this.v2_authService.isUserDev == true" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/staff">
-        Developer Dashboard
+        Dashboard
       </a>
 
       <a *ngIf="!this.v2_authService.isUserLoggedIn" class="btn btn-info text-dark p-2" routerLinkActive="active" routerLink="/login">
