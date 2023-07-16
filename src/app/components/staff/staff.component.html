@@ -1,1 +1,696 @@
-<p>staff works!</p>
+<div class="text-center">
+    <img src="{{v2_Company.logoImageUrl}}" class="img-fluid mb-5 rounded mx-auto d-bloc" alt="{{v2_Company.name}} logo">
+</div>
+
+<div class="accordion" id="detailsAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#detailsOne" aria-expanded="true" aria-controls="detailsOne">
+          Edit and View Company Details
+        </button>
+      </h2>
+      <div id="detailsOne" class="accordion-collapse collapse" data-bs-parent="#detailsAccordion">
+        <div class="accordion-body">
+            <div class="container-fluid mt-5 mb-5 pb-5">
+                <div class="row mb-5">
+                    <div class="col-lg-3">
+                        <h5>Update Company</h5>
+                        <form
+                            class="form-group"
+                            [formGroup]="FORM_updateCompany"
+                            (ngSubmit)="updateCompany()">
+                            
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="name"
+                                    ngmodel="v2_Company.name"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Description</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="description"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="phoneNumber"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Small Tagline</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="smallTagline"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Menu Description</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="menuDescription"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Street</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressStreet"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Suite</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressSuite"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>City</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressCity"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>State</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressState"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Postal Code</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressPostal_Code"
+                                    />
+                            </div>
+        
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    formControlName="addressCountry"
+                                    ngModel="USA"
+                                    />
+                            </div>
+        
+                            <button type="submit" class="btn btn-block btn-primary">Create Staff</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-3">
+                        <h5>View Company Details</h5>
+                        <ul>
+                            <li>{{ v2_Company.name }}</li>
+                            <li>{{ v2_Company.description }}</li>
+                            <li>{{ v2_Company.smallTagline }}</li>
+                            <li>{{ v2_Company.menuDescription }}</li>
+        
+                            <li>{{ v2_Company.phoneNumber }}</li>
+        
+                            <li>{{ v2_Company.addressStreet }} {{ v2_Company.addressSuite }} {{ v2_Company.addressCity }}, {{ v2_Company.addressState }} {{ v2_Company.addressPostal_Code }} {{ v2_Company.addressCountry }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h6>instructions: click browse and choose which image you want to replace the current image and then click on "submit"</h6>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><h6>Header</h6></li>
+                                    <li><img height="75px" src="{{ v2_Company.headerImage }}" alt="header-image"></li>
+                                    <form action="{{_imageDomain + v2_Company.id +_header }}" method="post" enctype="multipart/form-data">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                            <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                        </div>
+                                        <button class="btn btn-warning" type="submit">Submit</button>
+                                    </form>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6">
+                                <ul>
+                                    <li><h6>About Us</h6></li>
+                                    <li><img height="75px" src="{{ v2_Company.aboutUsImageUrl }}" alt="header-image"></li>
+                                    <form action="{{_imageDomain + v2_Company.id +_aboutus }}" method="post" enctype="multipart/form-data">
+                                        <div class="input-group mb-3">
+                                            <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                            <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                        </div>    
+                                        <button class="btn btn-warning" type="submit">Submit</button>                      
+                                    </form>
+                                </ul>
+                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><h6>Location</h6></li>
+                                <li><img height="75px" src="{{ v2_Company.locationImageUrl }}" alt="header-image"></li>
+                                <form action="{{_imageDomain + v2_Company.id +_location }}" method="post" enctype="multipart/form-data">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                        <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                    </div>         
+                                    <button class="btn btn-warning" type="submit">Submit</button>                 
+                                </form>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><h6>Logo</h6></li>
+                                <li><img height="75px" src="{{ v2_Company.logoImageUrl }}" alt="header-image"></li>
+                                <form action="{{_imageDomain + v2_Company.id +_logo }}" method="post" enctype="multipart/form-data">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                        <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                    </div>           
+                                    <button class="btn btn-warning" type="submit">Submit</button>               
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul>
+                                <li><h6>Misc</h6></li>
+                                <li><img height="75px" src="{{ v2_Company.miscImageUrl }}" alt="header-image"></li>
+                                <form action="{{_imageDomain + v2_Company.id +_misc }}" method="post" enctype="multipart/form-data">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                        <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                    </div>         
+                                    <button class="btn btn-warning" type="submit">Submit</button>                 
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detailsTwo" aria-expanded="false" aria-controls="detailsTwo">
+          Add admin, create staff account, update profile and update password
+        </button>
+      </h2>
+      <div id="detailsTwo" class="accordion-collapse collapse" data-bs-parent="#detailsAccordion">
+        <div class="accordion-body">
+            <div class="row">
+                <div class="col-lg-3">
+                    <h5>New Admin</h5>
+                    <form
+                        class="form-group"
+                        [formGroup]="FORM_overrideAdmin"
+                        (ngSubmit)="v2_OverrideAdmin()">
+                        <h6>below are staff members who are not admins</h6>
+                        <label>Instructions, choose staff to give admin privledges, then choose which position to replace</label>
+                        <div class="form-group">
+                            <select formControlName="userEmail" class="form-select" aria-label="staff giving admin">
+                                <option *ngFor="let member of nonAdminList" [ngValue]="member.email">{{member.email}}</option>
+                              </select>
+                        </div>
+                        <div class="form-group">
+                            <select formControlName="replaceAdminOneOrTwo" class="form-select" aria-label="replace admin">
+                                <option [ngValue]="0">Company Owner</option>
+                                <option [ngValue]="1">Administrator One</option>
+                                <option [ngValue]="2">Administrator Two</option>
+                              </select>
+                        </div>
+    
+                        <button type="submit" class="btn btn-block btn-primary">Update Company Admin</button>
+                    </form>
+                </div>
+                <div class="col-lg-3">
+                    <h5>New Staff</h5>
+                    <form
+                        class="form-group"
+                        [formGroup]="FORM_newStaff"
+                        (ngSubmit)="staffCreate()">
+                        
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                formControlName="Email"
+                                />
+                            <p>Default password is P@ssword1</p>
+                        </div>
+    
+                        <button type="submit" class="btn btn-block btn-primary">Create Staff</button>
+                    </form>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-center">Update Password</h5>
+                    <form
+                        class="form-control"
+                        [formGroup]="FORM_updatePassword"
+                        (ngSubmit)="updatePassword()"
+                        >
+                        
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input
+                        type="password"
+                        class="form-control"
+                        formControlName="currentPassword"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input
+                        type="password"
+                        class="form-control"
+                        formControlName="newPassword"
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+                    </form>
+                </div>
+                <div class="col-lg-3">
+                    <h5 class="text-center">Update Profile</h5>
+                    <form
+                        class="form-control"
+                        [formGroup]="FORM_updateProfile"
+                        (ngSubmit)="updateProfile()"
+                        >
+                        
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="name"
+                        ngModel="{{v2_Staff.name}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="phoneNumber"
+                        ngModel="{{v2_Staff.phoneNumber}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Street</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="addressStreet"
+                        ngModel="{{v2_Staff.addressStreet}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Suite</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="addressSuite"
+                        ngModel="{{v2_Staff.addressSuite}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>City</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="addressCity"
+                        ngModel="{{v2_Staff.addressCity}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>State</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="addressState"
+                        ngModel="{{v2_Staff.addressState}}"
+                        />
+                    </div>
+    
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        formControlName="addressPostal_Code"
+                        ngModel="{{v2_Staff.addressPostal_Code}}"
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#detailsThree" aria-expanded="false" aria-controls="detailsThree">
+            Add products, update products, delete products
+          </button>
+        </h2>
+        <div id="detailsThree" class="accordion-collapse collapse" data-bs-parent="#detailsAccordion">
+            <div class="accordion-body">
+                <div class="row mb-5">
+                    <div class="col-lg-4">
+                        <h5>Add new product!</h5>
+                        <form class="form-group"
+                        [formGroup]="FORM_newProduct"
+                        (ngSubmit)="v2_newProduct()">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="name" aria-describedby="newProductName">
+                                <div id="newProductName" class="form-text">Name of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Description</label>
+                                <input type="text" name="description" class="form-control" id="description" aria-describedby="newProductDescription">
+                                <div id="newProductDescription" class="form-text">Description of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Default Price</label>
+                                <input type="text" name="default_price" class="form-control" id="default_price" aria-describedby="newProductDefaultPrice">
+                                <div id="newProductDefaultPrice" class="form-text">Default Price of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Package Dimensions</label>
+                                <input type="text" name="package_dimensions" class="form-control" id="package_dimensions" aria-describedby="newProductpackage_dimensions">
+                                <div id="newProductpackage_dimensions" class="form-text">Package Dimensions of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Statement Description</label>
+                                <input type="text" name="statement_descriptor" class="form-control" id="statement_descriptor" aria-describedby="newProductstatement_descriptor">
+                                <div id="newProductstatement_descriptor" class="form-text">This will be shown on the customer's debit card statement.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="unit_label" class="form-label">Unit Label</label>
+                                <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                                <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                                <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="shippable" aria-describedby="newProductshippable" value="true">
+                                <label for="unit_label" class="form-label">This product can be shipped</label>
+                                <div id="newProductshippable" class="form-text">Check the box if this product can be shipped</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <img src="https://via.placeholder.com/150x80?text=image" alt="">
+                                <h5>Placeholder Image</h5>
+                                <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the product unless you upload one.</div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="seo" class="form-control" id="seo" aria-describedby="newProductseo">
+                                <div id="newProductseo" class="form-text">Search Engine Optimizations Tags</div>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="Available only during Breakfast">Available only during Breakfast</option>
+                                    <option value="Available After Breakfast">Available After Breakfast</option>
+                                    <option value="Available After Lunch">Available After Lunch</option>
+                                    <option value="Lunch Only">Lunch Only</option>
+                                    <option value="Dinner Only">Dinner Only</option>
+                                    <option value="Appetizer">Appetizer</option>
+                                    <option value="Limited Amount Daily">Limited Amount Daily</option>
+                                    <option value="Limited Time Only">Limited Time Only</option>
+                                    <option value="Dessert">Dessert</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Seasonal">Seasonal</option>
+                                </select>
+                            </div>
+                            <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-4 mt-3 ">
+                        <div class="row">
+                            <div class="col-lg-4 mt-3 ">
+                                <h4>DELETE PRODUCT</h4>
+                                <form class="form-group"
+                                [formGroup]="FORM_deleteProduct"
+                                (ngSubmit)="v2_deleteProduct()">
+                                        <div class="form-control">
+                                            <select formControlName="productId" >
+                                                <option disabled>SELECT Product</option>
+                                                <option *ngFor="let product of v2_Products" [ngValue]="product.id">
+                                                    {{product.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
+                                </form>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6" *ngFor="let product of v2_Products">
+                                    <p>instructions: click browse and choose which image you want to replace the current image and then click on "submit"</p>
+                                    <h6>Current Image</h6>
+                                        <img height="75px" src="{{ product.image }}" alt="header-image">
+                                        <form action="{{_productImageDomain + product.id }}" method="post" enctype="multipart/form-data">
+                                            <div class="input-group mb-3">
+                                                <label class="input-group-text " for="newHeaderImage">Click --></label>
+                                                <input type="file" class="form-control btn btn-outline-primary" id="newHeaderImage" />
+                                            </div>
+                                            <button class="btn btn-warning" type="submit">Submit</button>
+                                        </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-3">
+                        <div class="row" *ngFor="let product of v2_Products">
+                            <h6>{{product.name}}</h6>
+                            <p>Current Image for {{product.name}}</p>
+                            <img height="100px" src="{{product.image}}" alt="image of {{product.name}}">
+                            <form action="{{_productImageDomain + product.id }}" method="post" enctype="multipart/form-data">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text " for="newProductImage">Click --></label>
+                                    <input type="file" class="form-control btn btn-outline-primary" id="newProductImage" />
+                                </div>
+                                <button class="btn btn-warning" type="submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-4 mt-3">
+                        <div class="form-group" *ngFor="let product of v2_Products">
+                            <select formControlName="userEmail" class="form-select" aria-label="staff giving admin">
+                                <option *ngFor="let member of nonAdminList" [ngValue]="member.email">{{member.email}}</option>
+                              </select>
+                        </div>
+                        <h5>Update product</h5>
+                        <form class="form-group"
+                        [formGroup]="FORM_newProduct"
+                        (ngSubmit)="v2_newProduct()">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" name="name" class="form-control" id="name" aria-describedby="newProductName">
+                                <div id="newProductName" class="form-text">Name of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Description</label>
+                                <input type="text" name="description" class="form-control" id="description" aria-describedby="newProductDescription">
+                                <div id="newProductDescription" class="form-text">Description of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Default Price</label>
+                                <input type="text" name="default_price" class="form-control" id="default_price" aria-describedby="newProductDefaultPrice">
+                                <div id="newProductDefaultPrice" class="form-text">Default Price of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Package Dimensions</label>
+                                <input type="text" name="package_dimensions" class="form-control" id="package_dimensions" aria-describedby="newProductpackage_dimensions">
+                                <div id="newProductpackage_dimensions" class="form-text">Package Dimensions of the new product.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Statement Description</label>
+                                <input type="text" name="statement_descriptor" class="form-control" id="statement_descriptor" aria-describedby="newProductstatement_descriptor">
+                                <div id="newProductstatement_descriptor" class="form-text">This will be shown on the customer's debit card statement.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="unit_label" class="form-label">Unit Label</label>
+                                <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                                <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
+                                <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="shippable" aria-describedby="newProductshippable" value="true">
+                                <label for="unit_label" class="form-label">This product can be shipped</label>
+                                <div id="newProductshippable" class="form-text">Check the box if this product can be shipped</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <img src="https://via.placeholder.com/150x80?text=image" alt="">
+                                <h5>Placeholder Image</h5>
+                                <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the product unless you upload one.</div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" name="imageToBeUploaded" id="imageToBeUploaded" aria-describedby="newProductimageToBeUploaded" accept="image/png, image/jpeg">
+                                <label class="input-group-text" for="imageToBeUploaded">Product Image</label>
+                                <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the menu</div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" name="seo" class="form-control" id="seo" aria-describedby="newProductseo">
+                                <div id="newProductseo" class="form-text">Search Engine Optimizations Tag</div>
+                            </div>
+                            <div class="mb-3">
+                                <select class="form-select" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="Available only during Breakfast">Available only during Breakfast</option>
+                                    <option value="Available After Breakfast">Available After Breakfast</option>
+                                    <option value="Available After Lunch">Available After Lunch</option>
+                                    <option value="Lunch Only">Lunch Only</option>
+                                    <option value="Dinner Only">Dinner Only</option>
+                                    <option value="Appetizer">Appetizer</option>
+                                    <option value="Limited Amount Daily">Limited Amount Daily</option>
+                                    <option value="Limited Time Only">Limited Time Only</option>
+                                    <option value="Dessert">Dessert</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="Seasonal">Seasonal</option>
+                                </select>
+                            </div>
+                            <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
+                        </form>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+<ng-container>
+    <div class="container-fluid mt-5 mb-5 pb-5">
+        <div class="accordion" id="ordersAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-ordersOne" aria-expanded="true" aria-controls="panelsStayOpen-ordersOne">
+                  Active Orders
+                </button>
+              </h2>
+              <div id="panelsStayOpen-ordersOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <ng-container>
+                        <table class="table table-striped" *ngIf="v2_ActiveOrders.length > StringsAreAMatch">
+                            <thead>
+                                <th>METHOD</th>
+                                <th>READY?</th>
+                                <th>STATUS</th>
+                                <th>ADDRESS</th>
+                                <th>ITEMS</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let order of v2_ActiveOrders">
+                                    <th scope="row">{{order.method}}</th>
+                                    <td><a class="btn btn-primary" href="{{_orderDomain + order.method + order.id}}">Order Is Ready</a></td>
+                                    <td>{{order.status}}</td>
+                                    <td>{{order.deliveryAddress}}</td>
+                                    <td *ngFor="let item of order.cart.items">{{item.quantity}} of {{item.name}}</td>
+                                    <td>{{order.cart.items}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped" *ngIf="v2_ActiveOrders.length == StringsAreAMatch">
+                            <thead>
+                                <th>METHOD</th>
+                                <th>READY?</th>
+                                <th>STATUS</th>
+                                <th>ADDRESS</th>
+                                <th>ITEMS</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center" colspan="5">...No Orders...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-ordersTwo" aria-expanded="false" aria-controls="panelsStayOpen-ordersTwo">
+                  Completed Orders
+                </button>
+              </h2>
+              <div id="panelsStayOpen-ordersTwo" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <ng-container>
+                        <table class="table table-striped" *ngIf="v2_CompletedOrders.length > StringsAreAMatch">
+                            <thead>
+                                <th>METHOD</th>
+                                <th>STATUS</th>
+                                <th>Delivered At</th>
+                                <th>Picked up At</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let order of v2_CompletedOrders">
+                                    <th scope="row">{{order.method}}</th>
+                                    <td>{{order.status}}</td>
+                                    <td>{{order.timeDelivered}}</td>
+                                    <td>Ready for {{order.timePickedUpByCustomer}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped" *ngIf="v2_CompletedOrders.length == StringsAreAMatch">
+                            <thead>
+                                <th>METHOD</th>
+                                <th>STATUS</th>
+                                <th>Delivered At</th>
+                                <th>Picked up At</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="center" colspan="4">...No Orders...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

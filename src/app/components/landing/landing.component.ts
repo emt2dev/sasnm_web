@@ -50,6 +50,13 @@ export class LandingComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
@@ -62,6 +69,13 @@ export class LandingComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
@@ -74,6 +88,13 @@ export class LandingComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_Company: v2_CompanyDTO = {
@@ -120,7 +141,14 @@ export class LandingComponent implements OnInit {
     latitude: '...Loading...',
     coordinates: '...Loading...',
     password: '...Loading...',
-    email: ''
+    email: '',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_Customer: v2_CustomerDTO = {
@@ -135,6 +163,9 @@ export class LandingComponent implements OnInit {
     livemode: false,
     password: '...Loading...',
     email: '...Loading...',
+    phoneNumber: '',
+    addressSuite: '',
+    addressCountry: ''
   };
 
   v2_Products: Array<v2_ProductDTO> = [];
@@ -150,7 +181,7 @@ export class LandingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await delay(5000);
 
-    let presentationId = 1;
+    const presentationId = 1;
 
     this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
       this.v2_Company = data;

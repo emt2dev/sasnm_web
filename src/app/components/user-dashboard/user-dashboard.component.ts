@@ -21,6 +21,7 @@ import { AuthService } from 'src/app/shared/authsvc/auth.service';
 import { STAFF, v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
 import { CompanyService } from 'src/app/shared/company/company.service';
 import { v2_CompanyService } from 'src/app/shared/company/v2_company.service';
+import { updatePasswordDTO } from 'src/app/shared/v2_DTOs/updatePasswordDTO';
 import { v2_CompanyDTO } from 'src/app/shared/v2_DTOs/v2_Company';
 import { v2_CustomerDTO } from 'src/app/shared/v2_DTOs/v2_Customer';
 import { v2_OrderDTO } from 'src/app/shared/v2_DTOs/v2_Order';
@@ -43,22 +44,8 @@ export class UserDashboardComponent implements OnInit {
   // allows stripe methods
   private stripePromise?: Promise<Stripe | null>;
 
-  // API Admin Forms and Info
-  FORM_newDev: FormGroup;
-  FORM_newCompany: FormGroup;
-  FORM_overrideAdmin: FormGroup;
-
-  // Company Forms and Info
-  FORM__COMPANY__ADD__ADMIN: FormGroup;
-  FORM__COMPANY__DELETE__ADMIN: FormGroup;
-
-  FORM_newProduct: FormGroup;
-  FORM_updateProduct: FormGroup;
-  FORM_deleteProduct: FormGroup;
-
-  // User Forms and Info
-  FORM__USER__UPDATE__PROFILE: FormGroup;
-  FORM__USER__UPDATE__PASSWORD: FormGroup;
+  FORM_updatePassword: FormGroup;
+  FORM_updateProfile: FormGroup;
   
   v2_CustomerId= this.v2_authService.returnUserId()!;
   v2_Roles = this.v2_authService.returnRoles();
@@ -73,7 +60,14 @@ export class UserDashboardComponent implements OnInit {
     latitude: '...Loading...',
     coordinates: '...Loading...',
     password: '...Loading...',
-    email: '...Loading...'
+    email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_Owner: v2_StaffDTO = {
@@ -86,6 +80,13 @@ export class UserDashboardComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
@@ -98,6 +99,13 @@ export class UserDashboardComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
@@ -110,6 +118,13 @@ export class UserDashboardComponent implements OnInit {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_Company: v2_CompanyDTO = {
@@ -154,6 +169,9 @@ export class UserDashboardComponent implements OnInit {
     livemode: false,
     password: '...Loading...',
     email: '...Loading...',
+    phoneNumber: '..Loading...',
+    addressSuite: '',
+    addressCountry: ''
   }
   
   v2_Cart: v2_ShoppingCartDTO = {
@@ -168,102 +186,15 @@ export class UserDashboardComponent implements OnInit {
   };
 
   v2_Products: Array<v2_ProductDTO> = [];
+  
   v2_ActiveOrders: Array<v2_OrderDTO> = [];
+  v2_CompletedOrders: Array<v2_OrderDTO> = [];
   
   // Cart Forms and Info
   FORM__ADD__TO__CART: FormGroup;
 
   constructor(public formBuilder: FormBuilder, private v2_authService: v2_AuthService, private v2_companyService: v2_CompanyService, private actRoute: ActivatedRoute, private router: Router){
-    this.FORM_newDev = this.formBuilder.group({
-      email: ['', Validators.email],
-      password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
-    });
-
-    this.FORM_newCompany = this.formBuilder.group({
-      name: ['',],
-      description: ['',],
-      phoneNumber: ['',],
-      smallTagline: ['',],
-      menuDescription: ['',],
-      addressStreet: ['',],
-      addressSuite: ['',],
-      addressCity: ['',],
-      addressState: ['',],
-      addressPostal_Code: ['',],
-      addressCountry: ['',],
-    });
-
-    this.FORM_overrideAdmin = this.formBuilder.group({
-      userEmail: ['',Validators.email],
-      companyId: ['',],
-      replaceAdminOneOrTwo: ['',]
-    });
-
-    // company forms
-    this.FORM__COMPANY__ADD__ADMIN = this.formBuilder.group({
-      userEmail: ['',Validators.email],
-      companyId: ['',],
-      replaceAdminOneOrTwo: ['',]
-    });
-
-    this.FORM__COMPANY__DELETE__ADMIN = this.formBuilder.group({
-      userEmail: ['',Validators.email],
-      companyId: ['',],
-      replaceAdminOneOrTwo: ['',]
-    });
-
-    this.FORM_newProduct = this.formBuilder.group({
-      id: [,],
-      companyId: [,],
-      stripeId: ['',],
-      name: ['',],
-      description: ['',],
-      default_price: [,],
-      package_dimensions: ['',],
-      statement_descriptor: ['',],
-      unit_label: ['',],
-      shippable: ['',],
-      image: ['',],
-      url: ['',],
-      priceInString: ['',],
-      seo: ['',],
-      keyword: ['',],
-      imageToBeUploaded: [File,],
-    });
-
-    this.FORM_updateProduct = this.formBuilder.group({
-      id: [,],
-      companyId: [,],
-      stripeId: ['',],
-      name: ['',],
-      description: ['',],
-      default_price: [,],
-      quantity: [,],
-      package_dimensions: ['',],
-      statement_descriptor: ['',],
-      unit_label: ['',],
-      shippable: ['',],
-      image: ['',],
-      url: ['',],
-      priceInString: ['',],
-      seo: ['',],
-      keyword: ['',],
-      imageToBeUploaded: ['',],
-    });
-
-    this.FORM_deleteProduct = this.formBuilder.group({
-      productId: [,]
-    });
-
-    this.FORM__USER__UPDATE__PROFILE = this.formBuilder.group({
-      name: ['',],
-      phoneNumber: ['',],
-    });
-
-    this.FORM__USER__UPDATE__PASSWORD = this.formBuilder.group({
-      currentPassword: ['',Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")],
-      newPassword: ['',Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")],
-    });
+    
 
     this.FORM__ADD__TO__CART = this.formBuilder.group({
       userId: ['',],
@@ -271,46 +202,60 @@ export class UserDashboardComponent implements OnInit {
       companyId: ['',],
       email: ['',],
     });
+
+    this.FORM_updateProfile = this.formBuilder.group({
+      name: [this.v2_Staff.email,],
+      phoneNumber: [this.v2_Staff.phoneNumber,],
+      addressStreet: [this.v2_Staff.addressStreet,],
+      addressSuite: [this.v2_Staff.addressSuite,],
+      addressCity: [this.v2_Staff.addressCity,],
+      addressState: [this.v2_Staff.addressState,],
+      addressPostal_Code: [this.v2_Staff.addressPostal_Code,],
+      addressCountry: ["USA",],
+    });
+
+    this.FORM_updatePassword = this.formBuilder.group({
+      currentPassword: ['',],
+      newPassword: ['',],
+    });
   }
 
   async ngOnInit(): Promise<void> {
     let presentationId = 1;
+
+    this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
+      this.v2_Company = data;
+
+      await this.v2_Company;
+    });
+
+    this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
+      this.v2_Products = data;
+
+      await this.v2_Products;
+    });
+
+    this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
     
-    if (localStorage.getItem(STAFF) == "true") {
-      this.v2_companyService.v2_getCompanyDetails(presentationId).subscribe(async (data: v2_CompanyDTO) => {
-        this.v2_Company = data;
-  
-        await this.v2_Company;
-      });
-  
-      this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
-        this.v2_Products = data;
-  
-        await this.v2_Products;
-      });
-  
-      this.v2_Staff = this.v2_authService.v2_displayStaffDetails();
-    } else {
-      this.v2_authService.v2_getCustomerProfile(this.v2_CustomerId).subscribe((data: v2_CustomerDTO) => {
-        this.v2_Customer = data;
-        console.log(data);
-        return this.v2_Customer;
-      });
-                  
-      this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
-  
-      this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
-        this.v2_Cart = data;
-  
-        await this.v2_Cart;
-      });
-  
-      this.v2_companyService.v2_getActiveCustomerOrders(presentationId, this.v2_CustomerId).subscribe(async (data: Array<v2_OrderDTO>) => {
-        this.v2_ActiveOrders = data;
-  
-        await this.v2_ActiveOrders;
-      });
-    }
+    this.v2_authService.v2_getCustomerProfile(this.v2_CustomerId).subscribe((data: v2_CustomerDTO) => {
+      this.v2_Customer = data;
+      console.log(data);
+      return this.v2_Customer;
+    });
+                
+    this.v2_Customer = this.v2_authService.v2_displayCustomerDetails();
+
+    this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
+      this.v2_Cart = data;
+
+      await this.v2_Cart;
+    });
+
+    this.v2_companyService.v2_getActiveCustomerOrders(presentationId, this.v2_CustomerId).subscribe(async (data: Array<v2_OrderDTO>) => {
+      this.v2_ActiveOrders = data;
+
+      await this.v2_ActiveOrders;
+    });
 
     this.v2_companyService.v2_getAllCompanyProducts(presentationId).subscribe(async (data: Array<v2_ProductDTO>) => {
       this.v2_Products = data;
@@ -319,13 +264,14 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  v2_newDev() {
-    let newDev = new Base__User(this.FORM_newDev.value.email, this.FORM_newDev.value.password);
+  updateProfile() {
+    let customer = new v2_CustomerDTO(this.v2_CustomerId, this.FORM_updateProfile.value.name, this.v2_Customer.description, this.FORM_updateProfile.value.addressStreet, this.FORM_updateProfile.value.addressSuite, this.FORM_updateProfile.value.addressCity, this.FORM_updateProfile.value.addressState, this.FORM_updateProfile.value.addressPostal_Code, this.FORM_updateProfile.value.addressCountry, this.v2_Customer.currency, false, '', this.v2_Customer.email, this.FORM_updateProfile.value.phoneNumber);
 
-    this.v2_authService.v2_registerDev_Entry(newDev).subscribe({
+    this.v2_authService.v2_updateCustomerProfile(this.v2_CustomerId, customer).subscribe({
       next: (res) => {
 
-        this.FORM_newDev.reset();
+        this.FORM_updateProfile.reset();
+        this.router.navigateByUrl("dashboard");
       },
       error: (err) => {
         console.log(err);
@@ -333,90 +279,21 @@ export class UserDashboardComponent implements OnInit {
     });
   }
 
-  v2_newCompany() {
-    let newCompany = new v2_CompanyDTO(0, this.FORM_newCompany.value.name, "This is an example description of your company, and we're proud to do it in our small town. We've pulled ourselevs up by our bootstraps and offer the best bang for your buck.", this.FORM_newCompany.value.phoneNumber, "Our Products are the result of our love for family and good quality which we dedicate to our customers.", "Comfort Food With A Puerto-Rican Twist.", this.FORM_newCompany.value.addressStreet, this.FORM_newCompany.value.addressSuite, this.FORM_newCompany.value.addressCity, this.FORM_newCompany.value.addressState, this.FORM_newCompany.value.addressPostal_Code, this.FORM_newCompany.value.addressCountry, "https://via.placeholder.com/200x100?text=Header%20Placeholder", "https://via.placeholder.com/150x100?text=About%20Us", "https://via.placeholder.com/150x100?text=Location", "https://via.placeholder.com/300x150?text=Logo", "https://via.placeholder.com/150x80?text=Misc%20Image", [], this.v2_Owner, this.v2_AdministratorOne, this.v2_AdministratorTwo);
+  updatePassword() {
+    let updatePasswordAttempt = new updatePasswordDTO(this.FORM_updatePassword.value.currentPassword, this.FORM_updatePassword.value.newPassword);
 
-    this.v2_authService.v2_NewCompany(newCompany).subscribe({
+    let userId = this.v2_CustomerId;
+;
+
+    this.v2_authService.v2_updatePassword(userId, updatePasswordAttempt).subscribe({
       next: (res) => {
 
-        this.FORM_newCompany.reset();
+        this.FORM_updatePassword.reset();
       },
       error: (err) => {
         console.log(err);
       }
     });
-  }
-
-  v2_newProduct() {
-    let newProduct = new v2_ProductDTO
-    (
-      0,
-      this.v2_Company.id,
-      "",
-      this.FORM_newProduct.value.name,
-      this.FORM_newProduct.value.description,
-      this.FORM_newProduct.value.default_price,
-      1,
-      false,
-      this.FORM_newProduct.value.package_dimensions,
-      this.FORM_newProduct.value.statement_descriptor,
-      this.FORM_newProduct.value.unit_label,
-      false,
-      "https://via.placeholder.com/150x80?text=image",
-      "",
-      this.FORM_newProduct.value.default_price.toString(),
-      this.FORM_newProduct.value.seo,
-      this.FORM_newProduct.value.keyword,
-      "",
-    );
-
-    this.v2_companyService.v2_newProduct(newProduct).subscribe({
-      next: (res) => {
-
-        this.FORM_newProduct.reset();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
-
-  v2_OverrideAdmin() {
-    const overrideAdmin_DTO = new overrideDTO(this.FORM_overrideAdmin.value.userEmail, parseInt(this.FORM_overrideAdmin.value.companyId), this.FORM_overrideAdmin.value.replaceAdminOneOrTwo);
-
-    this.v2_authService.v2_overrideAdmin(overrideAdmin_DTO).subscribe({
-      next: (res) => {
-
-        this.FORM_overrideAdmin.reset();
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
-
-  v2_deleteProduct() {
-    const productId = this.FORM_deleteProduct.value.productId;
-    console.log(productId);
-
-    this.v2_companyService.v2_deleteProduct(productId).subscribe({
-      next: (res) => {
-
-        this.FORM_deleteProduct.reset();
-        this.v2_companyService.v2_getAllCompanyProducts(parseInt(this.v2_Customer.id)).subscribe((data2: Array<v2_ProductDTO>) => {
-          this.v2_Products = data2;
-          return this.v2_Products;
-        });
-        this.router.navigateByUrl('/dashboard');
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
-
-  v2_updateProductImage() {
-    // console.log(event);
   }
 
   v2_EmptyCart(event: any) {
@@ -434,7 +311,7 @@ export class UserDashboardComponent implements OnInit {
         this.FORM__ADD__TO__CART.reset();
 
         let presentationId = 1;
-        this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_Customer.id).subscribe(async (data: v2_ShoppingCartDTO) => {
+        this.v2_companyService.v2_getCustomerCart(presentationId, this.v2_CustomerId).subscribe(async (data: v2_ShoppingCartDTO) => {
         this.v2_Cart=data;
   
         await this.v2_Cart;

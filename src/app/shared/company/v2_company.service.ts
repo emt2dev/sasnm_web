@@ -24,6 +24,13 @@ export class v2_CompanyService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   AdministratorOne: v2_StaffDTO = {
@@ -36,6 +43,13 @@ export class v2_CompanyService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   AdministratorTwo: v2_StaffDTO = {
@@ -48,6 +62,13 @@ export class v2_CompanyService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   Company: v2_CompanyDTO = {
@@ -77,6 +98,11 @@ export class v2_CompanyService {
   /* AuthReadyAPI V2 API End Points */
   // api builder
   _api: string = 'http://localhost:5035/api/v2';
+
+  // staff end points
+  _getStaffList: string = 'staff/all';
+  _getNonAdmins: string = 'staff/nonadmins';
+  _getAdmins: string = 'staff/admins';
 
   // Company End Points
   _getCompanyDetails: string = 'company/details';
@@ -125,6 +151,18 @@ export class v2_CompanyService {
   /**** COMPANY CALLS */
   v2_getCompanyDetails(companyId: number): Observable<any> {
     return this.http.get<v2_CompanyDTO>(`${this._api}/${this._getCompanyDetails}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  v2_getStaffList(companyId: number): Observable<any> {
+    return this.http.get<Array<v2_StaffDTO>>(`${this._api}/${this._getStaffList}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  v2_getNonAdminList(companyId: number): Observable<any> {
+    return this.http.get<Array<v2_StaffDTO>>(`${this._api}/${this._getNonAdmins}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
+  }
+
+  v2_getAdminList(companyId: number): Observable<any> {
+    return this.http.get<Array<v2_StaffDTO>>(`${this._api}/${this._getAdmins}/${companyId}`, {headers:this.headers}).pipe(catchError(this.handleError))
   }
 
   v2_updateCompanyDetails(sendingDTO: v2_CompanyDTO): Observable<any> {

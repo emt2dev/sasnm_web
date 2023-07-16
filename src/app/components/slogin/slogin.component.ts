@@ -3,24 +3,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
-import { AuthService } from 'src/app/shared/authsvc/auth.service';
 import { v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-slogin',
   standalone: true,
   imports: 
   [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './slogin.component.html',
+  styleUrls: ['./slogin.component.css']
 })
-
-export class LoginComponent implements OnInit {
+export class SloginComponent implements OnInit {
   FORM__LOGIN: FormGroup;
 
-  /**
-   *
-   */
   constructor(public formBuilder: FormBuilder, public v2_authService: v2_AuthService, public router: Router)
   {
     this.FORM__LOGIN = this.formBuilder.group({
@@ -28,20 +23,20 @@ export class LoginComponent implements OnInit {
       Password: ['', Validators.pattern("^(?=.*[^a-zA-Z0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$")]
     });
   }
+  ngOnInit(){}
 
-  ngOnInit() {}
+  staffLogin() {
+    const existingStaff = new Base__User(this.FORM__LOGIN.value.Email, this.FORM__LOGIN.value.Password);
 
-  customerLOGIN() {
-    const EXISTING__USER = new Base__User(this.FORM__LOGIN.value.Email, this.FORM__LOGIN.value.Password);
-
-    this.v2_authService.v2_LoginCustomer(EXISTING__USER).subscribe({
+    this.v2_authService.v2_LoginStaff(existingStaff).subscribe({
       next: (res) => {
 
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/staff');
       },
       error: (err) => {
         console.log(err);
       }
     });
   }
+
 }

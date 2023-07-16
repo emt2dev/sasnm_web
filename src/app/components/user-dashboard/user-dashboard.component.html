@@ -1,228 +1,194 @@
-<ng-container>
-    <div class="container-fluid" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch)">
-        {{v2_Customer.email}}
-    </div>
-</ng-container>
-<ng-container>
-    <div class="container-fluid" *ngIf="(DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch)">
-        {{v2_Staff.email}}
-    </div>
-</ng-container>
-<ng-container>
-    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(
-        OwnerComparison.localeCompare(v2_Staff.email) == StringsAreAMatch  && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch
-        || AdministratorOneComparison.localeCompare(v2_Staff.email) == StringsAreAMatch  && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch
-        || AdministratorTwoComparison.localeCompare(v2_Staff.email) == StringsAreAMatch && DefaultComparison.localeCompare(v2_Staff.email) != StringsAreAMatch)"
-    >
-<h5>Here is company admin</h5>
-        <div class="row">
-            <div class="col-lg-4">
-                <h5>Delete Admin</h5>
-                <form>
-                <ul>
-                    <li>Admin: {{v2_Company.administratorOne.name}} <button class="btn btn-danger">Revoke Admin</button></li>
-                    <li>Admin: {{v2_Company.administratorTwo.name}} <button class="btn btn-danger">Revoke Admin</button></li>
-                </ul>
-                </form>
-            </div>
-            <div class="col-lg-4">
-                <h5>Add Admin</h5>
-                <form
-                    class="form-group"
-                    [formGroup]="FORM_newDev"
-                    (ngSubmit)="v2_newDev()">
-                    
-                    <div class="form-group">
-                    <label>Email Address</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        formControlName="email"
-                        placeholder="Enter Email Address"
-                        />
+<div class="container-fluid">
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                Update Profile Here
+            </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h5 class="text-center">Update Password</h5>
+                            <form
+                                class="form-control"
+                                [formGroup]="FORM_updatePassword"
+                                (ngSubmit)="updatePassword()"
+                                >
+                                
+                            <div class="form-group">
+                                <label>Current Password</label>
+                                <input
+                                type="password"
+                                class="form-control"
+                                formControlName="currentPassword"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>New Password</label>
+                                <input
+                                type="password"
+                                class="form-control"
+                                formControlName="newPassword"
+                                />
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+                            </form>
+                        </div>
+                        <div class="col-lg-6">
+                            <h5 class="text-center">Update Profile</h5>
+                            <form
+                                class="form-control"
+                                [formGroup]="FORM_updateProfile"
+                                (ngSubmit)="updateProfile()"
+                                >
+                                
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="name"
+                                ngModel="{{v2_Staff.name}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="phoneNumber"
+                                ngModel="{{v2_Staff.phoneNumber}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Street</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="addressStreet"
+                                ngModel="{{v2_Staff.addressStreet}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Suite</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="addressSuite"
+                                ngModel="{{v2_Staff.addressSuite}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>City</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="addressCity"
+                                ngModel="{{v2_Staff.addressCity}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>State</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="addressState"
+                                ngModel="{{v2_Staff.addressState}}"
+                                />
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Postal Code</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                formControlName="addressPostal_Code"
+                                ngModel="{{v2_Staff.addressPostal_Code}}"
+                                />
+                            </div>
+                            <button type="submit" class="btn btn-block btn-primary">Sign up</button>
+                            </form>
+                        </div>
                     </div>
-
-                    <button type="submit" class="mt-3 btn btn-block btn-primary">Register</button>
-                </form>
-            </div>
-            <div class="col-lg-4">
-                <h5>View Company Details</h5>
-                <ul>
-                    <li>{{ v2_Company.name }}</li>
-                    <li>{{ v2_Company.description }}</li>
-
-                    
-                    <li>{{ v2_Company.smallTagline }}</li>
-                    <li>{{ v2_Company.menuDescription }}</li>
-
-                    <li>{{ v2_Company.addressStreet }}</li>
-                    <li>{{ v2_Company.addressSuite }}</li>
-                    <li>{{ v2_Company.addressCity }}</li>
-                    <li>{{ v2_Company.addressState }}</li>
-                    <li>{{ v2_Company.addressPostal_Code }}</li>
-                    <li>{{ v2_Company.addressCountry }}</li>
-                    <li>{{ v2_Company.phoneNumber }}</li>
-
-                    <li *ngFor="let product of v2_Company.listOfAllProducts">{{ product.name }}</li>
-                </ul>
+                </div>
             </div>
         </div>
-        <div class="row mb-5">
-            <h5 class="offset-3 mt-5 mb-5">Product Details</h5>
-            <div class="col-lg-4">
-                <h5>Add new product!</h5>
-                <form class="form-group"
-                [formGroup]="FORM_newProduct"
-                (ngSubmit)="v2_newProduct()">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" name="name" class="form-control" id="name" aria-describedby="newProductName">
-                        <div id="newProductName" class="form-text">Name of the new product.</div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                View Orders that have not yet been completed
+            </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <ng-container>
+                    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="v2_ActiveOrders.length > StringsAreAMatch">
+                        <div>
+                            <h4>Active Orders</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Delivery or Pickup</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Order will be ready at</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let order of v2_ActiveOrders">
+                                    <th scope="row">{{order.method}}</th>
+                                    <td>{{order.status}}</td>
+                                    <td>{{order.eta}}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                          </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Description</label>
-                        <input type="text" name="description" class="form-control" id="description" aria-describedby="newProductDescription">
-                        <div id="newProductDescription" class="form-text">Description of the new product.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Default Price</label>
-                        <input type="text" name="default_price" class="form-control" id="default_price" aria-describedby="newProductDefaultPrice">
-                        <div id="newProductDefaultPrice" class="form-text">Default Price of the new product.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Package Dimensions</label>
-                        <input type="text" name="package_dimensions" class="form-control" id="package_dimensions" aria-describedby="newProductpackage_dimensions">
-                        <div id="newProductpackage_dimensions" class="form-text">Package Dimensions of the new product.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Statement Description</label>
-                        <input type="text" name="statement_descriptor" class="form-control" id="statement_descriptor" aria-describedby="newProductstatement_descriptor">
-                        <div id="newProductstatement_descriptor" class="form-text">This will be shown on the customer's debit card statement.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="unit_label" class="form-label">Unit Label</label>
-                        <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
-                        <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" name="unit_label" class="form-control" id="unit_label" aria-describedby="newProductunit_label">
-                        <div id="newProductunit_label" class="form-text">What does the customer get with this product?</div>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="shippable" aria-describedby="newProductshippable" value="true">
-                        <label for="unit_label" class="form-label">This product can be shipped</label>
-                        <div id="newProductshippable" class="form-text">Check the box if this product can be shipped</div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <img src="https://via.placeholder.com/150x80?text=image" alt="">
-                        <h5>Placeholder Image</h5>
-                        <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the product unless you upload one.</div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="file" class="form-control" name="imageToBeUploaded" id="imageToBeUploaded" aria-describedby="newProductimageToBeUploaded" accept="image/png, image/jpeg">
-                        <label class="input-group-text" for="imageToBeUploaded">Product Image</label>
-                        <div id="newProductimageToBeUploaded" class="form-text">This will be shown on the menu</div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" name="seo" class="form-control" id="seo" aria-describedby="newProductseo">
-                        <div id="newProductseo" class="form-text">Search Engine Optimizations Tag</div>
-                    </div>
-                    <div class="mb-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Open this select menu</option>
-                            <option value="Available only during Breakfast">Available only during Breakfast</option>
-                            <option value="Available After Breakfast">Available After Breakfast</option>
-                            <option value="Available After Lunch">Available After Lunch</option>
-                            <option value="Lunch Only">Lunch Only</option>
-                            <option value="Dinner Only">Dinner Only</option>
-                            <option value="Appetizer">Appetizer</option>
-                            <option value="Limited Amount Daily">Limited Amount Daily</option>
-                            <option value="Limited Time Only">Limited Time Only</option>
-                            <option value="Dessert">Dessert</option>
-                            <option value="Clothing">Clothing</option>
-                            <option value="Accessories">Accessories</option>
-                            <option value="Seasonal">Seasonal</option>
-                        </select>
-                    </div>
-                    <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
-                </form>
+                </ng-container>
             </div>
-            <div class="col-lg-4 mt-3 ">
-                <h4>DELETE PRODUCT</h4>
-                <form class="form-group"
-                [formGroup]="FORM_deleteProduct"
-                (ngSubmit)="v2_deleteProduct()">
-                        <div class="form-control">
-                            <select formControlName="productId" >
-                                <option disabled>SELECT Product</option>
-                                <option *ngFor="let product of v2_Products" [ngValue]="product.id">
-                                    {{product.name}}
-                                </option>
-                            </select>
-                        </div>
-                    <button class="mt-3 mb-3 btn btn-large btn-success">submit</button>
-                </form>
             </div>
-            <div class="col-lg-4 mt-3 ">
-                <h6>COMING SOON</h6>
-                <h4>UPDATE PRODUCT IMAGE</h4>
-                <form class="form-group">
-                        <div class="form-control">
-                            <select formControlName="productId" >
-                                <option disabled>SELECT Product</option>
-                                <option #productId *ngFor="let product of v2_Products" [ngValue]="product.id">
-                                    {{product.name}}
-                                </option>
-                            </select>
-                        </div>
-                    <button type="button" (click)="v2_updateProductImage()" class="mt-3 mb-3 btn btn-large btn-success">submit</button>
-                </form>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                View Completed Orders
+            </button>
+            </h2>
+            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+            <div class="accordion-body">
+                <ng-container>
+                    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="v2_CompletedOrders.length > StringsAreAMatch">
+                        <div>
+                            <h4>Active Orders</h4>
+                            <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Delivery or Pickup</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Order will be ready at</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td align="center" colspan="3" >...Loading Orders...</td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                          </div>
+                    </div>
+                </ng-container>
+            </div>
             </div>
         </div>
     </div>
-</ng-container>
-<ng-container>
-    <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch && v2_ActiveOrders.length != StringsAreAMatch)">
-        <div>
-            <h4>Active Orders</h4>
-            <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Delivery or Pickup</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Order will be ready at</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let order of v2_ActiveOrders">
-                    <th scope="row">{{order.method}}</th>
-                    <td>{{order.status}}</td>
-                    <td>{{order.eta}}</td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
-    </div>
-        <div class="container-fluid mt-5 mb-5 pb-5" *ngIf="(DefaultComparison.localeCompare(v2_Customer.email) != StringsAreAMatch && v2_ActiveOrders.length == StringsAreAMatch )">
-        <div>
-            <h4>Active Orders</h4>
-            <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">Delivery or Pickup</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Order will be ready at</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td align="center" colspan="3" >...Loading Orders...</td>
-                    </tr>
-                </tbody>
-              </table>
-          </div>
-    </div>
-</ng-container>
+</div>
 <ng-container>
     <div *ngIf="v2_Cart.companyId > StringsAreAMatch" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">

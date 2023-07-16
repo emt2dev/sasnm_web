@@ -1,0 +1,201 @@
+<ng-container>
+    <div class="container-fluid mt-5 mb-5 pb-5">
+        <div class="row">
+            <div class="col-lg-4">
+                <h5>New Admin</h5>
+                <form
+                    class="form-group"
+                    [formGroup]="FORM_overrideAdmin"
+                    (ngSubmit)="v2_OverrideAdmin()">
+                    <h6>below are staff members who are not admins</h6>
+                    <label>Instructions, choose staff to give admin privledges, then choose which position to replace</label>
+                    <div class="form-group">
+                        <select formControlName="userEmail" class="form-select" aria-label="staff giving admin">
+                            <option *ngFor="let member of nonAdminList" [ngValue]="member.email">{{member.email}}</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <select formControlName="replaceAdminOneOrTwo" class="form-select" aria-label="replace admin">
+                            <option [ngValue]="0">Company Owner</option>
+                            <option [ngValue]="1">Administrator One</option>
+                            <option [ngValue]="2">Administrator Two</option>
+                          </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-primary">Update Company Admin</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>New Developer</h5>
+                <form
+                    class="form-group"
+                    [formGroup]="FORM_newDev"
+                    (ngSubmit)="devCreate()">
+                    
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="Email"
+                            />
+                        <p>Default password is P@ssword1</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-primary">Create Developer</button>
+                </form>
+            </div>
+            <div class="col-lg-4">
+                <h5>New Staff</h5>
+                <form
+                    class="form-group"
+                    [formGroup]="FORM_newStaff"
+                    (ngSubmit)="staffCreate()">
+                    
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="Email"
+                            />
+                        <p>Default password is P@ssword1</p>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-primary">Create Staff</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h5>View Company Details</h5>
+                <ul>
+                    <li>{{ v2_Company.name }}</li>
+                    <li>{{ v2_Company.description }}</li>
+                    <li>{{ v2_Company.smallTagline }}</li>
+                    <li>{{ v2_Company.menuDescription }}</li>
+
+                    <li>{{ v2_Company.phoneNumber }}</li>
+
+                    <li>{{ v2_Company.addressStreet }} {{ v2_Company.addressSuite }} {{ v2_Company.addressCity }}, {{ v2_Company.addressState }} {{ v2_Company.addressPostal_Code }} {{ v2_Company.addressCountry }}</li>
+
+                    <li><img height="100px" src="{{ v2_Company.headerImage }}" alt="header-image"></li>
+                    <li><img height="100px" src="{{ v2_Company.aboutUsImageUrl }}" alt="about-us-image"></li>
+                    <li><img height="100px" src="{{ v2_Company.locationImageUrl }}" alt="location-image"></li>
+                    <li><img height="100px" src="{{ v2_Company.logoImageUrl }}" alt="logo-image"></li>
+                    <li><img height="100px" src="{{ v2_Company.miscImageUrl }}" alt="misc-image"></li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <h5>New Company</h5>
+                <form
+                    class="form-group"
+                    [formGroup]="FORM_newCompany"
+                    (ngSubmit)="companyCreate()">
+                    
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="description"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="phoneNumber"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Small Tagline</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="smallTagline"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Menu Description</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="menuDescription"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Street</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressStreet"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Suite</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressSuite"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>City</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressCity"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>State</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressState"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressPostal_Code"
+                            />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            formControlName="addressCountry"
+                            ngModel="USA"
+                            />
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-primary">Create Staff</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</ng-container>

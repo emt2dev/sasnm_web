@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/authsvc/auth.service';
+import { v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
 
 @Component({
@@ -18,7 +19,7 @@ export class RegisterComponent implements OnInit {
   /**
    *
    */
-  constructor(public formBuilder: FormBuilder, public authService: AuthService, public router: Router)
+  constructor(public formBuilder: FormBuilder, public v2_authService: v2_AuthService, public router: Router)
   {
     this.FORM__REGISTER = this.formBuilder.group({
       email: ['', Validators.email],
@@ -28,15 +29,15 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {}
 
-  SUBMIT__REGISTRATION() {
+  customerREGISTRATION() {
     const NEW__USER = new Base__User(this.FORM__REGISTER.value.email, this.FORM__REGISTER.value.password);
 
-    this.authService.REGISTER__USER(NEW__USER).subscribe({
-      next: (res) => {
+    this.v2_authService.v2_registerCustomer(NEW__USER).subscribe({
+      next: () => {
         this.FORM__REGISTER.reset();
         this.router.navigateByUrl('/login');
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log(err);
       }
     });

@@ -14,11 +14,13 @@ import { UserDashboardComponent } from './components/user-dashboard/user-dashboa
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
 import { StaffComponent } from './components/staff/staff.component';
+import { DevComponent } from './components/dev/dev.component';
+import { DloginComponent } from './components/dlogin/dlogin.component';
+import { SloginComponent } from './components/slogin/slogin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    StaffComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,11 @@ import { StaffComponent } from './components/staff/staff.component';
     LandingComponent,
     UserDashboardComponent,
     SuccessComponent,
-    CancelComponent
+    CancelComponent,
+    StaffComponent,
+    DevComponent,
+    DloginComponent,
+    SloginComponent,
   ],
   providers: [
     {

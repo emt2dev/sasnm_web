@@ -17,6 +17,7 @@ import { overrideDTO } from '../DTOs/overrideDTo';
 import { v2_StaffDTO } from '../v2_DTOs/v2_Staff';
 import { v2_CustomerDTO } from '../v2_DTOs/v2_Customer';
 import { v2_CompanyDTO } from '../v2_DTOs/v2_Company';
+import { updatePasswordDTO } from '../v2_DTOs/updatePasswordDTO';
 
 export const TOKEN: string = 'TOKEN';
 export const USER_ID: string = 'USER_ID';
@@ -24,6 +25,7 @@ export const REFRESH_TOKEN: string = 'REFRESH_TOKEN';
 export const ROLES: string = 'ROLES';
 export const DECODED_TOKEN: string = 'DECODED_TOKEN';
 export const STAFF: string = "false";
+export const DEV: string = "false";
 
 export interface decodedUser {
   Token: string;
@@ -41,6 +43,10 @@ export class v2_AuthService {
     /* AuthReadyAPI V2 API End Points */
   // api builder
   _api: string = 'http://localhost:5035/api/v2.0';
+
+  // update password
+  _updatePassword: string = '/customers/update/password';
+  _updateProfile: string = '/customers/update/password';
 
   // logins
   _customerLogin: string = 'entry/customer';
@@ -67,7 +73,6 @@ export class v2_AuthService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-
   v2_Customer: v2_CustomerDTO = {
     id: '...Loading...',
     name: '...Loading...',
@@ -80,6 +85,9 @@ export class v2_AuthService {
     livemode: false,
     password: '...Loading...',
     email: '...Loading...',
+    phoneNumber: '',
+    addressSuite: '',
+    addressCountry: ''
   }
 
   v2_Staff: v2_StaffDTO = {
@@ -91,7 +99,14 @@ export class v2_AuthService {
     latitude: '...Loading...',
     coordinates: '...Loading...',
     password: '...Loading...',
-    email: ''
+    email: '',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   }
 
   v2_Owner: v2_StaffDTO = {
@@ -104,6 +119,13 @@ export class v2_AuthService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorOne: v2_StaffDTO = {
@@ -116,6 +138,13 @@ export class v2_AuthService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_AdministratorTwo: v2_StaffDTO = {
@@ -128,6 +157,13 @@ export class v2_AuthService {
     coordinates: '...Loading...',
     password: '...Loading...',
     email: '...Loading...',
+    addressStreet: '',
+    addressSuite: '',
+    addressCity: '',
+    addressState: '',
+    addressPostal_Code: '',
+    addressCountry: '',
+    phoneNumber: ''
   };
 
   v2_Company: v2_CompanyDTO = {
@@ -293,7 +329,8 @@ export class v2_AuthService {
           i = localStorage.setItem(DECODED_TOKEN, decoded)
           i = localStorage.setItem(USER_ID, decoded.uid);
           i = localStorage.setItem(ROLES, decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]);
-
+          i = localStorage.setItem(DEV, "true");
+          
           console.log(decoded);
           const decodedUser: decodedUser = {
             Token: res.token,
@@ -313,8 +350,23 @@ export class v2_AuthService {
     .pipe(catchError(this.handleError))
   }
 
+  v2_updatePassword(userId: string, DTO: updatePasswordDTO): Observable<any>{
+    return this.http.post(`${this._api}/${this._updatePassword}/${userId}`, DTO, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
+
   v2_getCustomerProfile(id: string): Observable<any>{
     return this.http.post(`${this._api}/${this._customerDetails}/${id}`, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
+
+  v2_updateStaffProfile(id: string, DTO: v2_StaffDTO): Observable<any>{
+    return this.http.post(`${this._api}/${this._customerDetails}/${id}`, DTO, { headers:this.headers })
+    .pipe(catchError(this.handleError))
+  }
+
+  v2_updateCustomerProfile(id: string, DTO: v2_CustomerDTO): Observable<any>{
+    return this.http.post(`${this._api}/${this._customerDetails}/${id}`, DTO, { headers:this.headers })
     .pipe(catchError(this.handleError))
   }
    
@@ -339,15 +391,25 @@ export class v2_AuthService {
     return validToken !== null ? true : false;
   }
 
+  get isUserDev(): boolean {
+    if(localStorage.getItem(DEV) == "true") return true;
+    else return false;
+  }
+
+  get isUserStaff(): boolean {
+    if(localStorage.getItem(STAFF) == "true") return true;
+    else return false;
+  }
+
   LOGOUT__USER() {
     let logoutActions = localStorage.removeItem(TOKEN);
     logoutActions = localStorage.removeItem(USER_ID);
     logoutActions = localStorage.removeItem(DECODED_TOKEN);
     logoutActions = localStorage.removeItem(ROLES);
-    
-    if (logoutActions == null) {
-      this.router.navigate(['']);
-    }
+    logoutActions = localStorage.removeItem(DEV);
+    logoutActions = localStorage.removeItem(STAFF);
+  
+    this.router.navigateByUrl('/login');
   }
 
   // Error
