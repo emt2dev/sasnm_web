@@ -392,28 +392,29 @@
                     <div class="col-lg-4">
                         <h5>Add new product!</h5>
                         <form
-                        action="{{_newProductAction}}"
-                        method="post"
-                        enctype="multipart/form-data"
+                        class="form-control"
+                        [formGroup]="FORM_newProduct"
+                        (ngSubmit)="v2_newProduct()"
+                        enctype="multipart/form-data" 
                         >
-                            <div class="input-group mb-3">
+                            <!-- <div class="input-group mb-3">
                                 <input type="text" class="form-control btn btn-outline-primary" name="companyId" value="{{v2_Company.id}}" hidden readonly required />
+                            </div> -->
+                            <div class="input-group mb-3">
+                                <label class="input-group-text " for="name">Name</label>
+                                <input type="text" class="form-control btn btn-outline-primary" formControlName="name" name="name" required />
                             </div>
                             <div class="input-group mb-3">
-                                <label class="input-group-text " for="image">Name</label>
-                                <input type="text" class="form-control btn btn-outline-primary" name="name" required />
+                                <label class="input-group-text " for="description">Description</label>
+                                <input type="text" class="form-control btn btn-outline-primary" formControlName="description" name="description" required />
                             </div>
                             <div class="input-group mb-3">
-                                <label class="input-group-text " for="image">Description</label>
-                                <input type="text" class="form-control btn btn-outline-primary" name="description" required />
-                            </div>
-                            <div class="input-group mb-3">
-                                <label class="input-group-text " for="image">default_price</label>
-                                <input type="number" class="form-control btn btn-outline-primary" name="default_price" required />
+                                <label class="input-group-text " for="default_price">default_price</label>
+                                <input type="number" class="form-control btn btn-outline-primary" formControlName="default_price" name="default_price"  required />
                             </div>
                             <div class="input-group mb-3">
                                 <label class="input-group-text " for="image">Add image</label>
-                                <input type="file" class="form-control btn btn-outline-primary" name="newImage" required />
+                                <input type="file" class="form-control btn btn-outline-primary" formControlName="image" name="image" (change)="uploadFile($any($event), 'image')" required />
                             </div>
                             <button class="btn btn-warning" type="submit">Submit</button>
                         </form>

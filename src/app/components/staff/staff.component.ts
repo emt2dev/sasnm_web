@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Base__User } from 'src/app/shared/DTOs/APIUsers/Base__APIUser';
+import { newProductDTO } from 'src/app/shared/DTOs/Products/newProductDTO';
 import { v2_newProductDTO } from 'src/app/shared/DTOs/Products/v2_newProductDTO';
 import { overrideDTO } from 'src/app/shared/DTOs/overrideDTo';
 import { v2_AuthService } from 'src/app/shared/authsvc/v2_auth.service';
@@ -176,6 +177,8 @@ export class StaffComponent implements OnInit {
     administratorTwo: this.v2_AdministratorTwo,
   };
 
+  outgoingFile: File;
+
   constructor(private formBuilder: FormBuilder, private v2_authService: v2_AuthService, private v2_companyService: v2_CompanyService, private router: Router)
   {
     this.FORM_newStaff = this.formBuilder.group({
@@ -205,7 +208,8 @@ export class StaffComponent implements OnInit {
     this.FORM_newProduct = this.formBuilder.group({
       name: ['',],
       description: ['',],
-      default_price: [,]
+      default_price: [,],
+      image: [File,]
     });
 
     this.FORM_updateProduct = this.formBuilder.group({
@@ -336,6 +340,19 @@ export class StaffComponent implements OnInit {
     });
   }
 
+  uploadFile(event, fileType: string) {  
+    console.log("reached upload file");
+    this.updateFile(event, fileType);
+  };
+
+  private updateFile(event: Event, formControlName: string){    
+    const file = (event.target as HTMLInputElement).files[0];
+    this.FORM_newProduct.controls[formControlName].patchValue([file]);
+    this.FORM_newProduct.get(formControlName)?.updateValueAndValidity();
+    this.outgoingFile = file;
+    console.log("stored file in outgoingFile");
+  };
+
   v2_newProduct() {
     let default_quantity: number = 1;
     let newProduct = new v2_newProductDTO
@@ -345,13 +362,48 @@ export class StaffComponent implements OnInit {
       this.FORM_newProduct.value.description,
       this.FORM_newProduct.value.default_price,
       default_quantity,
+      this.FORM_newProduct.value.image
     );
 
-    this.v2_companyService.v2_newProduct(newProduct).subscribe({
+    console.log(newProduct);
+
+    let formData: FormData = new FormData;
+      // Object.keys(this.FORM_newProduct.controls).forEach(formControlName => {
+      //   formData.append(formControlName,
+      //   this.FORM_newProduct.get(formControlName)?.value);    
+      // });   
+
+    // let formData: FormData = new FormData;
+      formData.append("companyId", `${this.v2_Company.id}`);
+      formData.append("name", newProduct.name);
+      formData.append("description", newProduct.description);
+      formData.append("default_price", newProduct.default_price.toString());
+      formData.append("quantity", "1");
+      formData.append("image", this.outgoingFile);
+      console.log("appended image")
+
+      // let formData: FormData = new FormData;
+      // formData.append("companyId", "1");
+      // formData.append("name", "test product 8778");
+      // formData.append("description", "test description");
+      // formData.append("default_price", "3.99");
+      // formData.append("quantity", "1");
+      // formData.append("image", newProduct.imageToBeUploaded);
+      // formData.append("image", fileUploaded);
+
+    console.log(formData.get("image"));
+
+    // let fdOne =    JSON.stringify(formData);
+    // let formDataTwo: FormData = new FormData;
+    // formDataTwo.append("incomingDTO",newProduct.toString());
+    // console.log(formDataTwo);
+
+    this.v2_companyService.v2_newProductFormData(formData).subscribe({
       next: (res) => {
+        // console.log(res);
         
-        this.FORM_newProduct.reset();
-        this.router.navigateByUrl('/staff');
+        // this.FORM_newProduct.reset();
+        // this.router.navigateByUrl('/staff');
       },
       error: (err) => {
         console.log(err);

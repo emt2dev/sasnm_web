@@ -138,7 +138,6 @@ export class v2_CompanyService {
   _getCompletedCompanyOrders: string = 'orders/company/completed';
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  
   constructor(private http: HttpClient, public router: Router) {
       
    }
@@ -192,8 +191,9 @@ export class v2_CompanyService {
   }
 
   v2_newProductFormData(sendingDTO: FormData): Observable<any> {
-    return this.http.post<v2_newProductDTO>(`${this._api}/${this._createNewProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
+    return this.http.post<any>(`${this._api}/${this._createNewProduct}`, sendingDTO, {}).pipe(catchError(this.handleError))
   }
+
 
   v2_updateProduct(sendingDTO: v2_ProductDTO): Observable<any> {
     return this.http.put(`${this._api}/${this._updateProduct}`, sendingDTO, {headers:this.headers}).pipe(catchError(this.handleError))
